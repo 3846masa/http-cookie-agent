@@ -1,13 +1,13 @@
 {
   "name": "http-cookie-agent",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Allows cookies with every Node.js HTTP clients.",
   "license": "MIT",
   "author": "3846masa <3846masahiro+git@gmail.com>",
   "homepage": "https://github.com/3846masa/http-cookie-agent#readme",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/3846masa/http-cookie-agent.git"
+    "url": "https://github.com/3846masa/http-cookie-agent.git"
   },
   "bugs": {
     "url": "https://github.com/3846masa/http-cookie-agent/issues"
@@ -21,6 +21,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
+    "semantic-release": "semantic-release",
     "pretest": "npm run build",
     "test": "ava"
   },
@@ -35,6 +36,8 @@
   "devDependencies": {
     "@ava/typescript": "2.0.0",
     "@hapi/wreck": "17.1.0",
+    "@semantic-release/changelog": "5.0.1",
+    "@semantic-release/git": "9.0.1",
     "@types/cookie": "0.4.1",
     "@types/http-proxy": "1.17.7",
     "@types/needle": "2.5.2",
@@ -54,6 +57,7 @@
     "phin": "3.6.0",
     "request": "2.88.2",
     "rimraf": "^3.0.2",
+    "semantic-release": "17.4.7",
     "superagent": "6.1.0",
     "tough-cookie": "4.0.0",
     "typescript": "4.4.3",
