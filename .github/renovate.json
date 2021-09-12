@@ -1,0 +1,45 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "timezone": "Asia/Tokyo",
+  "schedule": ["after 8:00 pm"],
+  "reviewers": ["3846masa"],
+  "labels": ["dependencies"],
+  "semanticCommits": "enabled",
+  "semanticCommitType": "chore",
+  "packageRules": [
+    {
+      "matchDepTypes": ["peerDependencies"],
+      "enabled": false
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "stabilityDays": 7,
+      "automerge": false
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "stabilityDays": 3,
+      "automerge": true
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "stabilityDays": 3,
+      "automerge": true,
+      "semanticCommitScope": "devdeps"
+    },
+    {
+      "groupName": "node",
+      "matchPackageNames": ["node", "@types/node"],
+      "allowedVersions": "<13.0.0",
+      "stabilityDays": 3,
+      "automerge": true
+    },
+    {
+      "groupName": "node-fetch",
+      "matchPackageNames": ["node-fetch", "@types/node-fetch"],
+      "allowedVersions": "<3.0.0",
+      "stabilityDays": 3,
+      "automerge": true
+    }
+  ]
+}
