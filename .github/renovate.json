@@ -6,15 +6,15 @@
   "labels": ["dependencies"],
   "semanticCommits": "enabled",
   "semanticCommitType": "chore",
+  "semanticCommitScope": "deps",
   "packageRules": [
     {
       "matchDepTypes": ["peerDependencies"],
       "enabled": false
     },
     {
-      "matchUpdateTypes": ["major"],
-      "stabilityDays": 7,
-      "automerge": false
+      "matchDepTypes": ["devDependencies"],
+      "semanticCommitScope": "deps-dev"
     },
     {
       "matchUpdateTypes": ["minor", "patch"],
@@ -22,24 +22,23 @@
       "automerge": true
     },
     {
-      "matchDepTypes": ["devDependencies"],
-      "stabilityDays": 3,
-      "automerge": true,
-      "semanticCommitScope": "devdeps"
+      "matchUpdateTypes": ["major"],
+      "stabilityDays": 7,
+      "automerge": false
+    },
+    {
+      "matchPackagePrefixes": ["@types/"],
+      "stabilityDays": 0
     },
     {
       "groupName": "node",
       "matchPackageNames": ["node", "@types/node"],
-      "allowedVersions": "<13.0.0",
-      "stabilityDays": 3,
-      "automerge": true
+      "allowedVersions": "<13.0.0"
     },
     {
       "groupName": "node-fetch",
       "matchPackageNames": ["node-fetch", "@types/node-fetch"],
-      "allowedVersions": "<3.0.0",
-      "stabilityDays": 3,
-      "automerge": true
+      "allowedVersions": "<3.0.0"
     }
   ]
 }
