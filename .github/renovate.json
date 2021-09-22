@@ -39,6 +39,10 @@
       "groupName": "node-fetch",
       "matchPackageNames": ["node-fetch", "@types/node-fetch"],
       "allowedVersions": "<3.0.0"
+    },
+    {
+      "groupName": "semantic-release",
+      "matchPackagePatterns": ["^semantic-release$", "^@semantic-release/"]
     }
   ]
 }
