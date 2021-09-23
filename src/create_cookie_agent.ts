@@ -53,7 +53,7 @@ export function createCookieAgent<
     private [GET_REQUEST_URL](req: http.ClientRequest): string {
       const requestUrl = liburl.format({
         protocol: req.protocol,
-        hostname: req.host,
+        host: req.host,
         pathname: req.path,
       });
 
