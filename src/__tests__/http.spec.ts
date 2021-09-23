@@ -183,3 +183,39 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
 
   t.plan(1);
 });
+
+test('should send cookies even when target is same host but different port', async (t) => {
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ jar });
+
+  const { port: firstServerPort } = await createTestServer([
+    (_req, res) => {
+      res.setHeader('Set-Cookie', 'key=expected');
+      res.end();
+    },
+  ]);
+
+  const { port: secondServerPort } = await createTestServer([
+    (req, res) => {
+      t.is(req.headers['cookie'], 'key=expected');
+      res.end();
+    },
+  ]);
+
+  {
+    const { promise } = request(`http://localhost:${firstServerPort}`, {
+      method: 'GET',
+      agent,
+    });
+    await promise;
+  }
+  {
+    const { promise } = request(`http://localhost:${secondServerPort}`, {
+      method: 'GET',
+      agent,
+    });
+    await promise;
+  }
+
+  t.plan(1);
+});
