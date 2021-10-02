@@ -51,7 +51,7 @@
     "axios": "0.21.4",
     "got": "11.8.2",
     "http-proxy": "1.18.1",
-    "http-proxy-agent": "4.0.1",
+    "http-proxy-agent": "5.0.0",
     "needle": "3.0.0",
     "node-fetch": "2.6.5",
     "phin": "3.6.0",
