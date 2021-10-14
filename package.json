@@ -1,6 +1,6 @@
 {
   "name": "http-cookie-agent",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Allows cookies with every Node.js HTTP clients.",
   "license": "MIT",
   "author": "3846masa <3846masahiro+git@gmail.com>",

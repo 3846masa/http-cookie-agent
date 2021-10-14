@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/3846masa/http-cookie-agent/compare/v1.0.1...v1.0.2) (2021-10-14)
+
+
+### Bug Fixes
+
+* fix supported node version ([#21](https://github.com/3846masa/http-cookie-agent/issues/21)) ([ba78fc1](https://github.com/3846masa/http-cookie-agent/commit/ba78fc1e70fd0d7d6b3a27ae587dd3cd8607a754)), closes [/github.com/3846masa/axios-cookiejar-support/issues/420#issuecomment-943350949](https://github.com//github.com/3846masa/axios-cookiejar-support/issues/420/issues/issuecomment-943350949)
+
 ## [1.0.1](https://github.com/3846masa/http-cookie-agent/compare/v1.0.0...v1.0.1) (2021-09-23)
 
 
