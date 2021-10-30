@@ -92,6 +92,28 @@ test('should send cookies from CookieJar', async (t) => {
   t.plan(1);
 });
 
+test('should send cookies from CookieJar when value is url-encoded', async (t) => {
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ jar });
+
+  const { port } = await createTestServer([
+    (req, res) => {
+      t.is(req.headers['cookie'], 'key=hello%20world');
+      res.end();
+    },
+  ]);
+
+  await jar.setCookie('key=hello%20world', `http://localhost:${port}`);
+
+  const { promise } = request(`http://localhost:${port}`, {
+    method: 'GET',
+    agent,
+  });
+  await promise;
+
+  t.plan(1);
+});
+
 test('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
   const agent = new HttpCookieAgent({ jar });
