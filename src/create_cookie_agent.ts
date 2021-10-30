@@ -33,6 +33,8 @@ const SET_COOKIE_HEADER = Symbol('setCookieHeader');
 const CREATE_COOKIE_HEADER_STRING = Symbol('createCookieHeaderString');
 const OVERWRITE_REQUEST_EMIT = Symbol('overwriteRequestEmit');
 
+const pass = <T>(value: T): T => value;
+
 export function createCookieAgent<
   BaseAgent extends http.Agent = http.Agent,
   BaseAgentOptions = unknown,
@@ -69,16 +71,16 @@ export function createCookieAgent<
       const cookieHeaderFromRequest = req.getHeader('Cookie');
       if (Array.isArray(cookieHeaderFromRequest)) {
         for (const str of cookieHeaderFromRequest) {
-          const cookie = libcookie.parse(str);
+          const cookie = libcookie.parse(str, { decode: pass });
           cookiesEntries.push(...Object.entries(cookie));
         }
       } else if (typeof cookieHeaderFromRequest === 'string') {
-        const cookie = libcookie.parse(cookieHeaderFromRequest);
+        const cookie = libcookie.parse(cookieHeaderFromRequest, { decode: pass });
         cookiesEntries.push(...Object.entries(cookie));
       }
 
       const cookieHeader = Array.from(new Map(cookiesEntries))
-        .map(([key, value]) => libcookie.serialize(key, value))
+        .map(([key, value]) => libcookie.serialize(key, value, { encode: pass }))
         .join(';\x20');
 
       return cookieHeader;
