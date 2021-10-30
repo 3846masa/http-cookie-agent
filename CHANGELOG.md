@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/3846masa/http-cookie-agent/compare/v1.0.2...v1.0.3) (2021-10-30)
+
+
+### Bug Fixes
+
+* avoid to url-encode cookie value ([#27](https://github.com/3846masa/http-cookie-agent/issues/27)) ([1c1da5c](https://github.com/3846masa/http-cookie-agent/commit/1c1da5c6ff4ead4824250b9418b48433b5b84508))
+
 ## [1.0.2](https://github.com/3846masa/http-cookie-agent/compare/v1.0.1...v1.0.2) (2021-10-14)
 
 
