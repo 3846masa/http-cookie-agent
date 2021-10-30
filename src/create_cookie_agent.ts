@@ -1,7 +1,6 @@
 import type http from 'http';
 import liburl from 'url';
-import libcookie from 'cookie';
-import { CookieJar } from 'tough-cookie';
+import { Cookie, CookieJar } from 'tough-cookie';
 
 declare module 'http' {
   interface Agent {
@@ -64,21 +63,26 @@ export function createCookieAgent<
       const requestUrl = this[GET_REQUEST_URL](req);
 
       const cookies = await this.jar.getCookies(requestUrl);
-      const cookiesEntries: [string, string][] = cookies.map((cookie) => [cookie.key, cookie.value]);
+      const cookiesMap = new Map(cookies.map((cookie) => [cookie.key, cookie]));
 
-      const cookieHeaderFromRequest = req.getHeader('Cookie');
-      if (Array.isArray(cookieHeaderFromRequest)) {
-        for (const str of cookieHeaderFromRequest) {
-          const cookie = libcookie.parse(str);
-          cookiesEntries.push(...Object.entries(cookie));
+      const cookieHeaderList = [req.getHeader('Cookie')].flat();
+
+      for (const header of cookieHeaderList) {
+        if (typeof header !== 'string') {
+          continue;
         }
-      } else if (typeof cookieHeaderFromRequest === 'string') {
-        const cookie = libcookie.parse(cookieHeaderFromRequest);
-        cookiesEntries.push(...Object.entries(cookie));
+
+        for (const str of header.split(';')) {
+          const cookie = Cookie.parse(str.trim());
+          if (cookie === undefined) {
+            continue;
+          }
+          cookiesMap.set(cookie.key, cookie);
+        }
       }
 
-      const cookieHeader = Array.from(new Map(cookiesEntries))
-        .map(([key, value]) => libcookie.serialize(key, value))
+      const cookieHeader = Array.from(cookiesMap.values())
+        .map((cookie) => cookie.cookieString())
         .join(';\x20');
 
       return cookieHeader;
