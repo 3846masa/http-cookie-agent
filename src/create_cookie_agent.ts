@@ -1,10 +1,13 @@
-import type http from 'http';
-import liburl from 'url';
-import { Cookie, CookieJar } from 'tough-cookie';
+import type http from "http";
+import liburl from "url";
+import { Cookie, CookieJar } from "tough-cookie";
 
-declare module 'http' {
+declare module "http" {
   interface Agent {
-    addRequest(req: http.ClientRequest, options: http.RequestOptions): void;
+    addRequest(
+      req: http.ClientRequest,
+      options: http.RequestOptions | any
+    ): void;
   }
   interface ClientRequest {
     _headerSent: boolean;
@@ -27,16 +30,21 @@ export type CookieAgentOptions = {
   jar: CookieJar;
 };
 
-const GET_REQUEST_URL = Symbol('getRequestUrl');
-const SET_COOKIE_HEADER = Symbol('setCookieHeader');
-const CREATE_COOKIE_HEADER_STRING = Symbol('createCookieHeaderString');
-const OVERWRITE_REQUEST_EMIT = Symbol('overwriteRequestEmit');
+const GET_REQUEST_URL = Symbol("getRequestUrl");
+const SET_COOKIE_HEADER = Symbol("setCookieHeader");
+const CREATE_COOKIE_HEADER_STRING = Symbol("createCookieHeaderString");
+const OVERWRITE_REQUEST_EMIT = Symbol("overwriteRequestEmit");
 
 export function createCookieAgent<
   BaseAgent extends http.Agent = http.Agent,
   BaseAgentOptions = unknown,
-  BaseAgentConstructorRestParams extends unknown[] = unknown[],
->(BaseAgentClass: new (options: BaseAgentOptions, ...rest: BaseAgentConstructorRestParams) => BaseAgent) {
+  BaseAgentConstructorRestParams extends unknown[] = unknown[]
+>(
+  BaseAgentClass: new (
+    options: BaseAgentOptions,
+    ...rest: BaseAgentConstructorRestParams
+  ) => BaseAgent
+) {
   // @ts-ignore
   class CookieAgent extends BaseAgentClass {
     jar: CookieJar;
@@ -59,20 +67,22 @@ export function createCookieAgent<
       return requestUrl;
     }
 
-    private async [CREATE_COOKIE_HEADER_STRING](req: http.ClientRequest): Promise<string> {
+    private async [CREATE_COOKIE_HEADER_STRING](
+      req: http.ClientRequest
+    ): Promise<string> {
       const requestUrl = this[GET_REQUEST_URL](req);
 
       const cookies = await this.jar.getCookies(requestUrl);
       const cookiesMap = new Map(cookies.map((cookie) => [cookie.key, cookie]));
 
-      const cookieHeaderList = [req.getHeader('Cookie')].flat();
+      const cookieHeaderList = [req.getHeader("Cookie")].flat();
 
       for (const header of cookieHeaderList) {
-        if (typeof header !== 'string') {
+        if (typeof header !== "string") {
           continue;
         }
 
-        for (const str of header.split(';')) {
+        for (const str of header.split(";")) {
           const cookie = Cookie.parse(str.trim());
           if (cookie === undefined) {
             continue;
@@ -83,7 +93,7 @@ export function createCookieAgent<
 
       const cookieHeader = Array.from(cookiesMap.values())
         .map((cookie) => cookie.cookieString())
-        .join(';\x20');
+        .join(";\x20");
 
       return cookieHeader;
     }
@@ -91,18 +101,18 @@ export function createCookieAgent<
     private async [SET_COOKIE_HEADER](req: http.ClientRequest): Promise<void> {
       const cookieHeader = await this[CREATE_COOKIE_HEADER_STRING](req);
 
-      if (cookieHeader === '') {
+      if (cookieHeader === "") {
         return;
       }
       if (req._header === null) {
-        req.setHeader('Cookie', cookieHeader);
+        req.setHeader("Cookie", cookieHeader);
         return;
       }
 
       const alreadyHeaderSent = req._headerSent;
 
       req._header = null;
-      req.setHeader('Cookie', cookieHeader);
+      req.setHeader("Cookie", cookieHeader);
       req._implicitHeader();
 
       if (alreadyHeaderSent !== true) {
@@ -110,7 +120,10 @@ export function createCookieAgent<
       }
 
       const firstChunk = req.outputData.shift()!;
-      const dataWithoutHeader = firstChunk.data.split('\r\n\r\n').slice(1).join('\r\n\r\n');
+      const dataWithoutHeader = firstChunk.data
+        .split("\r\n\r\n")
+        .slice(1)
+        .join("\r\n\r\n");
 
       const chunk = {
         ...firstChunk,
@@ -123,39 +136,47 @@ export function createCookieAgent<
       req._onPendingData(diffSize);
     }
 
-    private async [OVERWRITE_REQUEST_EMIT](req: http.ClientRequest): Promise<void> {
+    private async [OVERWRITE_REQUEST_EMIT](
+      req: http.ClientRequest
+    ): Promise<void> {
       const requestUrl = this[GET_REQUEST_URL](req);
 
       const emit = req.emit.bind(req);
       req.emit = (event: string, ...args: unknown[]): boolean => {
-        if (event !== 'response') {
+        if (event !== "response") {
           return emit(event, ...args);
         }
 
         const res = args[0] as http.IncomingMessage;
 
         (async () => {
-          const cookies = res.headers['set-cookie'];
+          const cookies = res.headers["set-cookie"];
           if (cookies !== undefined) {
             for (const cookie of cookies) {
-              await this.jar.setCookie(cookie, requestUrl, { ignoreError: true });
+              await this.jar.setCookie(cookie, requestUrl, {
+                ignoreError: true,
+              });
             }
           }
         })()
-          .then(() => emit('response', res))
-          .catch((err) => emit('error', err));
+          .then(() => emit("response", res))
+          .catch((err) => emit("error", err));
 
         return req.listenerCount(event) !== 0;
       };
     }
 
     addRequest(req: http.ClientRequest, options: http.RequestOptions): void {
-      options.secureEndpoint = options.protocol === "https:";
       Promise.resolve()
         .then(() => this[SET_COOKIE_HEADER](req))
         .then(() => this[OVERWRITE_REQUEST_EMIT](req))
-        .then(() => super.addRequest(req, options))
-        .catch((err) => req.emit('error', err));
+        .then(() =>
+          super.addRequest(req, {
+            secureEndpoint: options.protocol === "https:",
+            ...options,
+          })
+        )
+        .catch((err) => req.emit("error", err));
     }
   }
 
