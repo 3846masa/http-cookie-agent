@@ -150,6 +150,7 @@ export function createCookieAgent<
     }
 
     addRequest(req: http.ClientRequest, options: http.RequestOptions): void {
+      options.secureEndpoint = options.protocol === "https:";
       Promise.resolve()
         .then(() => this[SET_COOKIE_HEADER](req))
         .then(() => this[OVERWRITE_REQUEST_EMIT](req))
