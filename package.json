@@ -47,7 +47,7 @@
     "agentkeepalive": "4.1.4",
     "ava": "3.15.0",
     "axios": "0.24.0",
-    "got": "11.8.2",
+    "got": "11.8.3",
     "http-proxy": "1.18.1",
     "http-proxy-agent": "5.0.0",
     "needle": "3.0.0",
