@@ -4105,10 +4105,10 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-phin@3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/phin/-/phin-3.6.0.tgz#5c70debfc847d04a1b2bf72409a6c9767bc4d915"
-  integrity sha512-nYY4Qh/yGCoxcwOAS2UfCM8+nVJcbI4f9NC4M4zPAsuswnIIS2aB14uYAbvdxP/4DqzXfrpadT2WQOx9mLDyTA==
+phin@3.6.1:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/phin/-/phin-3.6.1.tgz#652f61b3dbb0957bc0413a15ef55dfa4e39c303c"
+  integrity sha512-ubcFKk2jRr2WUJEh+QpMkCgOQansJDuIShKbsjpejeyI/aOMLrAf0TaisbMjKwTq9CsypFFJqUaN9ZSRmBJLPw==
   dependencies:
     centra "^2.4.2"
 
