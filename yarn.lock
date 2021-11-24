@@ -5319,10 +5319,10 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-urllib@2.37.4:
-  version "2.37.4"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-2.37.4.tgz#004d4d0c2567e3e5448fe7a580801510ec449362"
-  integrity sha512-1l+eKrnE5d0TyNeaMw0cxLjA+1jGjacJYxvZ+ZP7l99kSv+dZmP5KTyp3KRV33pw0fsyqAY+rokCpfTFfwVfug==
+urllib@2.38.0:
+  version "2.38.0"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-2.38.0.tgz#5c0088f42091ef1cef07bb2547677487170414f5"
+  integrity sha512-8nim/hlS5GXtWe2BJ6usPimKx5VE3nenXgcG26ip5Ru+MKPddINH8uLpZ948n6ADhlus6A0AYj8xTYNmGQi8yA==
   dependencies:
     any-promise "^1.3.0"
     content-type "^1.0.2"
