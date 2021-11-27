@@ -59,7 +59,7 @@
     "superagent": "6.1.0",
     "tough-cookie": "4.0.0",
     "typescript": "4.5.2",
-    "urllib": "2.37.4"
+    "urllib": "2.38.0"
   },
   "keywords": [
     "agent",
