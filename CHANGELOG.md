@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/3846masa/http-cookie-agent/compare/v1.0.3...v1.0.4) (2021-12-25)
+
+
+### Bug Fixes
+
+* fix type definition ([#43](https://github.com/3846masa/http-cookie-agent/issues/43)) ([b7ab28d](https://github.com/3846masa/http-cookie-agent/commit/b7ab28d26e7b9d4fc95c71b082544424681f1150))
+
 ## [1.0.3](https://github.com/3846masa/http-cookie-agent/compare/v1.0.2...v1.0.3) (2021-10-30)
 
 
