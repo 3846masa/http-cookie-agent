@@ -1,7 +1,5 @@
-import liburl from 'url';
-import http from 'http';
-import https from 'https';
-import libcookie from 'cookie';
+import * as http from 'http';
+import * as https from 'https';
 import { CookieJar } from 'tough-cookie';
 
 type Primitive = string | number | bigint | boolean | symbol | null | undefined;
@@ -11,9 +9,9 @@ export type CookieAgentOptions = {
   jar: CookieJar;
 };
 
-interface CookieAgent<BaseAgent extends http.Agent> extends BaseAgent {
+type CookieAgent<BaseAgent extends http.Agent> = BaseAgent & {
   jar: CookieJar;
-}
+};
 
 export function createCookieAgent<
   BaseAgent extends http.Agent = http.Agent,
