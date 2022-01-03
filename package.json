@@ -44,7 +44,7 @@
     "@types/request": "2.48.8",
     "@types/superagent": "4.1.13",
     "@types/tough-cookie": "4.0.1",
-    "agentkeepalive": "4.1.4",
+    "agentkeepalive": "4.2.0",
     "ava": "3.15.0",
     "axios": "0.24.0",
     "got": "11.8.3",
