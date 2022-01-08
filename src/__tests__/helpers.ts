@@ -1,6 +1,7 @@
 import http from 'http';
 import httpProxy from 'http-proxy';
 import { promisify } from 'util';
+import { URL } from 'url';
 
 export async function createTestServer(
   stories: http.RequestListener[],
