@@ -51,7 +51,7 @@
     "http-proxy": "1.18.1",
     "http-proxy-agent": "5.0.0",
     "needle": "3.0.0",
-    "node-fetch": "2.6.6",
+    "node-fetch": "2.6.7",
     "phin": "3.6.1",
     "request": "2.88.2",
     "rimraf": "^3.0.2",
