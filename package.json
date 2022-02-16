@@ -40,7 +40,7 @@
     "@types/http-proxy": "1.17.8",
     "@types/needle": "2.5.3",
     "@types/node": "12.20.46",
-    "@types/node-fetch": "2.6.0",
+    "@types/node-fetch": "2.6.1",
     "@types/request": "2.48.8",
     "@types/superagent": "4.1.15",
     "@types/tough-cookie": "4.0.1",
