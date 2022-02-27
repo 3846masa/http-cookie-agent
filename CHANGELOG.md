@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/3846masa/http-cookie-agent/compare/v1.0.4...v1.0.5) (2022-02-27)
+
+
+### Bug Fixes
+
+* **deps:** update actions/setup-node action to v3 ([#66](https://github.com/3846masa/http-cookie-agent/issues/66)) ([90a87fa](https://github.com/3846masa/http-cookie-agent/commit/90a87fa413106f48963b291da42ac2844c1eecc0))
+
 ## [1.0.4](https://github.com/3846masa/http-cookie-agent/compare/v1.0.3...v1.0.4) (2021-12-25)
 
 
