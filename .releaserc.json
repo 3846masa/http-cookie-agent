@@ -15,6 +15,6 @@
     { "type": "feat", "release": "minor" },
     { "type": "fix", "release": "patch" },
     { "type": "docs", "release": "patch" },
-    { "type": "chore", "scope": "deps", "release": "patch" }
+    { "type": "chore", "scope": "npm-deps", "release": "patch" }
   ]
 }
