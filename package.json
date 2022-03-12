@@ -46,7 +46,7 @@
     "@types/tough-cookie": "4.0.1",
     "agentkeepalive": "4.2.1",
     "ava": "4.1.0",
-    "axios": "0.26.0",
+    "axios": "0.26.1",
     "got": "11.8.3",
     "http-proxy": "1.18.1",
     "http-proxy-agent": "5.0.0",
