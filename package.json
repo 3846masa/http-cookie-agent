@@ -43,7 +43,7 @@
     "@types/node-fetch": "2.6.1",
     "@types/request": "2.48.8",
     "@types/superagent": "4.1.15",
-    "@types/tough-cookie": "4.0.1",
+    "@types/tough-cookie": "4.0.2",
     "agentkeepalive": "4.2.1",
     "ava": "4.2.0",
     "axios": "0.26.1",
