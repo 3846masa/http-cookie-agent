@@ -4,7 +4,7 @@ import { CookieJar } from 'tough-cookie';
 import request from 'request';
 
 import { HttpCookieAgent } from '../';
-import { createTestServer } from './helpers';
+import { createTestServer, readStream } from './helpers';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
@@ -189,4 +189,34 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   });
 
   t.plan(1);
+});
+
+test('should send post data when keepalive is enabled', async (t) => {
+  const times = 2;
+
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ jar, keepAlive: true });
+
+  const { port } = await createTestServer(
+    Array.from({ length: times }, (_, idx) => {
+      return async (req, res) => {
+        t.is(await readStream(req), `{ "index": "${idx}" }`);
+        t.is(req.headers['cookie'], 'key=expected');
+        res.end();
+      };
+    }),
+  );
+
+  await jar.setCookie('key=expected', `http://localhost:${port}`);
+
+  for (let idx = 0; idx < times; idx++) {
+    await promisify(request)({
+      agent,
+      method: 'POST',
+      body: `{ "index": "${idx}" }`,
+      url: `http://localhost:${port}`,
+    });
+  }
+
+  t.plan(times * 2);
 });

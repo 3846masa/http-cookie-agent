@@ -3,7 +3,7 @@ import { CookieJar } from 'tough-cookie';
 import http from 'http';
 
 import { HttpCookieAgent } from '../';
-import { createTestServer } from './helpers';
+import { createTestServer, readStream } from './helpers';
 
 export function request(url: string, options: http.RequestOptions) {
   const req = http.request(url, options);
@@ -249,4 +249,34 @@ test('should send cookies even when target is same host but different port', asy
   }
 
   t.plan(1);
+});
+
+test('should send post data when keepalive is enabled', async (t) => {
+  const times = 2;
+
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ jar, keepAlive: true });
+
+  const { port } = await createTestServer(
+    Array.from({ length: times }, (_, idx) => {
+      return async (req, res) => {
+        t.is(await readStream(req), `{ "index": "${idx}" }`);
+        t.is(req.headers['cookie'], 'key=expected');
+        res.end();
+      };
+    }),
+  );
+
+  await jar.setCookie('key=expected', `http://localhost:${port}`);
+
+  for (let idx = 0; idx < times; idx++) {
+    const { promise, req } = request(`http://localhost:${port}`, {
+      method: 'POST',
+      agent,
+    });
+    req.end(`{ "index": "${idx}" }`);
+    await promise;
+  }
+
+  t.plan(times * 2);
 });

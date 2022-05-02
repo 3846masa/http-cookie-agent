@@ -2,6 +2,7 @@ import http from 'http';
 import httpProxy from 'http-proxy';
 import { promisify } from 'util';
 import { URL } from 'url';
+import { Readable } from 'stream';
 
 export async function createTestServer(
   stories: http.RequestListener[],
@@ -23,6 +24,11 @@ export async function createTestServer(
     if (stories.length === 0) {
       server.close();
     }
+  });
+
+  server.on('clientError', (err, socket) => {
+    console.error(err);
+    socket.end();
   });
 
   return {
@@ -66,4 +72,12 @@ export async function createTestServerWithProxy(
     port,
     proxyPort: serverInfo.port,
   };
+}
+
+export async function readStream(stream: Readable): Promise<string> {
+  let data = '';
+  for await (const chunk of stream) {
+    data += chunk;
+  }
+  return data;
 }
