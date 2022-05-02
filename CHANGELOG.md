@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/3846masa/http-cookie-agent/compare/v1.0.5...v1.0.6) (2022-05-02)
+
+
+### Bug Fixes
+
+* send data correctly when keepalive is enabled ([#90](https://github.com/3846masa/http-cookie-agent/issues/90)) ([b245a77](https://github.com/3846masa/http-cookie-agent/commit/b245a77d43a4f167d11bcadbf2104fd9beee2283))
+
 ## [1.0.5](https://github.com/3846masa/http-cookie-agent/compare/v1.0.4...v1.0.5) (2022-02-27)
 
 
