@@ -33,6 +33,7 @@
     "tough-cookie": "^4.0.0"
   },
   "devDependencies": {
+    "@3846masa/configs": "github:3846masa/configs",
     "@ava/typescript": "3.0.1",
     "@hapi/wreck": "17.2.0",
     "@semantic-release/changelog": "5.0.1",
