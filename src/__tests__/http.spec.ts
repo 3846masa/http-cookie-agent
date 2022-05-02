@@ -16,7 +16,6 @@ export function request(url: string, options: http.RequestOptions) {
     });
     req.on('error', (err) => reject(err));
   });
-  req.end();
 
   return { req, promise };
 }
@@ -32,10 +31,11 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
     },
   ]);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const { promise, req } = request(`http://localhost:${port}`, {
     method: 'GET',
     agent,
   });
+  req.end();
   await promise;
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
@@ -56,10 +56,11 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const { promise, req } = request(`http://localhost:${port}`, {
     method: 'GET',
     agent,
   });
+  req.end();
   await promise;
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
@@ -83,10 +84,11 @@ test('should send cookies from CookieJar', async (t) => {
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const { promise, req } = request(`http://localhost:${port}`, {
     method: 'GET',
     agent,
   });
+  req.end();
   await promise;
 
   t.plan(1);
@@ -105,10 +107,11 @@ test('should send cookies from CookieJar when value is url-encoded', async (t) =
 
   await jar.setCookie('key=hello%20world', `http://localhost:${port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const { promise, req } = request(`http://localhost:${port}`, {
     method: 'GET',
     agent,
   });
+  req.end();
   await promise;
 
   t.plan(1);
@@ -127,11 +130,12 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const { promise, req } = request(`http://localhost:${port}`, {
     method: 'GET',
     agent,
     headers: { Cookie: 'key2=value2' },
   });
+  req.end();
   await promise;
 
   t.plan(1);
@@ -150,11 +154,12 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const { promise, req } = request(`http://localhost:${port}`, {
     method: 'GET',
     agent,
     headers: { Cookie: 'key=expected' },
   });
+  req.end();
   await promise;
 
   t.plan(1);
@@ -174,10 +179,11 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
     },
   ]);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const { promise, req } = request(`http://localhost:${port}`, {
     method: 'GET',
     agent,
   });
+  req.end();
   await t.throwsAsync(() => promise);
 
   t.plan(1);
@@ -197,10 +203,11 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
     },
   ]);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const { promise, req } = request(`http://localhost:${port}`, {
     method: 'GET',
     agent,
   });
+  req.end();
   await t.throwsAsync(() => promise);
 
   t.plan(1);
@@ -225,17 +232,19 @@ test('should send cookies even when target is same host but different port', asy
   ]);
 
   {
-    const { promise } = request(`http://localhost:${firstServerPort}`, {
+    const { promise, req } = request(`http://localhost:${firstServerPort}`, {
       method: 'GET',
       agent,
     });
+    req.end();
     await promise;
   }
   {
-    const { promise } = request(`http://localhost:${secondServerPort}`, {
+    const { promise, req } = request(`http://localhost:${secondServerPort}`, {
       method: 'GET',
       agent,
     });
+    req.end();
     await promise;
   }
 
