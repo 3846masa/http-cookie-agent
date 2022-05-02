@@ -1,8 +1,9 @@
 import test from 'ava';
-import { CookieJar } from 'tough-cookie';
 import got from 'got';
+import { CookieJar } from 'tough-cookie';
 
 import { HttpCookieAgent } from '../';
+
 import { createTestServer, readStream } from './helpers';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
@@ -205,8 +206,8 @@ test('should send post data when keepalive is enabled', async (t) => {
   for (let idx = 0; idx < times; idx++) {
     await got(`http://localhost:${port}`, {
       agent: { http: agent },
-      method: 'POST',
       body: `{ "index": "${idx}" }`,
+      method: 'POST',
       retry: 0,
     });
   }

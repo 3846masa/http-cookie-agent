@@ -1,5 +1,6 @@
-import * as http from 'http';
-import * as https from 'https';
+import * as http from 'node:http';
+import * as https from 'node:https';
+
 import { CookieJar } from 'tough-cookie';
 
 type Primitive = string | number | bigint | boolean | symbol | null | undefined;

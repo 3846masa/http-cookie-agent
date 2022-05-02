@@ -1,5 +1,6 @@
-import type http from 'http';
-import liburl from 'url';
+import type http from 'node:http';
+import liburl from 'node:url';
+
 import { Cookie, CookieJar } from 'tough-cookie';
 
 declare module 'http' {
@@ -7,16 +8,16 @@ declare module 'http' {
     addRequest(req: http.ClientRequest, options: http.RequestOptions): void;
   }
   interface ClientRequest {
-    _headerSent: boolean;
     _header: string | null;
+    _headerSent: boolean;
     _implicitHeader(): void;
     _onPendingData(amount: number): void;
-    outputSize: number;
     outputData: Array<{
+      callback: unknown;
       data: string;
       encoding: string;
-      callback: unknown;
     }>;
+    outputSize: number;
   }
 }
 
@@ -37,7 +38,7 @@ export function createCookieAgent<
   BaseAgentOptions = unknown,
   BaseAgentConstructorRestParams extends unknown[] = unknown[],
 >(BaseAgentClass: new (options: BaseAgentOptions, ...rest: BaseAgentConstructorRestParams) => BaseAgent) {
-  // @ts-ignore
+  // @ts-expect-error ...
   class CookieAgent extends BaseAgentClass {
     jar: CookieJar;
 
@@ -51,9 +52,9 @@ export function createCookieAgent<
 
     private [GET_REQUEST_URL](req: http.ClientRequest): string {
       const requestUrl = liburl.format({
-        protocol: req.protocol,
         host: req.host,
         pathname: req.path,
+        protocol: req.protocol,
       });
 
       return requestUrl;
@@ -110,7 +111,11 @@ export function createCookieAgent<
         return;
       }
 
-      const firstChunk = req.outputData.shift()!;
+      const firstChunk = req.outputData.shift();
+      if (firstChunk === undefined) {
+        return;
+      }
+
       const dataWithoutHeader = firstChunk.data.split('\r\n\r\n').slice(1).join('\r\n\r\n');
 
       const chunk = {
@@ -150,7 +155,7 @@ export function createCookieAgent<
       };
     }
 
-    addRequest(req: http.ClientRequest, options: http.RequestOptions): void {
+    override addRequest(req: http.ClientRequest, options: http.RequestOptions): void {
       Promise.resolve()
         .then(() => this[SET_COOKIE_HEADER](req))
         .then(() => this[OVERWRITE_REQUEST_EMIT](req))

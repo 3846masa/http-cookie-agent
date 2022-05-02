@@ -2,17 +2,34 @@
   "name": "http-cookie-agent",
   "version": "2.0.0",
   "description": "Allows cookies with every Node.js HTTP clients.",
-  "license": "MIT",
-  "author": "3846masa <3846masahiro+git@gmail.com>",
+  "keywords": [
+    "agent",
+    "axios",
+    "cookies",
+    "fetch",
+    "got",
+    "http",
+    "https",
+    "needle",
+    "node-fetch",
+    "phin",
+    "request",
+    "superagent",
+    "tough-cookie",
+    "urllib"
+  ],
   "homepage": "https://github.com/3846masa/http-cookie-agent#readme",
+  "bugs": {
+    "url": "https://github.com/3846masa/http-cookie-agent/issues"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/3846masa/http-cookie-agent.git"
   },
-  "bugs": {
-    "url": "https://github.com/3846masa/http-cookie-agent/issues"
-  },
+  "license": "MIT",
+  "author": "3846masa <3846masahiro+git@gmail.com>",
   "main": "dist/index.js",
+  "types": "index.d.ts",
   "files": [
     "dist",
     "index.d.ts",
@@ -25,12 +42,19 @@
     "pretest": "npm run build",
     "test": "ava"
   },
-  "types": "index.d.ts",
+  "ava": {
+    "files": [
+      "**/__tests__/*.spec.ts"
+    ],
+    "typescript": {
+      "rewritePaths": {
+        "src/": "dist/"
+      },
+      "compile": false
+    }
+  },
   "dependencies": {
     "agent-base": "^6.0.2"
-  },
-  "peerDependencies": {
-    "tough-cookie": "^4.0.0"
   },
   "devDependencies": {
     "@3846masa/configs": "github:3846masa/configs",
@@ -62,34 +86,10 @@
     "typescript": "4.6.4",
     "urllib": "2.38.0"
   },
-  "keywords": [
-    "agent",
-    "axios",
-    "cookies",
-    "fetch",
-    "got",
-    "http",
-    "https",
-    "needle",
-    "node-fetch",
-    "phin",
-    "request",
-    "superagent",
-    "tough-cookie",
-    "urllib"
-  ],
+  "peerDependencies": {
+    "tough-cookie": "^4.0.0"
+  },
   "engines": {
     "node": ">=14.18.0 <15.0.0 || >=16.0.0"
-  },
-  "ava": {
-    "files": [
-      "**/__tests__/*.spec.ts"
-    ],
-    "typescript": {
-      "rewritePaths": {
-        "src/": "dist/"
-      },
-      "compile": false
-    }
   }
 }

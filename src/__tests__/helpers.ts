@@ -1,12 +1,13 @@
-import http from 'http';
+import http from 'node:http';
+import type { Readable } from 'node:stream';
+import { URL } from 'node:url';
+import { promisify } from 'node:util';
+
 import httpProxy from 'http-proxy';
-import { promisify } from 'util';
-import { URL } from 'url';
-import { Readable } from 'stream';
 
 export async function createTestServer(
   stories: http.RequestListener[],
-): Promise<{ server: http.Server; port: number }> {
+): Promise<{ port: number; server: http.Server }> {
   const server = http.createServer();
 
   await promisify(server.listen).apply(server);
@@ -32,27 +33,27 @@ export async function createTestServer(
   });
 
   return {
-    server,
     port: serverInfo.port,
+    server,
   };
 }
 
 export async function createTestServerWithProxy(
   stories: http.RequestListener[],
-): Promise<{ server: http.Server; port: number; proxyPort: number }> {
-  const { server, port } = await createTestServer(stories);
+): Promise<{ port: number; proxyPort: number; server: http.Server }> {
+  const { port, server } = await createTestServer(stories);
 
   // Create reverse proxy
   const proxy = httpProxy.createProxyServer();
   const proxyServer = http.createServer((req, res) => {
-    const url = new URL(req.url!);
+    const url = new URL(req.url ?? '');
     proxy.web(req, res, {
+      secure: false,
       target: {
-        protocol: url.protocol,
         hostname: url.hostname,
         port: url.port,
+        protocol: url.protocol,
       },
-      secure: false,
     });
   });
 
@@ -68,9 +69,9 @@ export async function createTestServerWithProxy(
   });
 
   return {
-    server,
     port,
     proxyPort: serverInfo.port,
+    server,
   };
 }
 

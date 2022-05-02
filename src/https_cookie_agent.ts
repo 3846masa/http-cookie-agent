@@ -1,4 +1,4 @@
-import https from 'https';
+import https from 'node:https';
 
 import { createCookieAgent } from './create_cookie_agent';
 

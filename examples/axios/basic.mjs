@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { CookieJar } from 'tough-cookie';
 import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent';
+import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
 

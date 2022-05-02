@@ -3,6 +3,7 @@ import { CookieJar } from 'tough-cookie';
 import urllib from 'urllib';
 
 import { HttpCookieAgent } from '../';
+
 import { createTestServer, readStream } from './helpers';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
@@ -204,8 +205,8 @@ test('should send post data when keepalive is enabled', async (t) => {
   for (let idx = 0; idx < times; idx++) {
     await urllib.request(`http://localhost:${port}`, {
       agent,
-      method: 'POST',
       data: `{ "index": "${idx}" }`,
+      method: 'POST',
     });
   }
 

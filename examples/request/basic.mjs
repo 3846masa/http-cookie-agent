@@ -1,6 +1,6 @@
+import { MixedCookieAgent } from 'http-cookie-agent';
 import request from 'request';
 import { CookieJar } from 'tough-cookie';
-import { MixedCookieAgent } from 'http-cookie-agent';
 
 const jar = new CookieJar();
 

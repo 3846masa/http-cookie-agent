@@ -1,8 +1,9 @@
 import test from 'ava';
-import { CookieJar } from 'tough-cookie';
 import fetch from 'node-fetch';
+import { CookieJar } from 'tough-cookie';
 
 import { HttpCookieAgent } from '../';
+
 import { createTestServer, readStream } from './helpers';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
@@ -202,9 +203,9 @@ test('should send post data when keepalive is enabled', async (t) => {
 
   for (let idx = 0; idx < times; idx++) {
     await fetch(`http://localhost:${port}`, {
-      method: 'POST',
-      body: `{ "index": "${idx}" }`,
       agent,
+      body: `{ "index": "${idx}" }`,
+      method: 'POST',
     });
   }
 

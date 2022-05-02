@@ -1,4 +1,4 @@
-import http from 'http';
+import http from 'node:http';
 
 import { createCookieAgent } from './create_cookie_agent';
 
