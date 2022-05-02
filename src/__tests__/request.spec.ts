@@ -1,9 +1,11 @@
+import { promisify } from 'node:util';
+
 import test from 'ava';
-import { promisify } from 'util';
-import { CookieJar } from 'tough-cookie';
 import request from 'request';
+import { CookieJar } from 'tough-cookie';
 
 import { HttpCookieAgent } from '../';
+
 import { createTestServer, readStream } from './helpers';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
@@ -89,8 +91,8 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await promisify(request)({
     agent,
-    url: `http://localhost:${port}`,
     headers: { Cookie: 'key2=value2' },
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -111,8 +113,8 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await promisify(request)({
     agent,
-    url: `http://localhost:${port}`,
     headers: { Cookie: 'key=expected' },
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -212,8 +214,8 @@ test('should send post data when keepalive is enabled', async (t) => {
   for (let idx = 0; idx < times; idx++) {
     await promisify(request)({
       agent,
-      method: 'POST',
       body: `{ "index": "${idx}" }`,
+      method: 'POST',
       url: `http://localhost:${port}`,
     });
   }

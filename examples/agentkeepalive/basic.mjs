@@ -1,7 +1,8 @@
-import https from 'https';
-import { CookieJar } from 'tough-cookie';
-import { createCookieAgent } from 'http-cookie-agent';
+import https from 'node:https';
+
 import { HttpsAgent as KeepAliveAgent } from 'agentkeepalive';
+import { createCookieAgent } from 'http-cookie-agent';
+import { CookieJar } from 'tough-cookie';
 
 const KeepAliveCookieAgent = createCookieAgent(KeepAliveAgent);
 

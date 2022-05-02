@@ -1,6 +1,6 @@
-import urllib from 'urllib';
-import { CookieJar } from 'tough-cookie';
 import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent';
+import { CookieJar } from 'tough-cookie';
+import urllib from 'urllib';
 
 const jar = new CookieJar();
 

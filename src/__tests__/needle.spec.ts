@@ -1,8 +1,9 @@
 import test from 'ava';
-import { CookieJar } from 'tough-cookie';
 import needle from 'needle';
+import { CookieJar } from 'tough-cookie';
 
 import { HttpCookieAgent } from '../';
+
 import { createTestServer, readStream } from './helpers';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
@@ -130,8 +131,8 @@ test('should send cookies from the first response when redirecting', async (t) =
   ]);
 
   await needle('get', `http://localhost:${port}`, {
-    follow_max: 1,
     agent,
+    follow_max: 1,
   });
 
   t.plan(1);

@@ -1,8 +1,9 @@
 import test from 'ava';
-import { CookieJar } from 'tough-cookie';
 import phin from 'phin';
+import { CookieJar } from 'tough-cookie';
 
 import { HttpCookieAgent } from '../';
+
 import { createTestServer, readStream } from './helpers';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
@@ -17,8 +18,8 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   ]);
 
   await phin({
-    url: `http://localhost:${port}`,
     core: { agent },
+    url: `http://localhost:${port}`,
   });
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
@@ -40,8 +41,8 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
   ]);
 
   await phin({
-    url: `http://localhost:${port}`,
     core: { agent },
+    url: `http://localhost:${port}`,
   });
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
@@ -66,8 +67,8 @@ test('should send cookies from CookieJar', async (t) => {
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
   await phin({
-    url: `http://localhost:${port}`,
     core: { agent },
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -87,9 +88,9 @@ test('should send cookies from both a request options and CookieJar', async (t) 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
   await phin({
-    url: `http://localhost:${port}`,
     core: { agent },
     headers: { Cookie: 'key2=value2' },
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -109,9 +110,9 @@ test('should send cookies from a request options when the key is duplicated in b
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
   await phin({
-    url: `http://localhost:${port}`,
     core: { agent },
     headers: { Cookie: 'key=expected' },
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -135,9 +136,9 @@ test('should send cookies from the first response when redirecting', async (t) =
   ]);
 
   await phin({
-    url: `http://localhost:${port}`,
     core: { agent },
     followRedirects: true,
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -159,8 +160,8 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
 
   await t.throwsAsync(() => {
     return phin({
-      url: `http://localhost:${port}`,
       core: { agent },
+      url: `http://localhost:${port}`,
     });
   });
 
@@ -183,8 +184,8 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
 
   await t.throwsAsync(async () => {
     return phin({
-      url: `http://localhost:${port}`,
       core: { agent },
+      url: `http://localhost:${port}`,
     });
   });
 
@@ -211,10 +212,10 @@ test('should send post data when keepalive is enabled', async (t) => {
 
   for (let idx = 0; idx < times; idx++) {
     await phin({
-      method: 'POST',
-      data: `{ "index": "${idx}" }`,
-      url: `http://localhost:${port}`,
       core: { agent },
+      data: `{ "index": "${idx}" }`,
+      method: 'POST',
+      url: `http://localhost:${port}`,
     });
   }
 

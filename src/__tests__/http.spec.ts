@@ -1,8 +1,10 @@
+import http from 'node:http';
+
 import test from 'ava';
 import { CookieJar } from 'tough-cookie';
-import http from 'http';
 
 import { HttpCookieAgent } from '../';
+
 import { createTestServer, readStream } from './helpers';
 
 export function request(url: string, options: http.RequestOptions) {
@@ -11,13 +13,14 @@ export function request(url: string, options: http.RequestOptions) {
   const promise = new Promise<http.IncomingMessage>((resolve, reject) => {
     req.on('response', (res) => {
       res.on('error', (err) => reject(err));
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       res.on('data', () => {});
       res.on('end', () => resolve(res));
     });
     req.on('error', (err) => reject(err));
   });
 
-  return { req, promise };
+  return { promise, req };
 }
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
@@ -32,8 +35,8 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   ]);
 
   const { promise, req } = request(`http://localhost:${port}`, {
-    method: 'GET',
     agent,
+    method: 'GET',
   });
   req.end();
   await promise;
@@ -57,8 +60,8 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
   ]);
 
   const { promise, req } = request(`http://localhost:${port}`, {
-    method: 'GET',
     agent,
+    method: 'GET',
   });
   req.end();
   await promise;
@@ -85,8 +88,8 @@ test('should send cookies from CookieJar', async (t) => {
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
   const { promise, req } = request(`http://localhost:${port}`, {
-    method: 'GET',
     agent,
+    method: 'GET',
   });
   req.end();
   await promise;
@@ -108,8 +111,8 @@ test('should send cookies from CookieJar when value is url-encoded', async (t) =
   await jar.setCookie('key=hello%20world', `http://localhost:${port}`);
 
   const { promise, req } = request(`http://localhost:${port}`, {
-    method: 'GET',
     agent,
+    method: 'GET',
   });
   req.end();
   await promise;
@@ -131,9 +134,9 @@ test('should send cookies from both a request options and CookieJar', async (t) 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
   const { promise, req } = request(`http://localhost:${port}`, {
-    method: 'GET',
     agent,
     headers: { Cookie: 'key2=value2' },
+    method: 'GET',
   });
   req.end();
   await promise;
@@ -155,9 +158,9 @@ test('should send cookies from a request options when the key is duplicated in b
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
   const { promise, req } = request(`http://localhost:${port}`, {
-    method: 'GET',
     agent,
     headers: { Cookie: 'key=expected' },
+    method: 'GET',
   });
   req.end();
   await promise;
@@ -180,8 +183,8 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   ]);
 
   const { promise, req } = request(`http://localhost:${port}`, {
-    method: 'GET',
     agent,
+    method: 'GET',
   });
   req.end();
   await t.throwsAsync(() => promise);
@@ -204,8 +207,8 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   ]);
 
   const { promise, req } = request(`http://localhost:${port}`, {
-    method: 'GET',
     agent,
+    method: 'GET',
   });
   req.end();
   await t.throwsAsync(() => promise);
@@ -233,16 +236,16 @@ test('should send cookies even when target is same host but different port', asy
 
   {
     const { promise, req } = request(`http://localhost:${firstServerPort}`, {
-      method: 'GET',
       agent,
+      method: 'GET',
     });
     req.end();
     await promise;
   }
   {
     const { promise, req } = request(`http://localhost:${secondServerPort}`, {
-      method: 'GET',
       agent,
+      method: 'GET',
     });
     req.end();
     await promise;
@@ -271,8 +274,8 @@ test('should send post data when keepalive is enabled', async (t) => {
 
   for (let idx = 0; idx < times; idx++) {
     const { promise, req } = request(`http://localhost:${port}`, {
-      method: 'POST',
       agent,
+      method: 'POST',
     });
     req.end(`{ "index": "${idx}" }`);
     await promise;

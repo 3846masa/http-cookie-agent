@@ -1,8 +1,9 @@
 import test from 'ava';
-import { CookieJar } from 'tough-cookie';
 import axios from 'axios';
+import { CookieJar } from 'tough-cookie';
 
 import { HttpCookieAgent } from '../';
+
 import { createTestServer, readStream } from './helpers';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {

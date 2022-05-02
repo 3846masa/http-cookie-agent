@@ -1,9 +1,10 @@
-import type http from 'http';
-import type https from 'https';
-import type { CookieJar } from 'tough-cookie';
-import agentBase from 'agent-base';
+import type http from 'node:http';
+import type https from 'node:https';
 
-import { CookieAgentOptions } from './create_cookie_agent';
+import agentBase from 'agent-base';
+import type { CookieJar } from 'tough-cookie';
+
+import type { CookieAgentOptions } from './create_cookie_agent';
 import { HttpCookieAgent } from './http_cookie_agent';
 import { HttpsCookieAgent } from './https_cookie_agent';
 
@@ -19,7 +20,7 @@ export class MixedCookieAgent extends agentBase.Agent {
     this.jar = options.jar;
   }
 
-  callback(_req: agentBase.ClientRequest, options: agentBase.RequestOptions) {
+  override callback(_req: agentBase.ClientRequest, options: agentBase.RequestOptions) {
     return options.secureEndpoint ? this._httpsAgent : this._httpAgent;
   }
 }

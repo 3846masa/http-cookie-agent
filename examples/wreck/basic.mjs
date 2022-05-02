@@ -1,6 +1,6 @@
 import Wreck from '@hapi/wreck';
-import { CookieJar } from 'tough-cookie';
 import { MixedCookieAgent } from 'http-cookie-agent';
+import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
 

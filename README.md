@@ -48,7 +48,7 @@ client.request('https://example.com', { agent: httpAgent });
 
 ### Supported libraries
 
-`http` / `https` / `axios` / `node-fetch` / `got`\*\* / `superagent`\*\* / `request`\*\* / `needle` / `phin` / `@hapi/wreck` / `urllib` etc.
+`node:http` / `node:https` / `axios` / `node-fetch` / `got`\*\* / `superagent`\*\* / `request`\*\* / `needle` / `phin` / `@hapi/wreck` / `urllib` etc.
 
 \*\* The library supports cookies by default. You may not need `http-cookie-agent`.
 
@@ -56,10 +56,11 @@ client.request('https://example.com', { agent: httpAgent });
 
 See also [examples](./examples) for more details.
 
-#### `http` / `https`
+#### `node:http` / `node:https`
 
 ```js
-import https from 'https';
+import https from 'node:https';
+
 import { CookieJar } from 'tough-cookie';
 import { HttpsCookieAgent } from 'http-cookie-agent';
 
@@ -244,7 +245,8 @@ await client.request('https://example.com');
 If you want to use another Agent library, wrap the agent in `createCookieAgent`.
 
 ```js
-import https from 'https';
+import https from 'node:https';
+
 import { HttpsAgent as KeepAliveAgent } from 'agentkeepalive';
 import { CookieJar } from 'tough-cookie';
 import { createCookieAgent } from 'http-cookie-agent';
