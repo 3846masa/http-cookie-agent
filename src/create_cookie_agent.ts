@@ -104,6 +104,7 @@ export function createCookieAgent<
       req._header = null;
       req.setHeader('Cookie', cookieHeader);
       req._implicitHeader();
+      req._headerSent = alreadyHeaderSent;
 
       if (alreadyHeaderSent !== true) {
         return;
