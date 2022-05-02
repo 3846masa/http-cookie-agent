@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/3846masa/http-cookie-agent/compare/v1.0.6...v2.0.0) (2022-05-02)
+
+
+### Features
+
+* drop Node.js v12 support ([#91](https://github.com/3846masa/http-cookie-agent/issues/91)) ([c722050](https://github.com/3846masa/http-cookie-agent/commit/c72205072026981518c5f8586d970cf7a2632cfd))
+
+
+### BREAKING CHANGES
+
+* drop Node.js v12 support, please use v14.18.0 or above
+
 ## [1.0.6](https://github.com/3846masa/http-cookie-agent/compare/v1.0.5...v1.0.6) (2022-05-02)
 
 
