@@ -21,4 +21,11 @@ module.exports = {
       },
     ],
   },
+  settings: {
+    'import/resolver': {
+      [require.resolve('./internal/resolver')]: {
+        extensions: ['.js', '.mjs', '.ts', '.mts', '.jsx', '.tsx'],
+      },
+    },
+  },
 };
