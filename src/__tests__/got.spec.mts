@@ -154,7 +154,7 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   await t.throwsAsync(() => {
     return got(`http://localhost:${port}`, {
       agent: { http: agent },
-      retry: 0,
+      retry: { limit: 0 },
     });
   });
 
@@ -178,7 +178,7 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   await t.throwsAsync(async () => {
     return got(`http://localhost:${port}`, {
       agent: { http: agent },
-      retry: 0,
+      retry: { limit: 0 },
     });
   });
 
@@ -208,7 +208,7 @@ test('should send post data when keepalive is enabled', async (t) => {
       agent: { http: agent },
       body: `{ "index": "${idx}" }`,
       method: 'POST',
-      retry: 0,
+      retry: { limit: 0 },
     });
   }
 
