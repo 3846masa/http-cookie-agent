@@ -1,10 +1,10 @@
 import test from 'ava';
+import fetch from 'node-fetch';
 import { CookieJar } from 'tough-cookie';
-import urllib from 'urllib';
 
-import { HttpCookieAgent } from '../';
+import { HttpCookieAgent } from '../index.js';
 
-import { createTestServer, readStream } from './helpers';
+import { createTestServer, readStream } from './helpers.mjs';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
@@ -17,7 +17,7 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
     },
   ]);
 
-  await urllib.request(`http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
   });
 
@@ -39,7 +39,7 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
 
-  await urllib.request(`http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
   });
 
@@ -64,7 +64,7 @@ test('should send cookies from CookieJar', async (t) => {
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  await urllib.request(`http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
   });
 
@@ -84,7 +84,7 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  await urllib.request(`http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
     headers: { Cookie: 'key2=value2' },
   });
@@ -105,7 +105,7 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
-  await urllib.request(`http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
     headers: { Cookie: 'key=expected' },
   });
@@ -130,9 +130,8 @@ test('should send cookies from the first response when redirecting', async (t) =
     },
   ]);
 
-  await urllib.request(`http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
-    followRedirect: true,
   });
 
   t.plan(1);
@@ -153,7 +152,7 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   ]);
 
   await t.throwsAsync(() => {
-    return urllib.request(`http://localhost:${port}`, {
+    return fetch(`http://localhost:${port}`, {
       agent,
     });
   });
@@ -175,8 +174,8 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
     },
   ]);
 
-  await t.throwsAsync(() => {
-    return urllib.request(`http://localhost:${port}`, {
+  await t.throwsAsync(async () => {
+    return fetch(`http://localhost:${port}`, {
       agent,
     });
   });
@@ -203,9 +202,9 @@ test('should send post data when keepalive is enabled', async (t) => {
   await jar.setCookie('key=expected', `http://localhost:${port}`);
 
   for (let idx = 0; idx < times; idx++) {
-    await urllib.request(`http://localhost:${port}`, {
+    await fetch(`http://localhost:${port}`, {
       agent,
-      data: `{ "index": "${idx}" }`,
+      body: `{ "index": "${idx}" }`,
       method: 'POST',
     });
   }

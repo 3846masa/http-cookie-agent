@@ -1,10 +1,12 @@
+import { promisify } from 'node:util';
+
 import test from 'ava';
-import superagent from 'superagent';
+import request from 'request';
 import { CookieJar } from 'tough-cookie';
 
-import { HttpCookieAgent } from '../';
+import { HttpCookieAgent } from '../index.js';
 
-import { createTestServer, readStream } from './helpers';
+import { createTestServer, readStream } from './helpers.mjs';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
@@ -17,7 +19,10 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
     },
   ]);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent);
+  await promisify(request)({
+    agent,
+    url: `http://localhost:${port}`,
+  });
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 1);
@@ -37,7 +42,10 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent);
+  await promisify(request)({
+    agent,
+    url: `http://localhost:${port}`,
+  });
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 2);
@@ -60,7 +68,10 @@ test('should send cookies from CookieJar', async (t) => {
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent);
+  await promisify(request)({
+    agent,
+    url: `http://localhost:${port}`,
+  });
 
   t.plan(1);
 });
@@ -78,7 +89,11 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent).set('Cookie', 'key2=value2');
+  await promisify(request)({
+    agent,
+    headers: { Cookie: 'key2=value2' },
+    url: `http://localhost:${port}`,
+  });
 
   t.plan(1);
 });
@@ -96,7 +111,11 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent).set('Cookie', 'key=expected');
+  await promisify(request)({
+    agent,
+    headers: { Cookie: 'key=expected' },
+    url: `http://localhost:${port}`,
+  });
 
   t.plan(1);
 });
@@ -118,7 +137,10 @@ test('should send cookies from the first response when redirecting', async (t) =
     },
   ]);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent);
+  await promisify(request)({
+    agent,
+    url: `http://localhost:${port}`,
+  });
 
   t.plan(1);
 });
@@ -138,7 +160,10 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   ]);
 
   await t.throwsAsync(() => {
-    return superagent.get(`http://localhost:${port}`).agent(agent);
+    return promisify(request)({
+      agent,
+      url: `http://localhost:${port}`,
+    });
   });
 
   t.plan(1);
@@ -159,7 +184,10 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   ]);
 
   await t.throwsAsync(async () => {
-    return superagent.get(`http://localhost:${port}`).agent(agent);
+    return promisify(request)({
+      agent,
+      url: `http://localhost:${port}`,
+    });
   });
 
   t.plan(1);
@@ -184,7 +212,12 @@ test('should send post data when keepalive is enabled', async (t) => {
   await jar.setCookie('key=expected', `http://localhost:${port}`);
 
   for (let idx = 0; idx < times; idx++) {
-    await superagent.post(`http://localhost:${port}`).send(`{ "index": "${idx}" }`).agent(agent);
+    await promisify(request)({
+      agent,
+      body: `{ "index": "${idx}" }`,
+      method: 'POST',
+      url: `http://localhost:${port}`,
+    });
   }
 
   t.plan(times * 2);
