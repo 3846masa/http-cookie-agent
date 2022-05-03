@@ -1,14 +1,14 @@
 import http from 'node:http';
 
+import KeepAliveAgent from 'agentkeepalive';
 import test from 'ava';
-import { HttpProxyAgent } from 'http-proxy-agent';
 import { CookieJar } from 'tough-cookie';
 
-import { createCookieAgent } from '../create_cookie_agent';
+import { createCookieAgent } from '../index.js';
 
-import { createTestServerWithProxy } from './helpers';
+import { createTestServer } from './helpers.mjs';
 
-const HttpProxyCookieAgent = createCookieAgent(HttpProxyAgent);
+const KeepAliveCookieAgent = createCookieAgent(KeepAliveAgent);
 
 export function request(url: string, options: http.RequestOptions) {
   const req = http.request(url, options);
@@ -29,14 +29,14 @@ export function request(url: string, options: http.RequestOptions) {
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
+  const agent = new KeepAliveCookieAgent({ jar });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   const { promise } = request(`http://localhost:${port}`, {
     agent,
@@ -53,14 +53,14 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
 
 test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
+  const agent = new KeepAliveCookieAgent({ jar });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', ['key1=value1', 'key2=value2']);
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   const { promise } = request(`http://localhost:${port}`, {
     agent,
@@ -78,14 +78,14 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
 
 test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
+  const agent = new KeepAliveCookieAgent({ jar });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (req, res) => {
       t.is(req.headers['cookie'], 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
@@ -100,14 +100,14 @@ test('should send cookies from CookieJar', async (t) => {
 
 test('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
+  const agent = new KeepAliveCookieAgent({ jar });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (req, res) => {
       t.is(req.headers['cookie'], 'key1=value1; key2=value2');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
@@ -123,14 +123,14 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
 test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
+  const agent = new KeepAliveCookieAgent({ jar });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (req, res) => {
       t.is(req.headers['cookie'], 'key=expected');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
@@ -149,14 +149,14 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   jar.getCookies = async () => {
     throw new Error('Error');
   };
+  const agent = new KeepAliveCookieAgent({ jar });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   const { promise } = request(`http://localhost:${port}`, {
     agent,
@@ -172,14 +172,14 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   jar.setCookie = async () => {
     throw new Error('Error');
   };
+  const agent = new KeepAliveCookieAgent({ jar });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   const { promise } = request(`http://localhost:${port}`, {
     agent,

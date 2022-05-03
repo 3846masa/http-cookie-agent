@@ -7,7 +7,7 @@ module.exports = {
         'import/no-unresolved': [
           'error',
           {
-            ignore: ['ava', 'http-cookie-agent'],
+            ignore: ['ava', 'got', 'http-cookie-agent'],
           },
         ],
       },
@@ -17,8 +17,15 @@ module.exports = {
     'import/no-unresolved': [
       'error',
       {
-        ignore: ['ava'],
+        ignore: ['ava', 'got'],
       },
     ],
+  },
+  settings: {
+    'import/resolver': {
+      [require.resolve('./internal/resolver')]: {
+        extensions: ['.js', '.mjs', '.ts', '.mts', '.jsx', '.tsx'],
+      },
+    },
   },
 };
