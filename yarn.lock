@@ -27,14 +27,6 @@
     "@jridgewell/gen-mapping" "^0.1.0"
     "@jridgewell/trace-mapping" "^0.3.9"
 
-"@ava/typescript@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@ava/typescript/-/typescript-3.0.1.tgz#b89efbe000b800fa477c9613795b3ca6a53f7112"
-  integrity sha512-/JXIUuKsvkaneaiA9ckk3ksFTqvu0mDNlChASrTe2BnDsvMbhQdPWyqQjJ9WRJWVhhs5TWn1/0Pp1G6Rv8Syrw==
-  dependencies:
-    escape-string-regexp "^5.0.0"
-    execa "^5.1.1"
-
 "@babel/cli@^7.17.10":
   version "7.17.10"
   resolved "https://registry.yarnpkg.com/@babel/cli/-/cli-7.17.10.tgz#5ea0bf6298bb78f3b59c7c06954f9bd1c79d5943"
@@ -3233,7 +3225,7 @@ execa@^4.0.0:
     signal-exit "^3.0.2"
     strip-final-newline "^2.0.0"
 
-execa@^5.0.0, execa@^5.1.1:
+execa@^5.0.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/execa/-/execa-5.1.1.tgz#f80ad9cbf4298f7bd1d4c9555c21e93741c411dd"
   integrity sha512-8uSpZZocAZRBAPIEINJj3Lo9HyGitllczc27Eh5YYojjMFMn8yHMDMaUHE2Jqfq05D/wucwI4JGURyXt1vchyg==
