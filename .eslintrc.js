@@ -7,30 +7,10 @@ module.exports = {
         'import/no-unresolved': [
           'error',
           {
-            ignore: ['ava', 'got', 'http-cookie-agent'],
+            ignore: ['http-cookie-agent'],
           },
         ],
       },
     },
-    {
-      files: ['src/undici/**/*'],
-      rules: {
-        eqeqeq: ['error', 'always', { null: 'never' }],
-        'no-undefined': ['error'],
-      },
-    },
   ],
-  rules: {
-    'import/no-unresolved': [
-      'error',
-      {
-        ignore: ['ava', 'got'],
-      },
-    ],
-  },
-  settings: {
-    'import/resolver': {
-      typescript: {},
-    },
-  },
 };

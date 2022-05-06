@@ -75,7 +75,7 @@ export function createCookieAgent<
 
         for (const str of header.split(';')) {
           const cookie = Cookie.parse(str.trim());
-          if (cookie === undefined) {
+          if (cookie == null) {
             continue;
           }
           cookiesMap.set(cookie.key, cookie);
@@ -95,7 +95,7 @@ export function createCookieAgent<
       if (cookieHeader === '') {
         return;
       }
-      if (req._header === null) {
+      if (req._header == null) {
         req.setHeader('Cookie', cookieHeader);
         return;
       }
@@ -112,7 +112,7 @@ export function createCookieAgent<
       }
 
       const firstChunk = req.outputData.shift();
-      if (firstChunk === undefined) {
+      if (firstChunk == null) {
         return;
       }
 
@@ -142,7 +142,7 @@ export function createCookieAgent<
 
         (async () => {
           const cookies = res.headers['set-cookie'];
-          if (cookies !== undefined) {
+          if (cookies != null) {
             for (const cookie of cookies) {
               await this.jar.setCookie(cookie, requestUrl, { ignoreError: true });
             }
