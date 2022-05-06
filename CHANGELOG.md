@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/3846masa/http-cookie-agent/compare/v2.0.0...v2.1.0) (2022-05-06)
+
+
+### Features
+
+* support undici ([#97](https://github.com/3846masa/http-cookie-agent/issues/97)) ([8b8c333](https://github.com/3846masa/http-cookie-agent/commit/8b8c33351cf320f6dce70d2ea4ee46b37e07d0dd))
+
 # [2.0.0](https://github.com/3846masa/http-cookie-agent/compare/v1.0.6...v2.0.0) (2022-05-02)
 
 
