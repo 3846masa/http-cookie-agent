@@ -13,13 +13,4 @@ module.exports = {
       },
     },
   ],
-  rules: {
-    eqeqeq: ['error', 'always', { null: 'never' }],
-    'no-undefined': ['error'],
-  },
-  settings: {
-    'import/resolver': {
-      typescript: {},
-    },
-  },
 };
