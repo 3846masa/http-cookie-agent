@@ -6,7 +6,7 @@
 [![license](https://flat.badgen.net/badge/license/MIT/blue)](LICENSE)
 [![standard-readme compliant](https://flat.badgen.net/badge/readme%20style/standard/green)](https://github.com/RichardLitt/standard-readme)
 
-Allows cookies with every Node.js HTTP clients (e.g. axios, node-fetch).
+Allows cookies with every Node.js HTTP clients (e.g. undici, axios, node-fetch).
 
 ## Table of Contents
 
@@ -20,7 +20,7 @@ Allows cookies with every Node.js HTTP clients (e.g. axios, node-fetch).
 
 ## Install
 
-```
+```bash
 npm install http-cookie-agent tough-cookie
 ```
 
@@ -48,13 +48,28 @@ client.request('https://example.com', { agent: httpAgent });
 
 ### Supported libraries
 
-`node:http` / `node:https` / `axios` / `node-fetch` / `got`\*\* / `superagent`\*\* / `request`\*\* / `needle` / `phin` / `@hapi/wreck` / `urllib` etc.
+`undici` / `node:http` / `node:https` / `axios` / `node-fetch` / `got`\*\* / `superagent`\*\* / `request`\*\* / `needle` / `phin` / `@hapi/wreck` / `urllib` etc.
 
 \*\* The library supports cookies by default. You may not need `http-cookie-agent`.
 
 ### Using with HTTP clients
 
 See also [examples](./examples) for more details.
+
+#### `undici`
+
+```js
+import { fetch, setGlobalDispatcher } from 'undici';
+import { CookieJar } from 'tough-cookie';
+import { CookieAgent } from 'http-cookie-agent/undici';
+
+const jar = new CookieJar();
+const agent = new CookieAgent({ cookies: { jar } });
+
+setGlobalDispatcher(agent);
+
+await fetch('https://example.com');
+```
 
 #### `node:http` / `node:https`
 
@@ -259,6 +274,54 @@ const agent = new Agent({ jar });
 https.get('https://example.com', { agent }, (res) => {
   // ...
 });
+```
+
+#### `undici`
+
+If you want to use another undici Agent library, use `CookieClient` via factory function.
+
+```js
+import { fetch, ProxyAgent, setGlobalDispatcher } from 'undici';
+import { CookieJar } from 'tough-cookie';
+import { CookieClient } from 'http-cookie-agent/undici';
+
+const jar = new CookieJar();
+const agent = new ProxyAgent({
+  factory: (origin, opts) => {
+    return new CookieClient(origin, {
+      ...opts,
+      cookies: { jar },
+    });
+  },
+});
+
+setGlobalDispatcher(agent);
+
+await fetch('https://example.com');
+```
+
+If you want to use another undici Client library, wrap the client in `createCookieClient`.
+
+```js
+import { fetch, Agent, MockClient, setGlobalDispatcher } from 'undici';
+import { CookieJar } from 'tough-cookie';
+import { createCookieClient } from 'http-cookie-agent/undici';
+
+const CookieClient = createCookieClient(MockClient);
+
+const jar = new CookieJar();
+const agent = new Agent({
+  factory: (origin, opts) => {
+    return new CookieClient(origin, {
+      ...opts,
+      cookies: { jar },
+    });
+  },
+});
+
+setGlobalDispatcher(agent);
+
+await fetch('https://example.com');
 ```
 
 ## Contributing

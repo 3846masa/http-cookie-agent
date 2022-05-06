@@ -12,6 +12,13 @@ module.exports = {
         ],
       },
     },
+    {
+      files: ['src/undici/**/*'],
+      rules: {
+        eqeqeq: ['error', 'always', { null: 'never' }],
+        'no-undefined': ['error'],
+      },
+    },
   ],
   rules: {
     'import/no-unresolved': [
