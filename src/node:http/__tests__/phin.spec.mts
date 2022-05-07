@@ -1,10 +1,9 @@
 import test from 'ava';
-import axios from 'axios';
+import phin from 'phin';
 import { CookieJar } from 'tough-cookie';
 
+import { createTestServer, readStream } from '../../__tests__/helpers.mjs';
 import { HttpCookieAgent } from '../index.js';
-
-import { createTestServer, readStream } from './helpers.mjs';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
@@ -17,8 +16,9 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
     },
   ]);
 
-  await axios.get(`http://localhost:${port}`, {
-    httpAgent: agent,
+  await phin({
+    core: { agent },
+    url: `http://localhost:${port}`,
   });
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
@@ -39,8 +39,9 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
 
-  await axios.get(`http://localhost:${port}`, {
-    httpAgent: agent,
+  await phin({
+    core: { agent },
+    url: `http://localhost:${port}`,
   });
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
@@ -64,8 +65,9 @@ test('should send cookies from CookieJar', async (t) => {
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  await axios.get(`http://localhost:${port}`, {
-    httpAgent: agent,
+  await phin({
+    core: { agent },
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -84,9 +86,10 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  await axios.get(`http://localhost:${port}`, {
+  await phin({
+    core: { agent },
     headers: { Cookie: 'key2=value2' },
-    httpAgent: agent,
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -105,9 +108,10 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
-  await axios.get(`http://localhost:${port}`, {
+  await phin({
+    core: { agent },
     headers: { Cookie: 'key=expected' },
-    httpAgent: agent,
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -130,8 +134,10 @@ test('should send cookies from the first response when redirecting', async (t) =
     },
   ]);
 
-  await axios.get(`http://localhost:${port}`, {
-    httpAgent: agent,
+  await phin({
+    core: { agent },
+    followRedirects: true,
+    url: `http://localhost:${port}`,
   });
 
   t.plan(1);
@@ -152,8 +158,9 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   ]);
 
   await t.throwsAsync(() => {
-    return axios.get(`http://localhost:${port}`, {
-      httpAgent: agent,
+    return phin({
+      core: { agent },
+      url: `http://localhost:${port}`,
     });
   });
 
@@ -174,9 +181,10 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
     },
   ]);
 
-  await t.throwsAsync(() => {
-    return axios.get(`http://localhost:${port}`, {
-      httpAgent: agent,
+  await t.throwsAsync(async () => {
+    return phin({
+      core: { agent },
+      url: `http://localhost:${port}`,
     });
   });
 
@@ -202,8 +210,11 @@ test('should send post data when keepalive is enabled', async (t) => {
   await jar.setCookie('key=expected', `http://localhost:${port}`);
 
   for (let idx = 0; idx < times; idx++) {
-    await axios.post(`http://localhost:${port}`, `{ "index": "${idx}" }`, {
-      httpAgent: agent,
+    await phin({
+      core: { agent },
+      data: `{ "index": "${idx}" }`,
+      method: 'POST',
+      url: `http://localhost:${port}`,
     });
   }
 
