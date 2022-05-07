@@ -14,14 +14,14 @@ const kCookieOptions = Symbol('cookieOptions');
 const kAppendCookieHeader = Symbol('appendCookieHeader');
 
 function createCookieClient<BaseClient extends Client = Client, BaseClientOptions = Client.Options>(
-  BaseAgentClass: new (origin: string | URL, options: BaseClientOptions) => BaseClient,
+  BaseClientClass: new (origin: string | URL, options: BaseClientOptions) => BaseClient,
 ) {
   type CookieClientOptions = BaseClientOptions & {
     cookies?: CookieOptions | undefined;
   };
 
   // @ts-expect-error ...
-  class CookieClient extends BaseAgentClass {
+  class CookieClient extends BaseClientClass {
     private [kCookieOptions]: CookieOptions | undefined;
 
     constructor(
