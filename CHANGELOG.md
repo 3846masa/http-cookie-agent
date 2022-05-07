@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/3846masa/http-cookie-agent/compare/v2.1.0...v2.1.1) (2022-05-07)
+
+
+### Bug Fixes
+
+* fix type definition for undici ([#106](https://github.com/3846masa/http-cookie-agent/issues/106)) ([4748df9](https://github.com/3846masa/http-cookie-agent/commit/4748df9317169c9c72813c514d21a9fe68c629a0))
+
 # [2.1.0](https://github.com/3846masa/http-cookie-agent/compare/v2.0.0...v2.1.0) (2022-05-06)
 
 
