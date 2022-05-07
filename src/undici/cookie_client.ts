@@ -1,18 +1,15 @@
-import type { IncomingHttpHeaders } from 'node:http';
-
-import { Cookie } from 'tough-cookie';
 import { Agent, Client, Dispatcher } from 'undici';
 import { kDispatch, kMaxRedirections, kUrl } from 'undici/lib/core/symbols';
 import { RedirectHandler } from 'undici/lib/handler/redirect';
 
 import type { CookieOptions } from '../cookie_options';
+import { createCookieHeaderValue } from '../utils/create_cookie_header_value';
 import { validateCookieOptions } from '../utils/validate_cookie_options';
 
 import { CookieHandler } from './cookie_handler';
 import { convertToHeadersObject } from './utils/convert_to_headers_object';
 
 const kCookieOptions = Symbol('cookieOptions');
-const kAppendCookieHeader = Symbol('appendCookieHeader');
 
 function createCookieClient<BaseClient extends Client = Client, BaseClientOptions = Client.Options>(
   BaseClientClass: new (origin: string | URL, options: BaseClientOptions) => BaseClient,
@@ -49,45 +46,19 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
       if (cookieOptions) {
         const origin = opts.origin || this[kUrl].origin;
         const requestUrl = new URL(opts.path, origin).toString();
-        const headers = this[kAppendCookieHeader](requestUrl, convertToHeadersObject(opts.headers), cookieOptions);
+        const headers = convertToHeadersObject(opts.headers);
+
+        headers['cookie'] = createCookieHeaderValue({
+          cookieOptions,
+          passedValues: [headers['cookie']],
+          requestUrl,
+        });
 
         opts = { ...opts, headers };
         handler = new CookieHandler(requestUrl, cookieOptions, handler);
       }
 
       return super[kDispatch](opts, handler);
-    }
-
-    private [kAppendCookieHeader](
-      requestUrl: string,
-      _headers: IncomingHttpHeaders,
-      cookieOpts: CookieOptions,
-    ): IncomingHttpHeaders {
-      const { async_UNSTABLE = false, jar } = cookieOpts;
-      const headers = { ..._headers };
-
-      const getCookiesSync = async_UNSTABLE
-        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-          (require('deasync') as typeof import('deasync'))(jar.getCookies.bind(jar))
-        : jar.getCookiesSync.bind(jar);
-
-      const cookies = getCookiesSync(requestUrl);
-      const cookiesMap = new Map(cookies.map((cookie) => [cookie.key, cookie]));
-
-      if (typeof headers['cookie'] === 'string') {
-        for (const str of headers['cookie'].split(';')) {
-          const cookie = Cookie.parse(str.trim());
-          if (cookie != null) {
-            cookiesMap.set(cookie.key, cookie);
-          }
-        }
-      }
-
-      headers['cookie'] = Array.from(cookiesMap.values())
-        .map((cookie) => cookie.cookieString())
-        .join(';\x20');
-
-      return headers;
     }
   }
 
