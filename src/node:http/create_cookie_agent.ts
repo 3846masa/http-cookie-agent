@@ -65,14 +65,15 @@ export function createCookieAgent<
       return requestUrl;
     }
 
-    private async [CREATE_COOKIE_HEADER_STRING](
-      req: http.ClientRequest,
-      cookieOptions: CookieOptions,
-    ): Promise<string> {
-      const { jar } = cookieOptions;
+    private [CREATE_COOKIE_HEADER_STRING](req: http.ClientRequest, cookieOptions: CookieOptions): string {
+      const { async_UNSTABLE = false, jar } = cookieOptions;
       const requestUrl = this[GET_REQUEST_URL](req);
+      const getCookiesSync = async_UNSTABLE
+        ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+          (require('deasync') as typeof import('deasync'))(jar.getCookies.bind(jar))
+        : jar.getCookiesSync.bind(jar);
 
-      const cookies = await jar.getCookies(requestUrl);
+      const cookies = getCookiesSync(requestUrl);
       const cookiesMap = new Map(cookies.map((cookie) => [cookie.key, cookie]));
 
       const cookieHeaderList = [req.getHeader('Cookie')].flat();
@@ -98,8 +99,8 @@ export function createCookieAgent<
       return cookieHeader;
     }
 
-    private async [SET_COOKIE_HEADER](req: http.ClientRequest, cookieOptions: CookieOptions): Promise<void> {
-      const cookieHeader = await this[CREATE_COOKIE_HEADER_STRING](req, cookieOptions);
+    private [SET_COOKIE_HEADER](req: http.ClientRequest, cookieOptions: CookieOptions): void {
+      const cookieHeader = this[CREATE_COOKIE_HEADER_STRING](req, cookieOptions);
 
       if (cookieHeader === '') {
         return;
@@ -138,8 +139,8 @@ export function createCookieAgent<
       req._onPendingData(diffSize);
     }
 
-    private async [OVERWRITE_REQUEST_EMIT](req: http.ClientRequest, cookieOptions: CookieOptions): Promise<void> {
-      const { jar } = cookieOptions;
+    private [OVERWRITE_REQUEST_EMIT](req: http.ClientRequest, cookieOptions: CookieOptions): void {
+      const { async_UNSTABLE = false, jar } = cookieOptions;
       const requestUrl = this[GET_REQUEST_URL](req);
 
       const emit = req.emit.bind(req);
@@ -149,19 +150,19 @@ export function createCookieAgent<
         }
 
         const res = args[0] as http.IncomingMessage;
+        const setCookieSync = async_UNSTABLE
+          ? // eslint-disable-next-line @typescript-eslint/no-var-requires
+            (require('deasync') as typeof import('deasync'))(jar.setCookie.bind(jar))
+          : jar.setCookieSync.bind(jar);
 
-        (async () => {
-          const cookies = res.headers['set-cookie'];
-          if (cookies != null) {
-            for (const cookie of cookies) {
-              await jar.setCookie(cookie, requestUrl, { ignoreError: true });
-            }
+        const cookies = res.headers['set-cookie'];
+        if (cookies != null) {
+          for (const cookie of cookies) {
+            setCookieSync(cookie, requestUrl, { ignoreError: true });
           }
-        })()
-          .then(() => emit('response', res))
-          .catch((err) => emit('error', err));
+        }
 
-        return req.listenerCount(event) !== 0;
+        return emit('response', res);
       };
     }
 
@@ -169,14 +170,15 @@ export function createCookieAgent<
       const cookieOptions = this[kCookieOptions];
 
       if (cookieOptions) {
-        Promise.resolve()
-          .then(() => this[SET_COOKIE_HEADER](req, cookieOptions))
-          .then(() => this[OVERWRITE_REQUEST_EMIT](req, cookieOptions))
-          .then(() => super.addRequest(req, options))
-          .catch((err) => req.emit('error', err));
-      } else {
-        super.addRequest(req, options);
+        try {
+          this[SET_COOKIE_HEADER](req, cookieOptions);
+          this[OVERWRITE_REQUEST_EMIT](req, cookieOptions);
+        } catch (err) {
+          req.emit('error', err);
+        }
       }
+
+      super.addRequest(req, options);
     }
   }
 
