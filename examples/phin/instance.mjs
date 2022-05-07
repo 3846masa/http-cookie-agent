@@ -6,7 +6,7 @@ const jar = new CookieJar();
 
 const client = phin.defaults({
   core: {
-    agent: new MixedCookieAgent({ jar }),
+    agent: new MixedCookieAgent({ cookies: { jar } }),
   },
 });
 

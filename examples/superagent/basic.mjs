@@ -3,7 +3,7 @@ import superagent from 'superagent';
 import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
-const mixedAgent = new MixedCookieAgent({ jar });
+const mixedAgent = new MixedCookieAgent({ cookies: { jar } });
 
 await superagent.get('https://httpbin.org/cookies/set/session/userid').agent(mixedAgent);
 
