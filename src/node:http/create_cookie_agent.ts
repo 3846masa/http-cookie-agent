@@ -1,7 +1,10 @@
 import type http from 'node:http';
 import liburl from 'node:url';
 
-import { Cookie, CookieJar } from 'tough-cookie';
+import type { CookieOptions } from '../cookie_options';
+import { createCookieHeaderValue } from '../utils/create_cookie_header_value';
+import { saveCookiesFromHeader } from '../utils/save_cookies_from_header';
+import { validateCookieOptions } from '../utils/validate_cookie_options';
 
 declare module 'http' {
   interface Agent {
@@ -21,17 +24,14 @@ declare module 'http' {
   }
 }
 
-type Primitive = string | number | bigint | boolean | symbol | null | undefined;
-type Diff<T, U> = T extends U ? never : T;
-
 export type CookieAgentOptions = {
-  jar: CookieJar;
+  cookies?: CookieOptions | undefined;
 };
 
-const GET_REQUEST_URL = Symbol('getRequestUrl');
-const SET_COOKIE_HEADER = Symbol('setCookieHeader');
-const CREATE_COOKIE_HEADER_STRING = Symbol('createCookieHeaderString');
-const OVERWRITE_REQUEST_EMIT = Symbol('overwriteRequestEmit');
+const kCookieOptions = Symbol('cookieOptions');
+const kReimplicitHeader = Symbol('reimplicitHeader');
+const kRecreateFirstChunk = Symbol('recreateFirstChunk');
+const kOverrideRequest = Symbol('overrideRequest');
 
 export function createCookieAgent<
   BaseAgent extends http.Agent = http.Agent,
@@ -40,127 +40,110 @@ export function createCookieAgent<
 >(BaseAgentClass: new (options: BaseAgentOptions, ...rest: BaseAgentConstructorRestParams) => BaseAgent) {
   // @ts-expect-error ...
   class CookieAgent extends BaseAgentClass {
-    jar: CookieJar;
+    [kCookieOptions]: CookieOptions | undefined;
 
     constructor(
-      options: Diff<BaseAgentOptions, Primitive> & CookieAgentOptions,
+      { cookies: cookieOptions, ...options }: BaseAgentOptions & CookieAgentOptions = {} as BaseAgentOptions,
       ...rest: BaseAgentConstructorRestParams
     ) {
-      super(options, ...rest);
-      this.jar = options.jar;
+      super(options as BaseAgentOptions, ...rest);
+
+      if (cookieOptions) {
+        validateCookieOptions(cookieOptions);
+      }
+      this[kCookieOptions] = cookieOptions;
     }
 
-    private [GET_REQUEST_URL](req: http.ClientRequest): string {
-      const requestUrl = liburl.format({
-        host: req.host,
-        pathname: req.path,
-        protocol: req.protocol,
-      });
-
-      return requestUrl;
-    }
-
-    private async [CREATE_COOKIE_HEADER_STRING](req: http.ClientRequest): Promise<string> {
-      const requestUrl = this[GET_REQUEST_URL](req);
-
-      const cookies = await this.jar.getCookies(requestUrl);
-      const cookiesMap = new Map(cookies.map((cookie) => [cookie.key, cookie]));
-
-      const cookieHeaderList = [req.getHeader('Cookie')].flat();
-
-      for (const header of cookieHeaderList) {
-        if (typeof header !== 'string') {
-          continue;
-        }
-
-        for (const str of header.split(';')) {
-          const cookie = Cookie.parse(str.trim());
-          if (cookie == null) {
-            continue;
-          }
-          cookiesMap.set(cookie.key, cookie);
-        }
-      }
-
-      const cookieHeader = Array.from(cookiesMap.values())
-        .map((cookie) => cookie.cookieString())
-        .join(';\x20');
-
-      return cookieHeader;
-    }
-
-    private async [SET_COOKIE_HEADER](req: http.ClientRequest): Promise<void> {
-      const cookieHeader = await this[CREATE_COOKIE_HEADER_STRING](req);
-
-      if (cookieHeader === '') {
-        return;
-      }
-      if (req._header == null) {
-        req.setHeader('Cookie', cookieHeader);
-        return;
-      }
-
-      const alreadyHeaderSent = req._headerSent;
-
+    private [kReimplicitHeader](req: http.ClientRequest): void {
+      const _headerSent = req._headerSent;
       req._header = null;
-      req.setHeader('Cookie', cookieHeader);
       req._implicitHeader();
-      req._headerSent = alreadyHeaderSent;
+      req._headerSent = _headerSent;
+    }
 
-      if (alreadyHeaderSent !== true) {
+    private [kRecreateFirstChunk](req: http.ClientRequest): void {
+      const firstChunk = req.outputData[0];
+      if (req._header == null || firstChunk == null) {
         return;
       }
 
-      const firstChunk = req.outputData.shift();
-      if (firstChunk == null) {
-        return;
+      const prevData = firstChunk.data;
+      const prevHeaderLength = prevData.indexOf('\r\n\r\n');
+
+      if (prevHeaderLength === -1) {
+        firstChunk.data = req._header;
+      } else {
+        firstChunk.data = `${req._header}${prevData.slice(prevHeaderLength + 4)}`;
       }
 
-      const dataWithoutHeader = firstChunk.data.split('\r\n\r\n').slice(1).join('\r\n\r\n');
-
-      const chunk = {
-        ...firstChunk,
-        data: `${req._header}${dataWithoutHeader}`,
-      };
-      req.outputData.unshift(chunk);
-
-      const diffSize = chunk.data.length - firstChunk.data.length;
+      const diffSize = firstChunk.data.length - prevData.length;
       req.outputSize += diffSize;
       req._onPendingData(diffSize);
     }
 
-    private async [OVERWRITE_REQUEST_EMIT](req: http.ClientRequest): Promise<void> {
-      const requestUrl = this[GET_REQUEST_URL](req);
+    private [kOverrideRequest](req: http.ClientRequest, requestUrl: string, cookieOptions: CookieOptions): void {
+      const _implicitHeader = req._implicitHeader.bind(req);
+      req._implicitHeader = (): void => {
+        try {
+          const cookieHeader = createCookieHeaderValue({
+            cookieOptions,
+            passedValues: [req.getHeader('Cookie')].flat(),
+            requestUrl,
+          });
+          if (cookieHeader) {
+            req.setHeader('Cookie', cookieHeader);
+          }
+        } catch (err) {
+          req.destroy(err as Error);
+          return;
+        }
+        return _implicitHeader();
+      };
 
       const emit = req.emit.bind(req);
       req.emit = (event: string, ...args: unknown[]): boolean => {
-        if (event !== 'response') {
-          return emit(event, ...args);
-        }
-
-        const res = args[0] as http.IncomingMessage;
-
-        (async () => {
-          const cookies = res.headers['set-cookie'];
-          if (cookies != null) {
-            for (const cookie of cookies) {
-              await this.jar.setCookie(cookie, requestUrl, { ignoreError: true });
-            }
+        if (event === 'response') {
+          try {
+            const res = args[0] as http.IncomingMessage;
+            saveCookiesFromHeader({
+              cookieOptions,
+              cookies: res.headers['set-cookie'],
+              requestUrl,
+            });
+          } catch (err) {
+            req.destroy(err as Error);
+            return false;
           }
-        })()
-          .then(() => emit('response', res))
-          .catch((err) => emit('error', err));
-
-        return req.listenerCount(event) !== 0;
+        }
+        return emit(event, ...args);
       };
     }
 
     override addRequest(req: http.ClientRequest, options: http.RequestOptions): void {
-      Promise.resolve()
-        .then(() => this[SET_COOKIE_HEADER](req))
-        .then(() => this[OVERWRITE_REQUEST_EMIT](req))
-        .then(() => super.addRequest(req, options))
-        .catch((err) => req.emit('error', err));
+      const cookieOptions = this[kCookieOptions];
+
+      if (cookieOptions) {
+        try {
+          const requestUrl = liburl.format({
+            host: req.host,
+            pathname: req.path,
+            protocol: req.protocol,
+          });
+          this[kOverrideRequest](req, requestUrl, cookieOptions);
+
+          if (req._header != null) {
+            this[kReimplicitHeader](req);
+          }
+          if (req._headerSent) {
+            this[kRecreateFirstChunk](req);
+          }
+        } catch (err) {
+          req.destroy(err as Error);
+          return;
+        }
+      }
+
+      return super.addRequest(req, options);
     }
   }
 

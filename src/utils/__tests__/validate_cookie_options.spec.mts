@@ -1,6 +1,5 @@
 import test from 'ava';
 import { CookieJar } from 'tough-cookie';
-import { errors } from 'undici';
 
 import { validateCookieOptions } from '../validate_cookie_options.js';
 
@@ -10,7 +9,7 @@ test('should throw Error when jar is not set', (t) => {
       validateCookieOptions({});
     },
     {
-      instanceOf: errors.InvalidArgumentError,
+      instanceOf: TypeError,
       message: 'invalid cookies.jar',
     },
   );
@@ -27,7 +26,7 @@ test('should throw Error when async_UNSTABLE is true but deasync is not installe
       validateCookieOptions({ async_UNSTABLE: true, jar }, resolver);
     },
     {
-      instanceOf: errors.InformationalError,
+      instanceOf: Error,
       message: 'you should install deasync library when cookies.async_UNSTABLE is true.',
     },
   );
@@ -42,7 +41,7 @@ test('should throw Error when cookie store is asynchronous but async_UNSTABLE is
       validateCookieOptions({ jar });
     },
     {
-      instanceOf: errors.InvalidArgumentError,
+      instanceOf: TypeError,
       message: 'you should set cookies.async_UNSTABLE to true for using the asynchronous cookie store.',
     },
   );

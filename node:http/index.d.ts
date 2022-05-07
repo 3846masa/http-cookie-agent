@@ -1,18 +1,18 @@
-import http from 'node:http';
-import https from 'node:https';
+import type http from 'node:http';
+import type https from 'node:https';
 
-import { CookieJar } from 'tough-cookie';
+import type { CookieJar } from 'tough-cookie';
 
-type Primitive = string | number | bigint | boolean | symbol | null | undefined;
-type Diff<T, U> = T extends U ? never : T;
+export interface CookieOptions {
+  async_UNSTABLE?: true;
+  jar: CookieJar;
+}
 
 export type CookieAgentOptions = {
-  jar: CookieJar;
+  cookies?: CookieOptions | undefined;
 };
 
-type CookieAgent<BaseAgent extends http.Agent> = BaseAgent & {
-  jar: CookieJar;
-};
+type CookieAgent<BaseAgent extends http.Agent> = BaseAgent;
 
 export function createCookieAgent<
   BaseAgent extends http.Agent = http.Agent,
@@ -21,7 +21,7 @@ export function createCookieAgent<
 >(
   BaseAgent: new (options: BaseAgentOptions, ...rest: BaseAgentConstructorRestParams) => BaseAgent,
 ): new (
-  options: Diff<BaseAgentOptions, Primitive> & CookieAgentOptions,
+  options: BaseAgentOptions & CookieAgentOptions,
   ...rest: BaseAgentConstructorRestParams
 ) => CookieAgent<BaseAgent>;
 
