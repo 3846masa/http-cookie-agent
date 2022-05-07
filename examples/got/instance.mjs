@@ -6,8 +6,8 @@ const jar = new CookieJar();
 
 const client = got.extend({
   agent: {
-    http: new HttpCookieAgent({ jar }),
-    https: new HttpsCookieAgent({ jar }),
+    http: new HttpCookieAgent({ cookies: { jar } }),
+    https: new HttpsCookieAgent({ cookies: { jar } }),
   },
 });
 

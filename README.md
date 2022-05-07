@@ -34,13 +34,13 @@ import { HttpCookieAgent, HttpsCookieAgent, MixedCookieAgent } from 'http-cookie
 
 const jar = new CookieJar();
 
-const httpAgent = new HttpCookieAgent({ jar });
+const httpAgent = new HttpCookieAgent({ cookies: { jar } });
 
 // To access via HTTPS, use HttpsCookieAgent instead.
-const httpsAgent = new HttpsCookieAgent({ jar });
+const httpsAgent = new HttpsCookieAgent({ cookies: { jar } });
 
 // If the client library cannot switch Agents based on the protocol, use MixedCookieAgent instead.
-const mixedAgent = new MixedCookieAgent({ jar });
+const mixedAgent = new MixedCookieAgent({ cookies: { jar } });
 
 // Pass agent to HTTP client.
 client.request('https://example.com', { agent: httpAgent });
@@ -80,7 +80,7 @@ import { CookieJar } from 'tough-cookie';
 import { HttpsCookieAgent } from 'http-cookie-agent/node:http';
 
 const jar = new CookieJar();
-const agent = new HttpsCookieAgent({ jar });
+const agent = new HttpsCookieAgent({ cookies: { jar } });
 
 https.get('https://example.com', { agent }, (res) => {
   // ...
@@ -97,8 +97,8 @@ import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
 const jar = new CookieJar();
 
 const client = axios.create({
-  httpAgent: new HttpCookieAgent({ jar }),
-  httpsAgent: new HttpsCookieAgent({ jar }),
+  httpAgent: new HttpCookieAgent({ cookies: { jar } }),
+  httpsAgent: new HttpsCookieAgent({ cookies: { jar } }),
 });
 
 await client.get('https://example.com');
@@ -113,8 +113,8 @@ import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
 
 const jar = new CookieJar();
 
-const httpAgent = new HttpCookieAgent({ jar });
-const httpsAgent = new HttpsCookieAgent({ jar });
+const httpAgent = new HttpCookieAgent({ cookies: { jar } });
+const httpsAgent = new HttpsCookieAgent({ cookies: { jar } });
 
 await fetch('https://example.com', {
   agent: ({ protocol }) => {
@@ -138,8 +138,8 @@ const jar = new CookieJar();
 
 const client = got.extend({
   agent: {
-    http: new HttpCookieAgent({ jar }),
-    https: new HttpsCookieAgent({ jar }),
+    http: new HttpCookieAgent({ cookies: { jar } }),
+    https: new HttpsCookieAgent({ cookies: { jar } }),
   },
 });
 
@@ -158,7 +158,7 @@ import { CookieJar } from 'tough-cookie';
 import { MixedCookieAgent } from 'http-cookie-agent/node:http';
 
 const jar = new CookieJar();
-const mixedAgent = new MixedCookieAgent({ jar });
+const mixedAgent = new MixedCookieAgent({ cookies: { jar } });
 
 const client = superagent.agent().use((req) => req.agent(mixedAgent));
 
@@ -179,7 +179,7 @@ import { MixedCookieAgent } from 'http-cookie-agent/node:http';
 const jar = new CookieJar();
 
 const client = request.defaults({
-  agent: new MixedCookieAgent({ jar }),
+  agent: new MixedCookieAgent({ cookies: { jar } }),
 });
 
 client.get('https://example.com', (_err, _res) => {
@@ -197,7 +197,7 @@ import { MixedCookieAgent } from 'http-cookie-agent/node:http';
 const jar = new CookieJar();
 
 await needle('get', 'https://example.com', {
-  agent: new MixedCookieAgent({ jar }),
+  agent: new MixedCookieAgent({ cookies: { jar } }),
 });
 ```
 
@@ -213,7 +213,7 @@ const jar = new CookieJar();
 await phin({
   url: 'https://example.com',
   core: {
-    agent: new MixedCookieAgent({ jar }),
+    agent: new MixedCookieAgent({ cookies: { jar } }),
   },
 });
 ```
@@ -229,9 +229,9 @@ const jar = new CookieJar();
 
 const client = Wreck.defaults({
   agents: {
-    http: new HttpCookieAgent({ jar }),
-    https: new HttpsCookieAgent({ jar }),
-    httpsAllowUnauthorized: new HttpsCookieAgent({ jar }),
+    http: new HttpCookieAgent({ cookies: { jar } }),
+    https: new HttpsCookieAgent({ cookies: { jar } }),
+    httpsAllowUnauthorized: new HttpsCookieAgent({ cookies: { jar } }),
   },
 });
 
@@ -248,11 +248,31 @@ import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
 const jar = new CookieJar();
 
 const client = urllib.create({
-  agent: new HttpCookieAgent({ jar }),
-  httpsAgent: new HttpsCookieAgent({ jar }),
+  agent: new HttpCookieAgent({ cookies: { jar } }),
+  httpsAgent: new HttpsCookieAgent({ cookies: { jar } }),
 });
 
 await client.request('https://example.com');
+```
+
+### Using with an asynchronous Cookie store
+
+`http-cookie-agent` use synchronous CookieJar functions by default.
+
+Therefore, you cannot use an asynchronous Cookie store (e.g. `redis-cookie-store`) by default.
+
+If you want to use an asynchronous Cookie store, set `cookies.async_UNSTABLE` to true.
+
+```js
+// node:http, node:https
+const jar = new CookieJar();
+const agent = new HttpsCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
+```
+
+```js
+// undici
+const jar = new CookieJar();
+const agent = new CookieAgent({ cookies: { async_UNSTABLE: true, jar } } });
 ```
 
 ### Using with another Agent library
@@ -269,7 +289,7 @@ import { createCookieAgent } from 'http-cookie-agent/node:http';
 const Agent = createCookieAgent(KeepAliveAgent);
 
 const jar = new CookieJar();
-const agent = new Agent({ jar });
+const agent = new Agent({ cookies: { jar } });
 
 https.get('https://example.com', { agent }, (res) => {
   // ...

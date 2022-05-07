@@ -6,9 +6,9 @@ const jar = new CookieJar();
 
 const client = Wreck.defaults({
   agents: {
-    http: new HttpCookieAgent({ jar }),
-    https: new HttpsCookieAgent({ jar }),
-    httpsAllowUnauthorized: new HttpsCookieAgent({ jar }),
+    http: new HttpCookieAgent({ cookies: { jar } }),
+    https: new HttpsCookieAgent({ cookies: { jar } }),
+    httpsAllowUnauthorized: new HttpsCookieAgent({ cookies: { jar } }),
   },
 });
 

@@ -5,8 +5,8 @@ import urllib from 'urllib';
 const jar = new CookieJar();
 
 await urllib.request('https://httpbin.org/cookies/set/session/userid', {
-  agent: new HttpCookieAgent({ jar }),
-  httpsAgent: new HttpsCookieAgent({ jar }),
+  agent: new HttpCookieAgent({ cookies: { jar } }),
+  httpsAgent: new HttpsCookieAgent({ cookies: { jar } }),
 });
 
 const cookies = await jar.getCookies('https://httpbin.org');
