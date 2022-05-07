@@ -1,5 +1,5 @@
 import got from 'got';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
 import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
