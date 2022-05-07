@@ -4,9 +4,8 @@ import KeepAliveAgent from 'agentkeepalive';
 import test from 'ava';
 import { CookieJar } from 'tough-cookie';
 
+import { createTestServer } from '../../__tests__/helpers.mjs';
 import { createCookieAgent } from '../index.js';
-
-import { createTestServer } from './helpers.mjs';
 
 const KeepAliveCookieAgent = createCookieAgent(KeepAliveAgent);
 

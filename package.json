@@ -30,15 +30,15 @@
   "license": "MIT",
   "author": "3846masa <3846masahiro+git@gmail.com>",
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./node:http/index.js",
     "./undici": "./undici/index.js"
   },
-  "main": "dist/index.js",
-  "types": "index.d.ts",
+  "main": "node:http/index.js",
+  "types": "node:http/index.d.ts",
   "files": [
     "dist",
     "undici",
-    "index.d.ts",
+    "node:http",
     "!**/__tests__"
   ],
   "scripts": {
