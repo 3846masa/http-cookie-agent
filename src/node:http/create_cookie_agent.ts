@@ -1,7 +1,10 @@
 import type http from 'node:http';
 import liburl from 'node:url';
 
-import { Cookie, CookieJar } from 'tough-cookie';
+import { Cookie } from 'tough-cookie';
+
+import type { CookieOptions } from '../cookie_options';
+import { validateCookieOptions } from '../utils/validate_cookie_options';
 
 declare module 'http' {
   interface Agent {
@@ -21,13 +24,11 @@ declare module 'http' {
   }
 }
 
-type Primitive = string | number | bigint | boolean | symbol | null | undefined;
-type Diff<T, U> = T extends U ? never : T;
-
 export type CookieAgentOptions = {
-  jar: CookieJar;
+  cookies?: CookieOptions | undefined;
 };
 
+const kCookieOptions = Symbol('cookieOptions');
 const GET_REQUEST_URL = Symbol('getRequestUrl');
 const SET_COOKIE_HEADER = Symbol('setCookieHeader');
 const CREATE_COOKIE_HEADER_STRING = Symbol('createCookieHeaderString');
@@ -40,14 +41,18 @@ export function createCookieAgent<
 >(BaseAgentClass: new (options: BaseAgentOptions, ...rest: BaseAgentConstructorRestParams) => BaseAgent) {
   // @ts-expect-error ...
   class CookieAgent extends BaseAgentClass {
-    jar: CookieJar;
+    [kCookieOptions]: CookieOptions | undefined;
 
     constructor(
-      options: Diff<BaseAgentOptions, Primitive> & CookieAgentOptions,
+      { cookies: cookieOptions, ...options }: BaseAgentOptions & CookieAgentOptions = {} as BaseAgentOptions,
       ...rest: BaseAgentConstructorRestParams
     ) {
-      super(options, ...rest);
-      this.jar = options.jar;
+      super(options as BaseAgentOptions, ...rest);
+
+      if (cookieOptions) {
+        validateCookieOptions(cookieOptions);
+      }
+      this[kCookieOptions] = cookieOptions;
     }
 
     private [GET_REQUEST_URL](req: http.ClientRequest): string {
@@ -60,10 +65,14 @@ export function createCookieAgent<
       return requestUrl;
     }
 
-    private async [CREATE_COOKIE_HEADER_STRING](req: http.ClientRequest): Promise<string> {
+    private async [CREATE_COOKIE_HEADER_STRING](
+      req: http.ClientRequest,
+      cookieOptions: CookieOptions,
+    ): Promise<string> {
+      const { jar } = cookieOptions;
       const requestUrl = this[GET_REQUEST_URL](req);
 
-      const cookies = await this.jar.getCookies(requestUrl);
+      const cookies = await jar.getCookies(requestUrl);
       const cookiesMap = new Map(cookies.map((cookie) => [cookie.key, cookie]));
 
       const cookieHeaderList = [req.getHeader('Cookie')].flat();
@@ -89,8 +98,8 @@ export function createCookieAgent<
       return cookieHeader;
     }
 
-    private async [SET_COOKIE_HEADER](req: http.ClientRequest): Promise<void> {
-      const cookieHeader = await this[CREATE_COOKIE_HEADER_STRING](req);
+    private async [SET_COOKIE_HEADER](req: http.ClientRequest, cookieOptions: CookieOptions): Promise<void> {
+      const cookieHeader = await this[CREATE_COOKIE_HEADER_STRING](req, cookieOptions);
 
       if (cookieHeader === '') {
         return;
@@ -129,7 +138,8 @@ export function createCookieAgent<
       req._onPendingData(diffSize);
     }
 
-    private async [OVERWRITE_REQUEST_EMIT](req: http.ClientRequest): Promise<void> {
+    private async [OVERWRITE_REQUEST_EMIT](req: http.ClientRequest, cookieOptions: CookieOptions): Promise<void> {
+      const { jar } = cookieOptions;
       const requestUrl = this[GET_REQUEST_URL](req);
 
       const emit = req.emit.bind(req);
@@ -144,7 +154,7 @@ export function createCookieAgent<
           const cookies = res.headers['set-cookie'];
           if (cookies != null) {
             for (const cookie of cookies) {
-              await this.jar.setCookie(cookie, requestUrl, { ignoreError: true });
+              await jar.setCookie(cookie, requestUrl, { ignoreError: true });
             }
           }
         })()
@@ -156,11 +166,17 @@ export function createCookieAgent<
     }
 
     override addRequest(req: http.ClientRequest, options: http.RequestOptions): void {
-      Promise.resolve()
-        .then(() => this[SET_COOKIE_HEADER](req))
-        .then(() => this[OVERWRITE_REQUEST_EMIT](req))
-        .then(() => super.addRequest(req, options))
-        .catch((err) => req.emit('error', err));
+      const cookieOptions = this[kCookieOptions];
+
+      if (cookieOptions) {
+        Promise.resolve()
+          .then(() => this[SET_COOKIE_HEADER](req, cookieOptions))
+          .then(() => this[OVERWRITE_REQUEST_EMIT](req, cookieOptions))
+          .then(() => super.addRequest(req, options))
+          .catch((err) => req.emit('error', err));
+      } else {
+        super.addRequest(req, options);
+      }
     }
   }
 
