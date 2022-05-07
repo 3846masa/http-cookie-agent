@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/3846masa/http-cookie-agent/compare/v2.1.1...v2.1.2) (2022-05-07)
+
+
+### Bug Fixes
+
+* loose the validation of CookieOptions.jar so that different versions of CookieJar can be used. ([#108](https://github.com/3846masa/http-cookie-agent/issues/108)) ([adc4b74](https://github.com/3846masa/http-cookie-agent/commit/adc4b74b6cf512e81692a7e906c8a6263080c666))
+
 ## [2.1.1](https://github.com/3846masa/http-cookie-agent/compare/v2.1.0...v2.1.1) (2022-05-07)
 
 

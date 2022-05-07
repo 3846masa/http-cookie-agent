@@ -1,6 +1,6 @@
 {
   "name": "http-cookie-agent",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Allows cookies with every Node.js HTTP clients.",
   "keywords": [
     "agent",
