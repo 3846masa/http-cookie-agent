@@ -11,19 +11,7 @@ test('should throw Error when jar is not set', (t) => {
     },
     {
       instanceOf: errors.InvalidArgumentError,
-      message: 'invalid cookies.jar object',
-    },
-  );
-});
-
-test('should throw Error when jar is not CookieJar', (t) => {
-  t.throws(
-    () => {
-      validateCookieOptions({ jar: {} });
-    },
-    {
-      instanceOf: errors.InvalidArgumentError,
-      message: 'invalid cookies.jar object',
+      message: 'invalid cookies.jar',
     },
   );
 });
