@@ -1,13 +1,10 @@
 import http from 'node:http';
 
 import test from 'ava';
-import hpa from 'http-proxy-agent';
 import { CookieJar } from 'tough-cookie';
 
-import { createTestServerWithProxy } from '../../__tests__/helpers.mjs';
-import { createCookieAgent } from '../create_cookie_agent.js';
-
-const HttpProxyCookieAgent = createCookieAgent(hpa.HttpProxyAgent);
+import { createTestServer, readStream } from '../../__tests__/helpers.mjs';
+import { HttpCookieAgent } from '../index.js';
 
 export function request(url: string, options: http.RequestOptions, payload?: unknown) {
   const promise = new Promise<http.IncomingMessage>((resolve, reject) => {
@@ -27,14 +24,14 @@ export function request(url: string, options: http.RequestOptions, payload?: unk
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ cookies: { jar }, host: 'localhost', port: proxyPort });
 
   await request(`http://localhost:${port}`, {
     agent,
@@ -50,14 +47,14 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
 
 test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', ['key1=value1', 'key2=value2']);
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ cookies: { jar }, host: 'localhost', port: proxyPort });
 
   await request(`http://localhost:${port}`, {
     agent,
@@ -74,14 +71,14 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
 
 test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (req, res) => {
       t.is(req.headers['cookie'], 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ cookies: { jar }, host: 'localhost', port: proxyPort });
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
@@ -93,16 +90,37 @@ test('should send cookies from CookieJar', async (t) => {
   t.plan(1);
 });
 
+test('should send cookies from CookieJar when value is url-encoded', async (t) => {
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
+
+  const { port } = await createTestServer([
+    (req, res) => {
+      t.is(req.headers['cookie'], 'key=hello%20world');
+      res.end();
+    },
+  ]);
+
+  await jar.setCookie('key=hello%20world', `http://localhost:${port}`);
+
+  await request(`http://localhost:${port}`, {
+    agent,
+    method: 'GET',
+  });
+
+  t.plan(1);
+});
+
 test('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (req, res) => {
       t.is(req.headers['cookie'], 'key1=value1; key2=value2');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ cookies: { jar }, host: 'localhost', port: proxyPort });
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
@@ -117,14 +135,14 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
 test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (req, res) => {
       t.is(req.headers['cookie'], 'key=expected');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ cookies: { jar }, host: 'localhost', port: proxyPort });
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
@@ -139,17 +157,23 @@ test('should send cookies from a request options when the key is duplicated in b
 
 test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.getCookiesSync = () => {
-    throw new Error('Error');
+  // @ts-expect-error ...
+  jar.getCookies = (...args) => {
+    const cb = args.at(-1);
+    if (typeof cb === 'function') {
+      cb(new Error('Error'));
+    } else {
+      return Promise.reject(new Error('Error'));
+    }
   };
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ cookies: { jar }, host: 'localhost', port: proxyPort });
 
   await t.throwsAsync(() => {
     return request(`http://localhost:${port}`, {
@@ -163,17 +187,23 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
 
 test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.setCookieSync = () => {
-    throw new Error('Error');
+  // @ts-expect-error ...
+  jar.setCookie = (...args) => {
+    const cb = args.at(-1);
+    if (typeof cb === 'function') {
+      cb(new Error('Error'));
+    } else {
+      return Promise.reject(new Error('Error'));
+    }
   };
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
 
-  const { port, proxyPort } = await createTestServerWithProxy([
+  const { port } = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent({ cookies: { jar }, host: 'localhost', port: proxyPort });
 
   await t.throwsAsync(() => {
     return request(`http://localhost:${port}`, {
@@ -183,4 +213,70 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   });
 
   t.plan(1);
+});
+
+test('should send cookies even when target is same host but different port', async (t) => {
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
+
+  const { port: firstServerPort } = await createTestServer([
+    (_req, res) => {
+      res.setHeader('Set-Cookie', 'key=expected');
+      res.end();
+    },
+  ]);
+
+  const { port: secondServerPort } = await createTestServer([
+    (req, res) => {
+      t.is(req.headers['cookie'], 'key=expected');
+      res.end();
+    },
+  ]);
+
+  {
+    await request(`http://localhost:${firstServerPort}`, {
+      agent,
+      method: 'GET',
+    });
+  }
+  {
+    await request(`http://localhost:${secondServerPort}`, {
+      agent,
+      method: 'GET',
+    });
+  }
+
+  t.plan(1);
+});
+
+test('should send post data when keepalive is enabled', async (t) => {
+  const times = 2;
+
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { async_UNSTABLE: true, jar }, keepAlive: true });
+
+  const { port } = await createTestServer(
+    Array.from({ length: times }, (_, idx) => {
+      return async (req, res) => {
+        t.is(await readStream(req), `{ "index": "${idx}" }`);
+        t.is(req.headers['cookie'], 'key=expected');
+        res.end();
+      };
+    }),
+  );
+
+  await jar.setCookie('key=expected', `http://localhost:${port}`);
+
+  for (let idx = 0; idx < times; idx++) {
+    await request(
+      `http://localhost:${port}`,
+      {
+        agent,
+        method: 'POST',
+      },
+      `{ "index": "${idx}" }`,
+    );
+  }
+
+  t.plan(times * 2);
 });

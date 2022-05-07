@@ -9,10 +9,9 @@ import { createCookieAgent } from '../index.js';
 
 const KeepAliveCookieAgent = createCookieAgent(KeepAliveAgent);
 
-export function request(url: string, options: http.RequestOptions) {
-  const req = http.request(url, options);
-
+export function request(url: string, options: http.RequestOptions, payload?: unknown) {
   const promise = new Promise<http.IncomingMessage>((resolve, reject) => {
+    const req = http.request(url, options);
     req.on('response', (res) => {
       res.on('error', (err) => reject(err));
       // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -20,15 +19,15 @@ export function request(url: string, options: http.RequestOptions) {
       res.on('end', () => resolve(res));
     });
     req.on('error', (err) => reject(err));
+    req.end(payload);
   });
-  req.end();
 
-  return { promise, req };
+  return promise;
 }
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
-  const agent = new KeepAliveCookieAgent({ jar });
+  const agent = new KeepAliveCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -37,11 +36,10 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
     },
   ]);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  await request(`http://localhost:${port}`, {
     agent,
     method: 'GET',
   });
-  await promise;
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 1);
@@ -52,7 +50,7 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
 
 test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
-  const agent = new KeepAliveCookieAgent({ jar });
+  const agent = new KeepAliveCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -61,11 +59,10 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  await request(`http://localhost:${port}`, {
     agent,
     method: 'GET',
   });
-  await promise;
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 2);
@@ -77,7 +74,7 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
 
 test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new KeepAliveCookieAgent({ jar });
+  const agent = new KeepAliveCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -88,18 +85,17 @@ test('should send cookies from CookieJar', async (t) => {
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  await request(`http://localhost:${port}`, {
     agent,
     method: 'GET',
   });
-  await promise;
 
   t.plan(1);
 });
 
 test('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new KeepAliveCookieAgent({ jar });
+  const agent = new KeepAliveCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -110,19 +106,18 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  await request(`http://localhost:${port}`, {
     agent,
     headers: { Cookie: 'key2=value2' },
     method: 'GET',
   });
-  await promise;
 
   t.plan(1);
 });
 
 test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new KeepAliveCookieAgent({ jar });
+  const agent = new KeepAliveCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -133,22 +128,21 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  await request(`http://localhost:${port}`, {
     agent,
     headers: { Cookie: 'key=expected' },
     method: 'GET',
   });
-  await promise;
 
   t.plan(1);
 });
 
 test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.getCookies = async () => {
+  jar.getCookiesSync = () => {
     throw new Error('Error');
   };
-  const agent = new KeepAliveCookieAgent({ jar });
+  const agent = new KeepAliveCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -157,21 +151,22 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
     },
   ]);
 
-  const { promise } = request(`http://localhost:${port}`, {
-    agent,
-    method: 'GET',
+  await t.throwsAsync(() => {
+    return request(`http://localhost:${port}`, {
+      agent,
+      method: 'GET',
+    });
   });
-  await t.throwsAsync(() => promise);
 
   t.plan(1);
 });
 
 test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.setCookie = async () => {
+  jar.setCookieSync = () => {
     throw new Error('Error');
   };
-  const agent = new KeepAliveCookieAgent({ jar });
+  const agent = new KeepAliveCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -180,11 +175,12 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
     },
   ]);
 
-  const { promise } = request(`http://localhost:${port}`, {
-    agent,
-    method: 'GET',
+  await t.throwsAsync(() => {
+    return request(`http://localhost:${port}`, {
+      agent,
+      method: 'GET',
+    });
   });
-  await t.throwsAsync(() => promise);
 
   t.plan(1);
 });
