@@ -1,4 +1,3 @@
-import { CookieJar } from 'tough-cookie';
 import { errors } from 'undici';
 
 import type { CookieOptions } from '../cookie_options';
@@ -10,8 +9,8 @@ function validateCookieOptions(
   opts: any,
   resolver: ModuleResolver = require.resolve,
 ): asserts opts is CookieOptions {
-  if (!(opts.jar instanceof CookieJar)) {
-    throw new errors.InvalidArgumentError('invalid cookies.jar object');
+  if (!('jar' in opts)) {
+    throw new errors.InvalidArgumentError('invalid cookies.jar');
   }
 
   if (opts.async_UNSTABLE) {
