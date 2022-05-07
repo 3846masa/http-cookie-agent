@@ -7,7 +7,7 @@ import { HttpCookieAgent } from '../index.js';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -30,7 +30,7 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
 
 test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -54,7 +54,7 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
 
 test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -75,7 +75,7 @@ test('should send cookies from CookieJar', async (t) => {
 
 test('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -97,7 +97,7 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
 test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -119,7 +119,7 @@ test('should send cookies from a request options when the key is duplicated in b
 
 test('should send cookies from the first response when redirecting', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -145,10 +145,10 @@ test('should send cookies from the first response when redirecting', async (t) =
 
 test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.getCookies = async () => {
+  jar.getCookiesSync = () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -169,10 +169,10 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
 
 test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.setCookie = async () => {
+  jar.setCookieSync = () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -181,7 +181,7 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
     },
   ]);
 
-  await t.throwsAsync(async () => {
+  await t.throwsAsync(() => {
     return phin({
       core: { agent },
       url: `http://localhost:${port}`,
@@ -195,7 +195,7 @@ test('should send post data when keepalive is enabled', async (t) => {
   const times = 2;
 
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar, keepAlive: true });
+  const agent = new HttpCookieAgent({ cookies: { jar }, keepAlive: true });
 
   const { port } = await createTestServer(
     Array.from({ length: times }, (_, idx) => {
