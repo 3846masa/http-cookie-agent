@@ -29,8 +29,9 @@ export type CookieAgentOptions = {
 };
 
 const kCookieOptions = Symbol('cookieOptions');
-const kSetCookieHeader = Symbol('setCookieHeader');
-const kOverwriteRequestEmit = Symbol('overwriteRequestEmit');
+const kReimplicitHeader = Symbol('reimplicitHeader');
+const kRecreateFirstChunk = Symbol('recreateFirstChunk');
+const kOverrideRequest = Symbol('overrideRequest');
 
 export function createCookieAgent<
   BaseAgent extends http.Agent = http.Agent,
@@ -53,55 +54,64 @@ export function createCookieAgent<
       this[kCookieOptions] = cookieOptions;
     }
 
-    private [kSetCookieHeader](req: http.ClientRequest, cookieHeader: string): void {
-      if (cookieHeader === '') {
-        return;
-      }
-      if (req._header == null) {
-        req.setHeader('Cookie', cookieHeader);
-        return;
-      }
-
-      const alreadyHeaderSent = req._headerSent;
-
+    private [kReimplicitHeader](req: http.ClientRequest): void {
+      const _headerSent = req._headerSent;
       req._header = null;
-      req.setHeader('Cookie', cookieHeader);
       req._implicitHeader();
-      req._headerSent = alreadyHeaderSent;
+      req._headerSent = _headerSent;
+    }
 
-      if (alreadyHeaderSent !== true) {
+    private [kRecreateFirstChunk](req: http.ClientRequest): void {
+      const firstChunk = req.outputData[0];
+      if (req._header == null || firstChunk == null) {
         return;
       }
 
-      const firstChunk = req.outputData.shift();
-      if (firstChunk == null) {
-        return;
+      const prevData = firstChunk.data;
+      const prevHeaderLength = prevData.indexOf('\r\n\r\n');
+
+      if (prevHeaderLength === -1) {
+        firstChunk.data = req._header;
+      } else {
+        firstChunk.data = `${req._header}${prevData.slice(prevHeaderLength + 4)}`;
       }
 
-      const dataWithoutHeader = firstChunk.data.split('\r\n\r\n').slice(1).join('\r\n\r\n');
-
-      const chunk = {
-        ...firstChunk,
-        data: `${req._header}${dataWithoutHeader}`,
-      };
-      req.outputData.unshift(chunk);
-
-      const diffSize = chunk.data.length - firstChunk.data.length;
+      const diffSize = firstChunk.data.length - prevData.length;
       req.outputSize += diffSize;
       req._onPendingData(diffSize);
     }
 
-    private [kOverwriteRequestEmit](req: http.ClientRequest, requestUrl: string, cookieOptions: CookieOptions): void {
-      const emit = req.emit.bind(req);
-
-      req.emit = (event: string, ...args: unknown[]): boolean => {
-        if (event === 'response') {
-          const res = args[0] as http.IncomingMessage;
-          saveCookiesFromHeader({
+    private [kOverrideRequest](req: http.ClientRequest, requestUrl: string, cookieOptions: CookieOptions): void {
+      const _implicitHeader = req._implicitHeader.bind(req);
+      req._implicitHeader = (): void => {
+        try {
+          const cookieHeader = createCookieHeaderValue({
             cookieOptions,
-            cookies: res.headers['set-cookie'],
+            passedValues: [req.getHeader('Cookie')].flat(),
             requestUrl,
           });
+          req.setHeader('Cookie', cookieHeader);
+        } catch (err) {
+          req.destroy(err as Error);
+          return;
+        }
+        return _implicitHeader();
+      };
+
+      const emit = req.emit.bind(req);
+      req.emit = (event: string, ...args: unknown[]): boolean => {
+        if (event === 'response') {
+          try {
+            const res = args[0] as http.IncomingMessage;
+            saveCookiesFromHeader({
+              cookieOptions,
+              cookies: res.headers['set-cookie'],
+              requestUrl,
+            });
+          } catch (err) {
+            req.destroy(err as Error);
+            return false;
+          }
         }
         return emit(event, ...args);
       };
@@ -111,23 +121,27 @@ export function createCookieAgent<
       const cookieOptions = this[kCookieOptions];
 
       if (cookieOptions) {
-        const requestUrl = liburl.format({
-          host: req.host,
-          pathname: req.path,
-          protocol: req.protocol,
-        });
+        try {
+          const requestUrl = liburl.format({
+            host: req.host,
+            pathname: req.path,
+            protocol: req.protocol,
+          });
+          this[kOverrideRequest](req, requestUrl, cookieOptions);
 
-        const cookieHeader = createCookieHeaderValue({
-          cookieOptions,
-          passedValues: [req.getHeader('Cookie')].flat(),
-          requestUrl,
-        });
-
-        this[kSetCookieHeader](req, cookieHeader);
-        this[kOverwriteRequestEmit](req, requestUrl, cookieOptions);
+          if (req._header != null) {
+            this[kReimplicitHeader](req);
+          }
+          if (req._headerSent) {
+            this[kRecreateFirstChunk](req);
+          }
+        } catch (err) {
+          req.destroy(err as Error);
+          return;
+        }
       }
 
-      super.addRequest(req, options);
+      return super.addRequest(req, options);
     }
   }
 
