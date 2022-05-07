@@ -3,6 +3,7 @@ import liburl from 'node:url';
 
 import type { CookieOptions } from '../cookie_options';
 import { createCookieHeaderValue } from '../utils/create_cookie_header_value';
+import { saveCookiesFromHeader } from '../utils/save_cookies_from_header';
 import { validateCookieOptions } from '../utils/validate_cookie_options';
 
 declare module 'http' {
@@ -102,28 +103,18 @@ export function createCookieAgent<
     }
 
     private [kOverwriteRequestEmit](req: http.ClientRequest, requestUrl: string, cookieOptions: CookieOptions): void {
-      const { async_UNSTABLE = false, jar } = cookieOptions;
-
       const emit = req.emit.bind(req);
+
       req.emit = (event: string, ...args: unknown[]): boolean => {
-        if (event !== 'response') {
-          return emit(event, ...args);
+        if (event === 'response') {
+          const res = args[0] as http.IncomingMessage;
+          saveCookiesFromHeader({
+            cookieOptions,
+            cookies: res.headers['set-cookie'],
+            requestUrl,
+          });
         }
-
-        const res = args[0] as http.IncomingMessage;
-        const setCookieSync = async_UNSTABLE
-          ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-            (require('deasync') as typeof import('deasync'))(jar.setCookie.bind(jar))
-          : jar.setCookieSync.bind(jar);
-
-        const cookies = res.headers['set-cookie'];
-        if (cookies != null) {
-          for (const cookie of cookies) {
-            setCookieSync(cookie, requestUrl, { ignoreError: true });
-          }
-        }
-
-        return emit('response', res);
+        return emit(event, ...args);
       };
     }
 
