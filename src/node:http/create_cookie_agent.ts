@@ -29,7 +29,6 @@ export type CookieAgentOptions = {
 };
 
 const kCookieOptions = Symbol('cookieOptions');
-const kGetRequestUrl = Symbol('getRequestUrl');
 const kSetCookieHeader = Symbol('setCookieHeader');
 const kOverwriteRequestEmit = Symbol('overwriteRequestEmit');
 
@@ -52,16 +51,6 @@ export function createCookieAgent<
         validateCookieOptions(cookieOptions);
       }
       this[kCookieOptions] = cookieOptions;
-    }
-
-    private [kGetRequestUrl](req: http.ClientRequest): string {
-      const requestUrl = liburl.format({
-        host: req.host,
-        pathname: req.path,
-        protocol: req.protocol,
-      });
-
-      return requestUrl;
     }
 
     private [kSetCookieHeader](req: http.ClientRequest, cookieHeader: string): void {
@@ -122,7 +111,11 @@ export function createCookieAgent<
       const cookieOptions = this[kCookieOptions];
 
       if (cookieOptions) {
-        const requestUrl = this[kGetRequestUrl](req);
+        const requestUrl = liburl.format({
+          host: req.host,
+          pathname: req.path,
+          protocol: req.protocol,
+        });
 
         const cookieHeader = createCookieHeaderValue({
           cookieOptions,
