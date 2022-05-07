@@ -28,9 +28,9 @@ export type CookieAgentOptions = {
 };
 
 const kCookieOptions = Symbol('cookieOptions');
-const GET_REQUEST_URL = Symbol('getRequestUrl');
-const SET_COOKIE_HEADER = Symbol('setCookieHeader');
-const OVERWRITE_REQUEST_EMIT = Symbol('overwriteRequestEmit');
+const kGetRequestUrl = Symbol('getRequestUrl');
+const kSetCookieHeader = Symbol('setCookieHeader');
+const kOverwriteRequestEmit = Symbol('overwriteRequestEmit');
 
 export function createCookieAgent<
   BaseAgent extends http.Agent = http.Agent,
@@ -53,7 +53,7 @@ export function createCookieAgent<
       this[kCookieOptions] = cookieOptions;
     }
 
-    private [GET_REQUEST_URL](req: http.ClientRequest): string {
+    private [kGetRequestUrl](req: http.ClientRequest): string {
       const requestUrl = liburl.format({
         host: req.host,
         pathname: req.path,
@@ -63,7 +63,7 @@ export function createCookieAgent<
       return requestUrl;
     }
 
-    private [SET_COOKIE_HEADER](req: http.ClientRequest, cookieHeader: string): void {
+    private [kSetCookieHeader](req: http.ClientRequest, cookieHeader: string): void {
       if (cookieHeader === '') {
         return;
       }
@@ -101,7 +101,7 @@ export function createCookieAgent<
       req._onPendingData(diffSize);
     }
 
-    private [OVERWRITE_REQUEST_EMIT](req: http.ClientRequest, requestUrl: string, cookieOptions: CookieOptions): void {
+    private [kOverwriteRequestEmit](req: http.ClientRequest, requestUrl: string, cookieOptions: CookieOptions): void {
       const { async_UNSTABLE = false, jar } = cookieOptions;
 
       const emit = req.emit.bind(req);
@@ -131,7 +131,7 @@ export function createCookieAgent<
       const cookieOptions = this[kCookieOptions];
 
       if (cookieOptions) {
-        const requestUrl = this[GET_REQUEST_URL](req);
+        const requestUrl = this[kGetRequestUrl](req);
 
         const cookieHeader = createCookieHeaderValue({
           cookieOptions,
@@ -139,8 +139,8 @@ export function createCookieAgent<
           requestUrl,
         });
 
-        this[SET_COOKIE_HEADER](req, cookieHeader);
-        this[OVERWRITE_REQUEST_EMIT](req, requestUrl, cookieOptions);
+        this[kSetCookieHeader](req, cookieHeader);
+        this[kOverwriteRequestEmit](req, requestUrl, cookieOptions);
       }
 
       super.addRequest(req, options);
