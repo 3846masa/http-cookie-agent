@@ -1,3 +1,20 @@
+# [3.0.0](https://github.com/3846masa/http-cookie-agent/compare/v2.1.2...v3.0.0) (2022-05-07)
+
+
+### Features
+
+* change import path for node:http ([#105](https://github.com/3846masa/http-cookie-agent/issues/105)) ([6260bdc](https://github.com/3846masa/http-cookie-agent/commit/6260bdc1c5fad2a466922e51d5ec260348725e75))
+* update README and add MIGRATION GUIDES ([#110](https://github.com/3846masa/http-cookie-agent/issues/110)) ([cb03a9f](https://github.com/3846masa/http-cookie-agent/commit/cb03a9fd4163ea57b9cb945fd2fd79c779cbac4a))
+* use cookiejar synchronous functions by default ([#107](https://github.com/3846masa/http-cookie-agent/issues/107)) ([2bf68bb](https://github.com/3846masa/http-cookie-agent/commit/2bf68bb28a8f5e0209a294d6d6430cf61a95ed9e))
+
+
+### BREAKING CHANGES
+
+* see MIGRATION.md for more details.
+* The property name for passing cookiejar to agent has been changed.
+* Changed to use cookiejar synchronous functions by default. If you use an asynchronous cookiejar store, set cookies.async_UNSTABLE to true.
+* you should import `'http-cookie-agent/node:http'` instead of `'http-cookie-agent'`.
+
 ## [2.1.2](https://github.com/3846masa/http-cookie-agent/compare/v2.1.1...v2.1.2) (2022-05-07)
 
 
