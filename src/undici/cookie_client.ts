@@ -5,10 +5,11 @@ import { Agent, Client, Dispatcher } from 'undici';
 import { kDispatch, kMaxRedirections, kUrl } from 'undici/lib/core/symbols';
 import { RedirectHandler } from 'undici/lib/handler/redirect';
 
+import type { CookieOptions } from '../cookie_options';
+import { validateCookieOptions } from '../utils/validate_cookie_options';
+
 import { CookieHandler } from './cookie_handler';
-import type { CookieOptions } from './cookie_options';
 import { convertToHeadersObject } from './utils/convert_to_headers_object';
-import { validateCookieOptions } from './utils/validate_cookie_options';
 
 const kCookieOptions = Symbol('cookieOptions');
 const kAppendCookieHeader = Symbol('appendCookieHeader');

@@ -3,7 +3,8 @@ import type { Duplex } from 'node:stream';
 import type { Dispatcher } from 'undici';
 import { errors } from 'undici';
 
-import type { CookieOptions } from './cookie_options';
+import type { CookieOptions } from '../cookie_options';
+
 import { convertToHeadersObject } from './utils/convert_to_headers_object';
 
 const kRequestUrl = Symbol('requestUrl');
