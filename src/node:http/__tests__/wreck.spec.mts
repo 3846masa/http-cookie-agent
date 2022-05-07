@@ -1,14 +1,13 @@
+import Wreck from '@hapi/wreck';
 import test from 'ava';
-import superagent from 'superagent';
 import { CookieJar } from 'tough-cookie';
 
+import { createTestServer, readStream } from '../../__tests__/helpers.mjs';
 import { HttpCookieAgent } from '../index.js';
-
-import { createTestServer, readStream } from './helpers.mjs';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -17,7 +16,9 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
     },
   ]);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent);
+  await Wreck.get(`http://localhost:${port}`, {
+    agent,
+  });
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 1);
@@ -28,7 +29,7 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
 
 test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -37,7 +38,9 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent);
+  await Wreck.get(`http://localhost:${port}`, {
+    agent,
+  });
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 2);
@@ -49,7 +52,7 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
 
 test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -60,14 +63,16 @@ test('should send cookies from CookieJar', async (t) => {
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent);
+  await Wreck.get(`http://localhost:${port}`, {
+    agent,
+  });
 
   t.plan(1);
 });
 
 test('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -78,14 +83,17 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent).set('Cookie', 'key2=value2');
+  await Wreck.get(`http://localhost:${port}`, {
+    agent,
+    headers: { Cookie: 'key2=value2' },
+  });
 
   t.plan(1);
 });
 
 test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -96,14 +104,17 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent).set('Cookie', 'key=expected');
+  await Wreck.get(`http://localhost:${port}`, {
+    agent,
+    headers: { Cookie: 'key=expected' },
+  });
 
   t.plan(1);
 });
 
 test('should send cookies from the first response when redirecting', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -118,17 +129,20 @@ test('should send cookies from the first response when redirecting', async (t) =
     },
   ]);
 
-  await superagent.get(`http://localhost:${port}`).agent(agent);
+  await Wreck.get(`http://localhost:${port}`, {
+    agent,
+    redirects: 1,
+  });
 
   t.plan(1);
 });
 
 test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.getCookies = async () => {
+  jar.getCookiesSync = () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -138,7 +152,9 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   ]);
 
   await t.throwsAsync(() => {
-    return superagent.get(`http://localhost:${port}`).agent(agent);
+    return Wreck.get(`http://localhost:${port}`, {
+      agent,
+    });
   });
 
   t.plan(1);
@@ -146,10 +162,10 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
 
 test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.setCookie = async () => {
+  jar.setCookieSync = () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -158,8 +174,10 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
     },
   ]);
 
-  await t.throwsAsync(async () => {
-    return superagent.get(`http://localhost:${port}`).agent(agent);
+  await t.throwsAsync(() => {
+    return Wreck.get(`http://localhost:${port}`, {
+      agent,
+    });
   });
 
   t.plan(1);
@@ -169,7 +187,7 @@ test('should send post data when keepalive is enabled', async (t) => {
   const times = 2;
 
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar, keepAlive: true });
+  const agent = new HttpCookieAgent({ cookies: { jar }, keepAlive: true });
 
   const { port } = await createTestServer(
     Array.from({ length: times }, (_, idx) => {
@@ -184,7 +202,10 @@ test('should send post data when keepalive is enabled', async (t) => {
   await jar.setCookie('key=expected', `http://localhost:${port}`);
 
   for (let idx = 0; idx < times; idx++) {
-    await superagent.post(`http://localhost:${port}`).send(`{ "index": "${idx}" }`).agent(agent);
+    await Wreck.post(`http://localhost:${port}`, {
+      agent,
+      payload: `{ "index": "${idx}" }`,
+    });
   }
 
   t.plan(times * 2);

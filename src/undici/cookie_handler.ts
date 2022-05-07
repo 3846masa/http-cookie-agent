@@ -3,7 +3,9 @@ import type { Duplex } from 'node:stream';
 import type { Dispatcher } from 'undici';
 import { errors } from 'undici';
 
-import type { CookieOptions } from './cookie_options';
+import type { CookieOptions } from '../cookie_options';
+import { saveCookiesFromHeader } from '../utils/save_cookies_from_header';
+
 import { convertToHeadersObject } from './utils/convert_to_headers_object';
 
 const kRequestUrl = Symbol('requestUrl');
@@ -38,22 +40,12 @@ class CookieHandler implements Required<Dispatcher.DispatchHandlers> {
       throw new errors.InvalidArgumentError('invalid onHeaders method');
     }
 
-    const { async_UNSTABLE, jar } = this[kCookieOptions];
     const headers = convertToHeadersObject(_headers);
-
-    const setCookieSync = async_UNSTABLE
-      ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-        (require('deasync') as typeof import('deasync'))(jar.setCookie.bind(jar))
-      : jar.setCookieSync.bind(jar);
-
-    const cookies = [headers['set-cookie']].flat();
-
-    for (const cookie of cookies) {
-      if (cookie == null) {
-        continue;
-      }
-      setCookieSync(cookie, this[kRequestUrl], { ignoreError: true });
-    }
+    saveCookiesFromHeader({
+      cookieOptions: this[kCookieOptions],
+      cookies: headers['set-cookie'],
+      requestUrl: this[kRequestUrl],
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this[kHandlers].onHeaders!(statusCode, _headers, resume);

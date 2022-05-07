@@ -1,6 +1,6 @@
 import http from 'node:http';
 
-import { createCookieAgent } from 'http-cookie-agent';
+import { createCookieAgent } from 'http-cookie-agent/node:http';
 import httpProxy from 'http-proxy';
 import httpProxyAgent from 'http-proxy-agent';
 import { CookieJar } from 'tough-cookie';
@@ -23,7 +23,7 @@ proxyServer.listen(9000);
 const HttpProxyCookieAgent = createCookieAgent(httpProxyAgent.HttpProxyAgent);
 
 const jar = new CookieJar();
-const agent = new HttpProxyCookieAgent({ host: '127.0.0.1', jar, port: 9000 });
+const agent = new HttpProxyCookieAgent({ cookies: { jar }, host: '127.0.0.1', port: 9000 });
 
 http.get('http://httpbin.org/cookies/set/session/userid', { agent }, (_res) => {
   jar.getCookies('http://httpbin.org').then((cookies) => {

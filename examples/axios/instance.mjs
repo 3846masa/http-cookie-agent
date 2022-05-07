@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
 import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
 
 const client = axios.create({
-  httpAgent: new HttpCookieAgent({ jar }),
-  httpsAgent: new HttpsCookieAgent({ jar }),
+  httpAgent: new HttpCookieAgent({ cookies: { jar } }),
+  httpsAgent: new HttpsCookieAgent({ cookies: { jar } }),
 });
 
 await client.get('https://httpbin.org/cookies/set/session/userid');

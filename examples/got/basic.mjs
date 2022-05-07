@@ -1,13 +1,13 @@
 import got from 'got';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
 import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
 
 await got('https://httpbin.org/cookies/set/session/userid', {
   agent: {
-    http: new HttpCookieAgent({ jar }),
-    https: new HttpsCookieAgent({ jar }),
+    http: new HttpCookieAgent({ cookies: { jar } }),
+    https: new HttpsCookieAgent({ cookies: { jar } }),
   },
 });
 

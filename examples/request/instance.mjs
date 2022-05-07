@@ -1,11 +1,11 @@
-import { MixedCookieAgent } from 'http-cookie-agent';
+import { MixedCookieAgent } from 'http-cookie-agent/node:http';
 import request from 'request';
 import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
 
 const client = request.defaults({
-  agent: new MixedCookieAgent({ jar }),
+  agent: new MixedCookieAgent({ cookies: { jar } }),
 });
 
 client.get('https://httpbin.org/cookies/set/session/userid', (_err, _res) => {

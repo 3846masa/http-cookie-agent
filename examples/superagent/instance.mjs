@@ -1,9 +1,9 @@
-import { MixedCookieAgent } from 'http-cookie-agent';
+import { MixedCookieAgent } from 'http-cookie-agent/node:http';
 import superagent from 'superagent';
 import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
-const mixedAgent = new MixedCookieAgent({ jar });
+const mixedAgent = new MixedCookieAgent({ cookies: { jar } });
 
 const client = superagent.agent().use((req) => req.agent(mixedAgent));
 

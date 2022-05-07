@@ -1,14 +1,13 @@
 import test from 'ava';
-import needle from 'needle';
+import fetch from 'node-fetch';
 import { CookieJar } from 'tough-cookie';
 
+import { createTestServer, readStream } from '../../__tests__/helpers.mjs';
 import { HttpCookieAgent } from '../index.js';
-
-import { createTestServer, readStream } from './helpers.mjs';
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -17,7 +16,7 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
     },
   ]);
 
-  await needle('get', `http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
   });
 
@@ -30,7 +29,7 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
 
 test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -39,7 +38,7 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
 
-  await needle('get', `http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
   });
 
@@ -53,7 +52,7 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
 
 test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -64,7 +63,7 @@ test('should send cookies from CookieJar', async (t) => {
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  await needle('get', `http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
   });
 
@@ -73,7 +72,7 @@ test('should send cookies from CookieJar', async (t) => {
 
 test('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -84,7 +83,7 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  await needle('get', `http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
     headers: { Cookie: 'key2=value2' },
   });
@@ -94,7 +93,7 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
 test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -105,7 +104,7 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
-  await needle('get', `http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
     headers: { Cookie: 'key=expected' },
   });
@@ -115,7 +114,7 @@ test('should send cookies from a request options when the key is duplicated in b
 
 test('should send cookies from the first response when redirecting', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -130,9 +129,8 @@ test('should send cookies from the first response when redirecting', async (t) =
     },
   ]);
 
-  await needle('get', `http://localhost:${port}`, {
+  await fetch(`http://localhost:${port}`, {
     agent,
-    follow_max: 1,
   });
 
   t.plan(1);
@@ -140,10 +138,10 @@ test('should send cookies from the first response when redirecting', async (t) =
 
 test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.getCookies = async () => {
+  jar.getCookiesSync = () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -153,7 +151,7 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   ]);
 
   await t.throwsAsync(() => {
-    return needle('get', `http://localhost:${port}`, {
+    return fetch(`http://localhost:${port}`, {
       agent,
     });
   });
@@ -163,10 +161,10 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
 
 test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.setCookie = async () => {
+  jar.setCookieSync = () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ jar });
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -175,8 +173,8 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
     },
   ]);
 
-  await t.throwsAsync(async () => {
-    return needle('get', `http://localhost:${port}`, {
+  await t.throwsAsync(() => {
+    return fetch(`http://localhost:${port}`, {
       agent,
     });
   });
@@ -188,7 +186,7 @@ test('should send post data when keepalive is enabled', async (t) => {
   const times = 2;
 
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar, keepAlive: true });
+  const agent = new HttpCookieAgent({ cookies: { jar }, keepAlive: true });
 
   const { port } = await createTestServer(
     Array.from({ length: times }, (_, idx) => {
@@ -203,8 +201,10 @@ test('should send post data when keepalive is enabled', async (t) => {
   await jar.setCookie('key=expected', `http://localhost:${port}`);
 
   for (let idx = 0; idx < times; idx++) {
-    await needle('post', `http://localhost:${port}`, `{ "index": "${idx}" }`, {
+    await fetch(`http://localhost:${port}`, {
       agent,
+      body: `{ "index": "${idx}" }`,
+      method: 'POST',
     });
   }
 
