@@ -1,25 +1,47 @@
-import Wreck from '@hapi/wreck';
+import http from 'node:http';
+
 import test from 'ava';
+import hpa from 'http-proxy-agent';
 import { CookieJar } from 'tough-cookie';
 
-import { HttpCookieAgent } from '../index.js';
+import { createTestServerWithProxy } from '../../__tests__/helpers.mjs';
+import { createCookieAgent } from '../create_cookie_agent.js';
 
-import { createTestServer, readStream } from './helpers.mjs';
+const HttpProxyCookieAgent = createCookieAgent(hpa.HttpProxyAgent);
+
+export function request(url: string, options: http.RequestOptions) {
+  const req = http.request(url, options);
+
+  const promise = new Promise<http.IncomingMessage>((resolve, reject) => {
+    req.on('response', (res) => {
+      res.on('error', (err) => reject(err));
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      res.on('data', () => {});
+      res.on('end', () => resolve(res));
+    });
+    req.on('error', (err) => reject(err));
+  });
+  req.end();
+
+  return { promise, req };
+}
 
 test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
 
-  const { port } = await createTestServer([
+  const { port, proxyPort } = await createTestServerWithProxy([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
+  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
-  await Wreck.get(`http://localhost:${port}`, {
+  const { promise } = request(`http://localhost:${port}`, {
     agent,
+    method: 'GET',
   });
+  await promise;
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 1);
@@ -30,18 +52,20 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
 
 test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
 
-  const { port } = await createTestServer([
+  const { port, proxyPort } = await createTestServerWithProxy([
     (_req, res) => {
       res.setHeader('Set-Cookie', ['key1=value1', 'key2=value2']);
       res.end();
     },
   ]);
+  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
-  await Wreck.get(`http://localhost:${port}`, {
+  const { promise } = request(`http://localhost:${port}`, {
     agent,
+    method: 'GET',
   });
+  await promise;
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 2);
@@ -53,87 +77,68 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
 
 test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
 
-  const { port } = await createTestServer([
+  const { port, proxyPort } = await createTestServerWithProxy([
     (req, res) => {
       t.is(req.headers['cookie'], 'key=value');
       res.end();
     },
   ]);
+  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  await Wreck.get(`http://localhost:${port}`, {
+  const { promise } = request(`http://localhost:${port}`, {
     agent,
+    method: 'GET',
   });
+  await promise;
 
   t.plan(1);
 });
 
 test('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
 
-  const { port } = await createTestServer([
+  const { port, proxyPort } = await createTestServerWithProxy([
     (req, res) => {
       t.is(req.headers['cookie'], 'key1=value1; key2=value2');
       res.end();
     },
   ]);
+  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  await Wreck.get(`http://localhost:${port}`, {
+  const { promise } = request(`http://localhost:${port}`, {
     agent,
     headers: { Cookie: 'key2=value2' },
+    method: 'GET',
   });
+  await promise;
 
   t.plan(1);
 });
 
 test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
 
-  const { port } = await createTestServer([
+  const { port, proxyPort } = await createTestServerWithProxy([
     (req, res) => {
       t.is(req.headers['cookie'], 'key=expected');
       res.end();
     },
   ]);
+  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
   await jar.setCookie('key=notexpected', `http://localhost:${port}`);
 
-  await Wreck.get(`http://localhost:${port}`, {
+  const { promise } = request(`http://localhost:${port}`, {
     agent,
     headers: { Cookie: 'key=expected' },
+    method: 'GET',
   });
-
-  t.plan(1);
-});
-
-test('should send cookies from the first response when redirecting', async (t) => {
-  const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar });
-
-  const { port } = await createTestServer([
-    (_req, res) => {
-      res.statusCode = 301;
-      res.setHeader('Location', '/redirect');
-      res.setHeader('Set-Cookie', 'key=value');
-      res.end();
-    },
-    (req, res) => {
-      t.is(req.headers['cookie'], 'key=value');
-      res.end();
-    },
-  ]);
-
-  await Wreck.get(`http://localhost:${port}`, {
-    agent,
-    redirects: 1,
-  });
+  await promise;
 
   t.plan(1);
 });
@@ -143,20 +148,20 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   jar.getCookies = async () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ jar });
 
-  const { port } = await createTestServer([
+  const { port, proxyPort } = await createTestServerWithProxy([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
+  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
-  await t.throwsAsync(() => {
-    return Wreck.get(`http://localhost:${port}`, {
-      agent,
-    });
+  const { promise } = request(`http://localhost:${port}`, {
+    agent,
+    method: 'GET',
   });
+  await t.throwsAsync(() => promise);
 
   t.plan(1);
 });
@@ -166,48 +171,20 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   jar.setCookie = async () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ jar });
 
-  const { port } = await createTestServer([
+  const { port, proxyPort } = await createTestServerWithProxy([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
+  const agent = new HttpProxyCookieAgent({ host: 'localhost', jar, port: proxyPort });
 
-  await t.throwsAsync(async () => {
-    return Wreck.get(`http://localhost:${port}`, {
-      agent,
-    });
+  const { promise } = request(`http://localhost:${port}`, {
+    agent,
+    method: 'GET',
   });
+  await t.throwsAsync(() => promise);
 
   t.plan(1);
-});
-
-test('should send post data when keepalive is enabled', async (t) => {
-  const times = 2;
-
-  const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ jar, keepAlive: true });
-
-  const { port } = await createTestServer(
-    Array.from({ length: times }, (_, idx) => {
-      return async (req, res) => {
-        t.is(await readStream(req), `{ "index": "${idx}" }`);
-        t.is(req.headers['cookie'], 'key=expected');
-        res.end();
-      };
-    }),
-  );
-
-  await jar.setCookie('key=expected', `http://localhost:${port}`);
-
-  for (let idx = 0; idx < times; idx++) {
-    await Wreck.post(`http://localhost:${port}`, {
-      agent,
-      payload: `{ "index": "${idx}" }`,
-    });
-  }
-
-  t.plan(times * 2);
 });
