@@ -30,13 +30,13 @@
   "license": "MIT",
   "author": "3846masa <3846masahiro+git@gmail.com>",
   "exports": {
-    "./node:http": "./node:http/index.js",
+    "./http": "./http/index.js",
     "./undici": "./undici/index.js"
   },
   "files": [
     "dist",
     "undici",
-    "node:http",
+    "http",
     "!**/__tests__"
   ],
   "scripts": {
@@ -66,7 +66,7 @@
     "agent-base": "^6.0.2"
   },
   "devDependencies": {
-    "@3846masa/configs": "github:3846masa/configs#a45bbd3e20a59f0c83aef18648144d8f04884f9b",
+    "@3846masa/configs": "github:3846masa/configs#c9cb404fd4e6ead15044c605e014aecea1182124",
     "@babel/cli": "^7.17.10",
     "@babel/core": "7.17.10",
     "@babel/preset-env": "^7.17.10",
