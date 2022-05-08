@@ -1,3 +1,19 @@
+# [4.0.0](https://github.com/3846masa/http-cookie-agent/compare/v3.0.0...v4.0.0) (2022-05-08)
+
+
+### Bug Fixes
+
+* fix import path for windows ([#112](https://github.com/3846masa/http-cookie-agent/issues/112)) ([3096d4f](https://github.com/3846masa/http-cookie-agent/commit/3096d4f8647ac6878fabcb54eea3faea21d3928e))
+
+
+### BREAKING CHANGES
+
+* `http-cookie-agent/http:node` cannot use on windows, so renamed `http-cookie-agent/http`
+
+* ci: test on windows and macos environments
+
+* chore: update MIGRATION.md
+
 # [3.0.0](https://github.com/3846masa/http-cookie-agent/compare/v2.1.2...v3.0.0) (2022-05-07)
 
 
