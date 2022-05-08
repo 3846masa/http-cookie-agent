@@ -1,6 +1,6 @@
 import https from 'node:https';
 
-import { HttpsCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpsCookieAgent } from 'http-cookie-agent/http';
 import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();

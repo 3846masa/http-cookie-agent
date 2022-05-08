@@ -1,4 +1,4 @@
-import { MixedCookieAgent } from 'http-cookie-agent/node:http';
+import { MixedCookieAgent } from 'http-cookie-agent/http';
 import request from 'request';
 import { CookieJar } from 'tough-cookie';
 

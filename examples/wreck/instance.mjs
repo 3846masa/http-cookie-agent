@@ -1,5 +1,5 @@
 import Wreck from '@hapi/wreck';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/http';
 import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
