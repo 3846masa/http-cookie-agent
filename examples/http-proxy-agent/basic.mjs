@@ -1,6 +1,6 @@
 import http from 'node:http';
 
-import { createCookieAgent } from 'http-cookie-agent/node:http';
+import { createCookieAgent } from 'http-cookie-agent/http';
 import httpProxy from 'http-proxy';
 import httpProxyAgent from 'http-proxy-agent';
 import { CookieJar } from 'tough-cookie';

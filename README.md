@@ -30,7 +30,7 @@ Pass `http-cookie-agent` to HTTP clients instead of http(s).Agent.
 
 ```js
 import { CookieJar } from 'tough-cookie';
-import { HttpCookieAgent, HttpsCookieAgent, MixedCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpCookieAgent, HttpsCookieAgent, MixedCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -77,7 +77,7 @@ await fetch('https://example.com');
 import https from 'node:https';
 
 import { CookieJar } from 'tough-cookie';
-import { HttpsCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpsCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 const agent = new HttpsCookieAgent({ cookies: { jar } });
@@ -92,7 +92,7 @@ https.get('https://example.com', { agent }, (res) => {
 ```js
 import axios from 'axios';
 import { CookieJar } from 'tough-cookie';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -109,7 +109,7 @@ await client.get('https://example.com');
 ```js
 import fetch from 'node-fetch';
 import { CookieJar } from 'tough-cookie';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -132,7 +132,7 @@ See https://github.com/sindresorhus/got/tree/v11.8.2#cookies.
 ```js
 import got from 'got';
 import { CookieJar } from 'tough-cookie';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -155,7 +155,7 @@ See https://github.com/visionmedia/superagent/blob/v6.1.0/docs/index.md#saving-c
 ```js
 import superagent from 'superagent';
 import { CookieJar } from 'tough-cookie';
-import { MixedCookieAgent } from 'http-cookie-agent/node:http';
+import { MixedCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 const mixedAgent = new MixedCookieAgent({ cookies: { jar } });
@@ -174,7 +174,7 @@ See https://github.com/request/request/tree/v2.88.1#examples.
 ```js
 import request from 'request';
 import { CookieJar } from 'tough-cookie';
-import { MixedCookieAgent } from 'http-cookie-agent/node:http';
+import { MixedCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -192,7 +192,7 @@ client.get('https://example.com', (_err, _res) => {
 ```js
 import needle from 'needle';
 import { CookieJar } from 'tough-cookie';
-import { MixedCookieAgent } from 'http-cookie-agent/node:http';
+import { MixedCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -206,7 +206,7 @@ await needle('get', 'https://example.com', {
 ```js
 import phin from 'phin';
 import { CookieJar } from 'tough-cookie';
-import { MixedCookieAgent } from 'http-cookie-agent/node:http';
+import { MixedCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -223,7 +223,7 @@ await phin({
 ```js
 import Wreck from '@hapi/wreck';
 import { CookieJar } from 'tough-cookie';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -243,7 +243,7 @@ await client.get('https://example.com');
 ```js
 import urllib from 'urllib';
 import { CookieJar } from 'tough-cookie';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/node:http';
+import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/http';
 
 const jar = new CookieJar();
 
@@ -284,7 +284,7 @@ import https from 'node:https';
 
 import { HttpsAgent as KeepAliveAgent } from 'agentkeepalive';
 import { CookieJar } from 'tough-cookie';
-import { createCookieAgent } from 'http-cookie-agent/node:http';
+import { createCookieAgent } from 'http-cookie-agent/http';
 
 const Agent = createCookieAgent(KeepAliveAgent);
 
