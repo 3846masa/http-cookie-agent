@@ -1,6 +1,6 @@
 # MIGRATION GUIDES
 
-## Migration guide from v2.x.x to v3.0.0
+## Migration guide from v2.x.x to v4.0.0
 
 - [The import path has been changed.](#the-import-path-has-been-changed)
 - [The property name for passing cookiejar to agent has been changed.](#the-property-name-for-passing-cookiejar-to-agent-has-been-changed)
@@ -8,18 +8,18 @@
 
 ### The import path has been changed.
 
-You should import from `'http-cookie-agent/node:http'` instead of `'http-cookie-agent'`.
+You should import from `'http-cookie-agent/http'` instead of `'http-cookie-agent'`.
 
 ```diff
   // CommonJS
 - const { HttpCookieAgent } = require('http-cookie-agent');
-+ const { HttpCookieAgent } = require('http-cookie-agent/node:http');
++ const { HttpCookieAgent } = require('http-cookie-agent/http');
 ```
 
 ```diff
   // ES Module
 - import { HttpCookieAgent } from 'http-cookie-agent';
-+ import { HttpCookieAgent } from 'http-cookie-agent/node:http';
++ import { HttpCookieAgent } from 'http-cookie-agent/http';
 ```
 
 ### The property name for passing CookieJar to Agent has been changed.
@@ -46,3 +46,7 @@ If you use an asynchronous cookie store (e.g. `redis-cookie-store`), set `cookie
 +   cookies: { async_UNSTABLE: true, jar },
   });
 ```
+
+## Migration guide from v2.x.x to v3.0.0
+
+**`v3.0.0` is deprecated because it cannot work on windows. Please use v4.0.0.**
