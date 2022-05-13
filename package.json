@@ -77,7 +77,7 @@
     "@types/deasync": "0.1.2",
     "@types/http-proxy": "1.17.9",
     "@types/needle": "2.5.3",
-    "@types/node": "14.18.17",
+    "@types/node": "14.18.18",
     "@types/request": "2.48.8",
     "@types/semver": "^7.3.9",
     "@types/superagent": "4.1.15",
