@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/3846masa/http-cookie-agent/compare/v4.0.0...v4.0.1) (2022-05-21)
+
+
+### Bug Fixes
+
+* supports node.js global fetch since node.js v18.2.0 ([#127](https://github.com/3846masa/http-cookie-agent/issues/127)) ([05b669c](https://github.com/3846masa/http-cookie-agent/commit/05b669c6f9524a905ccdc52375d5420ec139347c))
+
 # [4.0.0](https://github.com/3846masa/http-cookie-agent/compare/v3.0.0...v4.0.0) (2022-05-08)
 
 
