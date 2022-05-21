@@ -6,14 +6,14 @@
 [![license](https://flat.badgen.net/badge/license/MIT/blue)](LICENSE)
 [![standard-readme compliant](https://flat.badgen.net/badge/readme%20style/standard/green)](https://github.com/RichardLitt/standard-readme)
 
-Allows cookies with every Node.js HTTP clients (e.g. undici, axios, node-fetch).
+Allows cookies with every Node.js HTTP clients (e.g. Node.js global fetch, undici, axios, node-fetch).
 
 ## Table of Contents
 
 - [Install](#install)
 - [Usage](#usage)
   - [Supported libraries](#supported-libraries)
-  - [Using with HTTP clients](#using-with-http-clients)
+  - [Using with an asynchronous Cookie store](#using-with-an-asynchronous-cookie-store)
   - [Using with another Agent library](#using-with-another-agent-library)
 - [Contributing](#contributing)
 - [License](#license)
@@ -24,51 +24,47 @@ Allows cookies with every Node.js HTTP clients (e.g. undici, axios, node-fetch).
 npm install http-cookie-agent tough-cookie
 ```
 
-## Usage
+When you want to use Node.js global fetch (aka. `undici`), you should install `undici` additionally.
 
-Pass `http-cookie-agent` to HTTP clients instead of http(s).Agent.
-
-```js
-import { CookieJar } from 'tough-cookie';
-import { HttpCookieAgent, HttpsCookieAgent, MixedCookieAgent } from 'http-cookie-agent/http';
-
-const jar = new CookieJar();
-
-const httpAgent = new HttpCookieAgent({ cookies: { jar } });
-
-// To access via HTTPS, use HttpsCookieAgent instead.
-const httpsAgent = new HttpsCookieAgent({ cookies: { jar } });
-
-// If the client library cannot switch Agents based on the protocol, use MixedCookieAgent instead.
-const mixedAgent = new MixedCookieAgent({ cookies: { jar } });
-
-// Pass agent to HTTP client.
-client.request('https://example.com', { agent: httpAgent });
+```bash
+npm install undici
 ```
+
+## Usage
 
 ### Supported libraries
 
-`undici` / `node:http` / `node:https` / `axios` / `node-fetch` / `got`\*\* / `superagent`\*\* / `request`\*\* / `needle` / `phin` / `@hapi/wreck` / `urllib` etc.
+Node.js global fetch / `undici` / `node:http` / `node:https` / `axios` / `node-fetch` / `got`\*\* / `superagent`\*\* / `request`\*\* / `needle` / `phin` / `@hapi/wreck` / `urllib` etc.
 
 \*\* The library supports cookies by default. You may not need `http-cookie-agent`.
 
-### Using with HTTP clients
-
 See also [examples](./examples) for more details.
 
-#### `undici`
+#### Node.js global fetch
+
+`http-cookie-agent` supports global fetch since Node.js v18.2.0.
 
 ```js
-import { fetch, setGlobalDispatcher } from 'undici';
 import { CookieJar } from 'tough-cookie';
 import { CookieAgent } from 'http-cookie-agent/undici';
 
 const jar = new CookieJar();
 const agent = new CookieAgent({ cookies: { jar } });
 
-setGlobalDispatcher(agent);
+await fetch('https://example.com', { dispatcher: agent });
+```
 
-await fetch('https://example.com');
+#### `undici`
+
+```js
+import { fetch } from 'undici';
+import { CookieJar } from 'tough-cookie';
+import { CookieAgent } from 'http-cookie-agent/undici';
+
+const jar = new CookieJar();
+const agent = new CookieAgent({ cookies: { jar } });
+
+await fetch('https://example.com', { dispatcher: agent });
 ```
 
 #### `node:http` / `node:https`
@@ -301,7 +297,7 @@ https.get('https://example.com', { agent }, (res) => {
 If you want to use another undici Agent library, use `CookieClient` via factory function.
 
 ```js
-import { fetch, ProxyAgent, setGlobalDispatcher } from 'undici';
+import { fetch, ProxyAgent } from 'undici';
 import { CookieJar } from 'tough-cookie';
 import { CookieClient } from 'http-cookie-agent/undici';
 
@@ -315,15 +311,13 @@ const agent = new ProxyAgent({
   },
 });
 
-setGlobalDispatcher(agent);
-
-await fetch('https://example.com');
+await fetch('https://example.com', { dispatcher: agent });
 ```
 
 If you want to use another undici Client library, wrap the client in `createCookieClient`.
 
 ```js
-import { fetch, Agent, MockClient, setGlobalDispatcher } from 'undici';
+import { fetch, Agent, MockClient } from 'undici';
 import { CookieJar } from 'tough-cookie';
 import { createCookieClient } from 'http-cookie-agent/undici';
 
@@ -339,9 +333,7 @@ const agent = new Agent({
   },
 });
 
-setGlobalDispatcher(agent);
-
-await fetch('https://example.com');
+await fetch('https://example.com', { dispatcher: agent });
 ```
 
 ## Contributing

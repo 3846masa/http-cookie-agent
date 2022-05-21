@@ -1,12 +1,11 @@
 import test from 'ava';
 import semver from 'semver';
 import { CookieJar } from 'tough-cookie';
-import { fetch } from 'undici';
 
 import { createTestServer, readStream } from '../../__tests__/helpers.mjs';
 import { CookieAgent } from '../cookie_agent.js';
 
-if (semver.lt(process.version, 'v16.5.0')) {
+if (semver.lt(process.version, 'v18.2.0')) {
   process.exit(0);
 }
 

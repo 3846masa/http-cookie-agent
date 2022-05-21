@@ -1,6 +1,5 @@
 import { CookieAgent } from 'http-cookie-agent/undici';
 import { CookieJar } from 'tough-cookie';
-import { fetch } from 'undici';
 
 const jar = new CookieJar();
 const agent = new CookieAgent({ cookies: { jar } });
