@@ -3,7 +3,7 @@ import http from 'node:http';
 import { CookieClient } from 'http-cookie-agent/undici';
 import httpProxy from 'http-proxy';
 import { CookieJar } from 'tough-cookie';
-import { fetch, ProxyAgent, setGlobalDispatcher } from 'undici';
+import { fetch, ProxyAgent } from 'undici';
 
 // Create reverse proxy for debugging
 const proxy = httpProxy.createServer();
@@ -25,9 +25,8 @@ const agent = new ProxyAgent({
   factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
   uri: 'http://127.0.0.1:9000',
 });
-setGlobalDispatcher(agent);
 
-await fetch('https://httpbin.org/cookies/set/session/userid');
+await fetch('https://httpbin.org/cookies/set/session/userid', { dispatcher: agent });
 
 const cookies = await jar.getCookies('https://httpbin.org');
 console.log(cookies);
