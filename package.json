@@ -83,7 +83,7 @@
     "@types/superagent": "4.1.15",
     "@types/tough-cookie": "4.0.2",
     "agentkeepalive": "4.2.1",
-    "ava": "4.2.0",
+    "ava": "4.3.0",
     "axios": "0.27.2",
     "deasync": "0.1.26",
     "got": "12.1.0",
