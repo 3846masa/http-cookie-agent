@@ -95,7 +95,7 @@
     "phin": "3.6.1",
     "request": "2.88.2",
     "rimraf": "^3.0.2",
-    "semantic-release": "19.0.2",
+    "semantic-release": "19.0.3",
     "semver": "^7.3.7",
     "superagent": "7.1.6",
     "tough-cookie": "4.0.0",
