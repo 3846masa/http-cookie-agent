@@ -1,23 +1,12 @@
 import http from 'node:http';
 
 import { CookieClient } from 'http-cookie-agent/undici';
-import httpProxy from 'http-proxy';
+import proxy from 'proxy';
 import { CookieJar } from 'tough-cookie';
 import { fetch, ProxyAgent } from 'undici';
 
 // Create reverse proxy for debugging
-const proxy = httpProxy.createServer();
-const proxyServer = http.createServer((req, res) => {
-  const url = new URL(req.url);
-  proxy.web(req, res, {
-    secure: false,
-    target: {
-      hostname: url.hostname,
-      port: url.port,
-      protocol: url.protocol,
-    },
-  });
-});
+const proxyServer = proxy(http.createServer());
 proxyServer.listen(9000);
 
 const jar = new CookieJar();
