@@ -1,23 +1,12 @@
 import http from 'node:http';
 
 import { createCookieAgent } from 'http-cookie-agent/http';
-import httpProxy from 'http-proxy';
 import httpProxyAgent from 'http-proxy-agent';
+import proxy from 'proxy';
 import { CookieJar } from 'tough-cookie';
 
 // Create reverse proxy for debugging
-const proxy = httpProxy.createServer();
-const proxyServer = http.createServer((req, res) => {
-  const url = new URL(req.url);
-  proxy.web(req, res, {
-    secure: false,
-    target: {
-      hostname: url.hostname,
-      port: url.port,
-      protocol: url.protocol,
-    },
-  });
-});
+const proxyServer = proxy(http.createServer());
 proxyServer.listen(9000);
 
 const HttpProxyCookieAgent = createCookieAgent(httpProxyAgent.HttpProxyAgent);
