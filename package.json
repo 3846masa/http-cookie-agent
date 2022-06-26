@@ -96,7 +96,7 @@
     "rimraf": "^3.0.2",
     "semantic-release": "19.0.3",
     "semver": "^7.3.7",
-    "superagent": "7.1.6",
+    "superagent": "8.0.0",
     "tough-cookie": "4.0.0",
     "typescript": "4.7.4",
     "undici": "5.5.1",
