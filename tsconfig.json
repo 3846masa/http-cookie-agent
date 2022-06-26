@@ -3,6 +3,10 @@
     "lib": ["ESNext"],
     "module": "CommonJS",
     "outDir": "./dist",
+    "paths": {
+      "http-cookie-agent/http": ["./http"],
+      "http-cookie-agent/undici": ["./undici"]
+    },
     "rootDir": "./src",
     "target": "ESNext",
     "types": ["@types/node"]
