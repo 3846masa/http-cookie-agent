@@ -2836,10 +2836,10 @@ dateformat@^3.0.0:
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
-deasync@0.1.26:
-  version "0.1.26"
-  resolved "https://registry.yarnpkg.com/deasync/-/deasync-0.1.26.tgz#87f54440034b87afc1e6a46667930c4e06363256"
-  integrity sha512-YKw0BmJSWxkjtQsbgn6Q9CHSWB7DKMen8vKrgyC006zy0UZ6nWyGidB0IzZgqkVRkOglAeUaFtiRTeLyel72bg==
+deasync@0.1.27:
+  version "0.1.27"
+  resolved "https://registry.yarnpkg.com/deasync/-/deasync-0.1.27.tgz#2a669a68d2d43bf8effa5a7efe7d8e1f1e447216"
+  integrity sha512-aCt6M9Ilkvs8TKIchmibUpNe/QSp9UNQL6YkvVraAce/SFFZCvYw3lQevl6MlUDn8Xr4QD4wYTerWH22yn+ODQ==
   dependencies:
     bindings "^1.5.0"
     node-addon-api "^1.7.1"
