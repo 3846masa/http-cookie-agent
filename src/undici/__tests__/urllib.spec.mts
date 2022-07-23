@@ -1,13 +1,14 @@
 import test from 'ava';
 import { CookieJar } from 'tough-cookie';
-import urllib from 'urllib';
+import { request, setGlobalDispatcher } from 'urllib';
 
 import { createTestServer, readStream } from '../../__tests__/helpers.mjs';
-import { HttpCookieAgent } from '../index.js';
+import { CookieAgent } from '../index.js';
 
-test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
+test.serial('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
+  const agent = new CookieAgent({ cookies: { jar } });
+  setGlobalDispatcher(agent);
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -16,9 +17,7 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
     },
   ]);
 
-  await urllib.request(`http://localhost:${port}`, {
-    agent,
-  });
+  await request(`http://localhost:${port}`);
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 1);
@@ -27,9 +26,10 @@ test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
   t.plan(2);
 });
 
-test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
+test.serial('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
+  const agent = new CookieAgent({ cookies: { jar } });
+  setGlobalDispatcher(agent);
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -38,9 +38,7 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
 
-  await urllib.request(`http://localhost:${port}`, {
-    agent,
-  });
+  await request(`http://localhost:${port}`);
 
   const cookies = await jar.getCookies(`http://localhost:${port}`);
   t.is(cookies.length, 2);
@@ -50,9 +48,10 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
   t.plan(3);
 });
 
-test('should send cookies from CookieJar', async (t) => {
+test.serial('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
+  const agent = new CookieAgent({ cookies: { jar } });
+  setGlobalDispatcher(agent);
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -63,16 +62,15 @@ test('should send cookies from CookieJar', async (t) => {
 
   await jar.setCookie('key=value', `http://localhost:${port}`);
 
-  await urllib.request(`http://localhost:${port}`, {
-    agent,
-  });
+  await request(`http://localhost:${port}`);
 
   t.plan(1);
 });
 
-test('should send cookies from both a request options and CookieJar', async (t) => {
+test.serial('should send cookies from both a request options and CookieJar', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
+  const agent = new CookieAgent({ cookies: { jar } });
+  setGlobalDispatcher(agent);
 
   const { port } = await createTestServer([
     (req, res) => {
@@ -83,38 +81,41 @@ test('should send cookies from both a request options and CookieJar', async (t) 
 
   await jar.setCookie('key1=value1', `http://localhost:${port}`);
 
-  await urllib.request(`http://localhost:${port}`, {
-    agent,
+  await request(`http://localhost:${port}`, {
     headers: { Cookie: 'key2=value2' },
   });
 
   t.plan(1);
 });
 
-test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
+test.serial(
+  'should send cookies from a request options when the key is duplicated in both a request options and CookieJar',
+  async (t) => {
+    const jar = new CookieJar();
+    const agent = new CookieAgent({ cookies: { jar } });
+    setGlobalDispatcher(agent);
+
+    const { port } = await createTestServer([
+      (req, res) => {
+        t.is(req.headers['cookie'], 'key=expected');
+        res.end();
+      },
+    ]);
+
+    await jar.setCookie('key=notexpected', `http://localhost:${port}`);
+
+    await request(`http://localhost:${port}`, {
+      headers: { Cookie: 'key=expected' },
+    });
+
+    t.plan(1);
+  },
+);
+
+test.serial('should send cookies from the first response when redirecting', async (t) => {
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
-    (req, res) => {
-      t.is(req.headers['cookie'], 'key=expected');
-      res.end();
-    },
-  ]);
-
-  await jar.setCookie('key=notexpected', `http://localhost:${port}`);
-
-  await urllib.request(`http://localhost:${port}`, {
-    agent,
-    headers: { Cookie: 'key=expected' },
-  });
-
-  t.plan(1);
-});
-
-test('should send cookies from the first response when redirecting', async (t) => {
-  const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
+  const agent = new CookieAgent({ cookies: { jar } });
+  setGlobalDispatcher(agent);
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -129,20 +130,20 @@ test('should send cookies from the first response when redirecting', async (t) =
     },
   ]);
 
-  await urllib.request(`http://localhost:${port}`, {
-    agent,
+  await request(`http://localhost:${port}`, {
     followRedirect: true,
   });
 
   t.plan(1);
 });
 
-test('should emit error when CookieJar#getCookies throws error.', async (t) => {
+test.serial('should emit error when CookieJar#getCookies throws error.', async (t) => {
   const jar = new CookieJar();
   jar.getCookiesSync = () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ cookies: { jar } });
+  const agent = new CookieAgent({ cookies: { jar } });
+  setGlobalDispatcher(agent);
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -152,20 +153,19 @@ test('should emit error when CookieJar#getCookies throws error.', async (t) => {
   ]);
 
   await t.throwsAsync(() => {
-    return urllib.request(`http://localhost:${port}`, {
-      agent,
-    });
+    return request(`http://localhost:${port}`);
   });
 
   t.plan(1);
 });
 
-test('should emit error when CookieJar#setCookie throws error.', async (t) => {
+test.serial('should emit error when CookieJar#setCookie throws error.', async (t) => {
   const jar = new CookieJar();
   jar.setCookieSync = () => {
     throw new Error('Error');
   };
-  const agent = new HttpCookieAgent({ cookies: { jar } });
+  const agent = new CookieAgent({ cookies: { jar } });
+  setGlobalDispatcher(agent);
 
   const { port } = await createTestServer([
     (_req, res) => {
@@ -175,19 +175,18 @@ test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   ]);
 
   await t.throwsAsync(() => {
-    return urllib.request(`http://localhost:${port}`, {
-      agent,
-    });
+    return request(`http://localhost:${port}`);
   });
 
   t.plan(1);
 });
 
-test('should send post data when keepalive is enabled', async (t) => {
+test.serial('should send post data when keepalive is enabled', async (t) => {
   const times = 2;
 
   const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar }, keepAlive: true });
+  const agent = new CookieAgent({ cookies: { jar } });
+  setGlobalDispatcher(agent);
 
   const { port } = await createTestServer(
     Array.from({ length: times }, (_, idx) => {
@@ -202,8 +201,7 @@ test('should send post data when keepalive is enabled', async (t) => {
   await jar.setCookie('key=expected', `http://localhost:${port}`);
 
   for (let idx = 0; idx < times; idx++) {
-    await urllib.request(`http://localhost:${port}`, {
-      agent,
+    await request(`http://localhost:${port}`, {
       data: `{ "index": "${idx}" }`,
       method: 'POST',
     });

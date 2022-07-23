@@ -237,18 +237,15 @@ await client.get('https://example.com');
 #### `urllib`
 
 ```js
-import urllib from 'urllib';
+import { request, setGlobalDispatcher } from 'urllib';
 import { CookieJar } from 'tough-cookie';
-import { HttpCookieAgent, HttpsCookieAgent } from 'http-cookie-agent/http';
+import { CookieClient } from 'http-cookie-agent/undici';
 
 const jar = new CookieJar();
+const agent = new CookieAgent({ cookies: { jar } });
+setGlobalDispatcher(agent);
 
-const client = urllib.create({
-  agent: new HttpCookieAgent({ cookies: { jar } }),
-  httpsAgent: new HttpsCookieAgent({ cookies: { jar } }),
-});
-
-await client.request('https://example.com');
+await request('https://example.com');
 ```
 
 ### Using with an asynchronous Cookie store
