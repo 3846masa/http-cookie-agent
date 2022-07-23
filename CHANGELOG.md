@@ -1,3 +1,10 @@
+## [4.0.2](https://github.com/3846masa/http-cookie-agent/compare/v4.0.1...v4.0.2) (2022-07-23)
+
+
+### Bug Fixes
+
+* **docs:** update dependency urllib to v3 ([#187](https://github.com/3846masa/http-cookie-agent/issues/187)) ([f7f7332](https://github.com/3846masa/http-cookie-agent/commit/f7f7332a8fe1922be029af37e562e1d1fcfb4411))
+
 ## [4.0.1](https://github.com/3846masa/http-cookie-agent/compare/v4.0.0...v4.0.1) (2022-05-21)
 
 
