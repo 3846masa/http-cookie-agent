@@ -6997,10 +6997,10 @@ url-join@^4.0.0:
   resolved "https://registry.yarnpkg.com/url-join/-/url-join-4.0.1.tgz#b642e21a2646808ffa178c4c5fda39844e12cde7"
   integrity sha512-jk1+QP6ZJqyOiuEI9AEWQfju/nB2Pw466kbA0LEZljHwKeMgd9WrAEgEGxjPDD2+TNbbb37rTyhEfrCXfuKXnA==
 
-urllib@3.0.4:
-  version "3.0.4"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.0.4.tgz#636bb30c6720bb63cce74a9bd191237a07556753"
-  integrity sha512-mYVOtm7zILGiI4opGv3/e3FrKHquyJGm8haHZmxw1wAlunQRcNmjO/XQ9/weHVxH9gtFOutIz88SltBSxge3lQ==
+urllib@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.1.0.tgz#52a07da884086436e473f4dc2039973c5d6cf50f"
+  integrity sha512-CD00ZWLQGEq+itp6oCoKo7Y6LFVZpgXDKn6BfdT4Do0vHCHlbp+xr96ty3R0+2ec6Ad28uCGYzmRhcApVJB88Q==
   dependencies:
     default-user-agent "^1.0.0"
     digest-header "^0.0.1"
