@@ -78,7 +78,7 @@
     "@types/needle": "2.5.3",
     "@types/node": "14.18.23",
     "@types/request": "2.48.8",
-    "@types/semver": "^7.3.10",
+    "@types/semver": "^7.3.11",
     "@types/superagent": "4.1.15",
     "@types/tough-cookie": "4.0.2",
     "agentkeepalive": "4.2.1",
