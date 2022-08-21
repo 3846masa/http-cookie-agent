@@ -1,4 +1,5 @@
-import { Agent, Client, Dispatcher } from 'undici';
+import type { Agent, Dispatcher } from 'undici';
+import { Client } from 'undici';
 import { kDispatch, kMaxRedirections, kUrl } from 'undici/lib/core/symbols';
 import { RedirectHandler } from 'undici/lib/handler/redirect';
 
