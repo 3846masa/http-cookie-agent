@@ -38,12 +38,14 @@ export function createCookieAgent<
   BaseAgentOptions = unknown,
   BaseAgentConstructorRestParams extends unknown[] = unknown[],
 >(BaseAgentClass: new (options: BaseAgentOptions, ...rest: BaseAgentConstructorRestParams) => BaseAgent) {
+  type Options = BaseAgentOptions & CookieAgentOptions;
+
   // @ts-expect-error ...
   class CookieAgent extends BaseAgentClass {
     [kCookieOptions]: CookieOptions | undefined;
 
     constructor(
-      { cookies: cookieOptions, ...options }: BaseAgentOptions & CookieAgentOptions = {} as BaseAgentOptions,
+      { cookies: cookieOptions, ...options }: Options = {} as Options,
       ...rest: BaseAgentConstructorRestParams
     ) {
       super(options as BaseAgentOptions, ...rest);
