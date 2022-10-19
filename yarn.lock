@@ -7031,10 +7031,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-urllib@3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.2.3.tgz#8198493804ffcfa3291e2daef6ff6f46673d4b39"
-  integrity sha512-ITHb33wz38fi2VXAs80282+eXt+05fgNCZLHZk+ags9yoDe31pZ6S5NHLXsHf+IiRCa7fgi1/+UqHqFa1SxPMw==
+urllib@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.3.1.tgz#f8fc05510c0a740e37812d00a7b52d96d39094b8"
+  integrity sha512-ULUYwH/Y35TKu3xZ5CSIKOhUzHWotfQ0dYvhAp0CGl+Nc/MuIMzB4I4G4JcjwD8ZqoqRk2Ezh654ctS8pkFlqw==
   dependencies:
     default-user-agent "^1.0.0"
     digest-header "^0.0.1"
