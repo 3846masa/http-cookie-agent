@@ -7,7 +7,7 @@ index 267ef1d..1911c90 100644
   */
  async function push(origin, branch, execaOptions) {
 -  await execa('git', ['push', '--tags', origin, `HEAD:${branch}`], execaOptions);
-+  await execa('git', ['push', '--tags', '--force-with-lease', origin, `HEAD:${branch}`], execaOptions);
++  await execa('git', ['push', '--tags', '--force', origin, `HEAD:${branch}`], execaOptions);
  }
  
  /**
