@@ -1,7 +1,6 @@
 import type { Agent, Dispatcher } from 'undici';
-import { Client } from 'undici';
+import { Client, RedirectHandler } from 'undici';
 import { kDispatch, kMaxRedirections, kUrl } from 'undici/lib/core/symbols';
-import { RedirectHandler } from 'undici/lib/handler/redirect';
 
 import type { CookieOptions } from '../cookie_options';
 import { createCookieHeaderValue } from '../utils/create_cookie_header_value';
