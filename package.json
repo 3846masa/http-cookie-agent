@@ -67,7 +67,7 @@
     "agent-base": "^6.0.2"
   },
   "devDependencies": {
-    "@3846masa/configs": "github:3846masa/configs#73560b6f62ac00ca27cc7dcf345c6a208eccb689",
+    "@3846masa/configs": "github:3846masa/configs#3eb1176383db72480571dc897106af83c540aa90",
     "@babel/cli": "7.19.3",
     "@babel/core": "7.19.6",
     "@babel/preset-env": "7.19.4",
