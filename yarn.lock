@@ -2923,6 +2923,11 @@ deprecation@^2.0.0, deprecation@^2.3.1:
   resolved "https://registry.yarnpkg.com/deprecation/-/deprecation-2.3.1.tgz#6368cbdb40abf3373b525ac87e4a260c3a700919"
   integrity sha512-xmHIy4F3scKVwMsQ4WnVaS8bHOx0DmVwRywosKhaILI0ywMDWPtBSku2HNxRvF7jtwDRsoEwYQSfbxj8b7RlJQ==
 
+destroy@^1.0.4:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.2.0.tgz#4803735509ad8be552934c67df614f94e66fa015"
+  integrity sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==
+
 detect-indent@^6.0.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/detect-indent/-/detect-indent-6.1.0.tgz#592485ebbbf6b3b1ab2be175c8393d04ca0d57e6"
@@ -3616,6 +3621,15 @@ formidable@^2.0.1:
     hexoid "1.0.0"
     once "1.4.0"
     qs "6.9.3"
+
+formstream@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/formstream/-/formstream-1.1.1.tgz#17259d2440c35ca9736db9f45fb3ba3f8669c750"
+  integrity sha512-yHRxt3qLFnhsKAfhReM4w17jP+U1OlhUjnKPPtonwKbIJO7oBP0MvoxkRUwb8AU9n0MIkYy5X5dK6pQnbj+R2Q==
+  dependencies:
+    destroy "^1.0.4"
+    mime "^2.5.2"
+    pause-stream "~0.0.11"
 
 from2@^2.3.0:
   version "2.3.0"
@@ -4968,7 +4982,7 @@ mime-types@^2.1.12, mime-types@^2.1.35, mime-types@~2.1.19:
   dependencies:
     mime-db "1.52.0"
 
-mime@2.6.0:
+mime@2.6.0, mime@^2.5.2:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/mime/-/mime-2.6.0.tgz#a2a682a95cd4d0cb1d6257e28f83da7e35800367"
   integrity sha512-USPkMeET31rOMiarsBNIHZKLGgvKc/LrjofAnBlOttf5ajRvqiRA8QsenbcooctK6d6Ts6aqZXBA+XbkKthiQg==
@@ -5868,6 +5882,13 @@ path-type@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+
+pause-stream@~0.0.11:
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/pause-stream/-/pause-stream-0.0.11.tgz#fe5a34b0cbce12b5aa6a2b403ee2e73b602f1445"
+  integrity sha512-e3FBlXLmN/D1S+zHzanP4E/4Z60oFAa3O051qt1pxa7DEJWKAyil6upYVXCWadEnuoqa4Pkc9oUx9zsxYeRv8A==
+  dependencies:
+    through "~2.3"
 
 performance-now@^2.1.0:
   version "2.1.0"
@@ -6934,7 +6955,7 @@ through2@~2.0.0:
     readable-stream "~2.3.6"
     xtend "~4.0.1"
 
-through@2, "through@>=2.2.7 <3":
+through@2, "through@>=2.2.7 <3", through@~2.3:
   version "2.3.8"
   resolved "https://registry.yarnpkg.com/through/-/through-2.3.8.tgz#0dd4c9ffaabc357960b1b724115d7e0e86a2e1f5"
   integrity sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
@@ -7221,15 +7242,16 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-urllib@3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.6.0.tgz#b7da3b9d3758a5e34f477eeae9c0012599719bf4"
-  integrity sha512-uBi8E/HR6uWdq8nL8iMUWQcxHnUjacxmfOgHTloDCw6jPMaZnud5axo6ySpLxfLDfy1HfPbypJlvsSQlAJdCdw==
+urllib@3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.7.0.tgz#7efcdf70c342c223bb9acfaee50b3698782de2f5"
+  integrity sha512-MsRFOWioOqyDL9ziTqiUTEuZrqY2sZg9YCzjZVHmbouoVbNYxAJ2lJyOLY3SlwBgUYXyeAe5ygcNBQJCf3DaWw==
   dependencies:
     default-user-agent "^1.0.0"
     digest-header "^1.0.0"
     form-data-encoder "^1.7.2"
     formdata-node "^4.3.3"
+    formstream "^1.1.1"
     mime-types "^2.1.35"
     pump "^3.0.0"
     tslib "^2.4.0"
