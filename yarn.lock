@@ -7237,10 +7237,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-urllib@3.8.0:
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.8.0.tgz#d4df73bd98ae769d7e035fde98dc8f84031b5349"
-  integrity sha512-7Xv9pnXzAaUgbZErfN4AgaVY6TI+3djv9VWAMgO80VBMf7uo74xq/OGYbMWT8iKOi/QsnrkkaPxfqaQ5Sy1uxQ==
+urllib@3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.9.0.tgz#d95fb9bc6a66ea2da8d40aa6c8891dfdd93321b6"
+  integrity sha512-jggHcORKCssSNu+VJu18dJgD6ogPYGU11FvPrf80Aqk5JfaGIo3xR+WSu2dNnckOppRrB0etbFyJiCsfj56hiA==
   dependencies:
     default-user-agent "^1.0.0"
     digest-header "^1.0.0"
