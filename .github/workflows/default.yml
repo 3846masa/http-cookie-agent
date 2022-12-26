@@ -46,16 +46,10 @@ jobs:
       - lint
     runs-on: ubuntu-latest
     steps:
-      - name: Generate GitHub token
-        id: generate-token
-        uses: tibdex/github-app-token@021a2405c7f990db57f5eae5397423dcc554159c # tag=v1.7.0
-        with:
-          app_id: ${{ secrets.RELEASE_BOT_APP_ID }}
-          private_key: ${{ secrets.RELEASE_BOT_APP_SECRET_KEY }}
       - name: Checkout
         uses: actions/checkout@755da8c3cf115ac066823e79a1e1788f8940201b # v3.2.0
         with:
-          token: ${{ steps.generate-token.outputs.token }}
+          ssh-key: ${{ secrets.DEPLOY_GIT_SSH_PRIVATE_KEY }}
       - name: Setup Node.js
         uses: actions/setup-node@8c91899e586c5b171469028077307d293428b516 # tag=v3.5.1
         with:
@@ -66,6 +60,6 @@ jobs:
       - run: yarn build
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn run semantic-release
