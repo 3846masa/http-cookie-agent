@@ -1,3 +1,15 @@
+# [5.0.0](https://github.com/3846masa/http-cookie-agent/compare/v4.0.2...v5.0.0) (2022-12-26)
+
+
+### Bug Fixes
+
+* support undici v5.11.0 ([#287](https://github.com/3846masa/http-cookie-agent/issues/287)) ([cdd4b6d](https://github.com/3846masa/http-cookie-agent/commit/cdd4b6ddbfa510568e3eb6395aa5a25fd30a4460))
+
+
+### BREAKING CHANGES
+
+* supports undici v5.11.0 or above only
+
 ## [4.0.2](https://github.com/3846masa/http-cookie-agent/compare/v4.0.1...v4.0.2) (2022-07-23)
 
 
