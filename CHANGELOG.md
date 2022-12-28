@@ -1,3 +1,10 @@
+## [5.0.1](https://github.com/3846masa/http-cookie-agent/compare/v5.0.0...v5.0.1) (2022-12-28)
+
+
+### Bug Fixes
+
+* **docs:** add funding link to README ([#361](https://github.com/3846masa/http-cookie-agent/issues/361)) ([8750722](https://github.com/3846masa/http-cookie-agent/commit/8750722666faa6dc4deb89475394550e2617b8cf))
+
 # [5.0.0](https://github.com/3846masa/http-cookie-agent/compare/v4.0.2...v5.0.0) (2022-12-26)
 
 
