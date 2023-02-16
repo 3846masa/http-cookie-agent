@@ -103,7 +103,7 @@
     "tough-cookie": "4.1.2",
     "typescript": "4.9.5",
     "undici": "5.16.0",
-    "urllib": "3.10.1"
+    "urllib": "3.10.2"
   },
   "peerDependencies": {
     "deasync": "^0.1.26",
