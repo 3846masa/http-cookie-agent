@@ -1,6 +1,5 @@
-import type { IncomingHttpHeaders } from 'node:http';
-
 import { errors } from 'undici';
+import type { IncomingHttpHeaders } from 'undici/types/header';
 
 function convertToHeadersObject(
   _headers: IncomingHttpHeaders | (string | Buffer)[] | null | undefined,
