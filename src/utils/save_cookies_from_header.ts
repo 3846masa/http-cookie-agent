@@ -2,7 +2,7 @@ import type { CookieOptions } from '../cookie_options';
 
 type Params = {
   cookieOptions: CookieOptions;
-  cookies: string[] | undefined;
+  cookies: string | string[] | undefined;
   requestUrl: string;
 };
 

@@ -50,7 +50,7 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
 
         const cookieHeader = createCookieHeaderValue({
           cookieOptions,
-          passedValues: [headers['cookie']],
+          passedValues: [headers['cookie']].flat(),
           requestUrl,
         });
         if (cookieHeader) {
