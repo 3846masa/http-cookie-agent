@@ -7380,10 +7380,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-urllib@3.10.2:
-  version "3.10.2"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.10.2.tgz#90d46c088605d8c7fd5f5f160a72e2e0b6c807ae"
-  integrity sha512-PpXDg5w5l9cuRRhcMJPFluFXdem85oHWptfy9igQ9rdWlpKNgN9yK8paMnqiCqvl+doOUdKXL39SxfiJBJn5Mw==
+urllib@3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.11.0.tgz#c1db628b6b5ee4a0866505006fd79b96bce4d4d2"
+  integrity sha512-rm/2dPV6n8Db4GANtmcDWyVwR2Wj1P+Ybr0RWBBL2YXqsqUoEKI6q+93tLrFAsWJJZk8oKGpoE+XImQhKsu9hQ==
   dependencies:
     default-user-agent "^1.0.0"
     digest-header "^1.0.0"
@@ -7392,7 +7392,6 @@ urllib@3.10.2:
     formstream "^1.1.1"
     mime-types "^2.1.35"
     pump "^3.0.0"
-    tslib "^2.4.0"
     undici "^5.6.0"
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
