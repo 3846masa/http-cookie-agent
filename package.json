@@ -96,7 +96,7 @@
     "phin": "3.7.0",
     "proxy": "1.0.2",
     "request": "2.88.2",
-    "rimraf": "4.3.0",
+    "rimraf": "4.3.1",
     "semantic-release": "19.0.5",
     "semver": "7.3.8",
     "superagent": "8.0.9",
