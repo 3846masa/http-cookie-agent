@@ -7418,10 +7418,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-urllib@3.12.0:
-  version "3.12.0"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.12.0.tgz#f3b31701f3cdb3444753e8f9a97182f6f3d82309"
-  integrity sha512-nF2huQg4U5J+gnqRidseXhu2DSZP4o+29O0TUXoITB5K587JkmaXX9iEUe0XH/hgEr+oBpGTFlSnl5kpUfqAcg==
+urllib@3.13.1:
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.13.1.tgz#4ef8f6d57e25bac53406f27df67690cd4afa03a5"
+  integrity sha512-pd2s956JMAgMDeO5Ru4b7kpBD6Ul4WSgbzBvRDOKNoIyCvaf0krwb1esP1GU3yXPIDcMk5Y3aREf5agNCWwvjg==
   dependencies:
     default-user-agent "^1.0.0"
     digest-header "^1.0.0"
