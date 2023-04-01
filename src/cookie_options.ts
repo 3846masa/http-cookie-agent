@@ -5,4 +5,4 @@ interface CookieOptions {
   jar: CookieJar;
 }
 
-export { CookieOptions };
+export type { CookieOptions };
