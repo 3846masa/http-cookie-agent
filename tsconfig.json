@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "declaration": false,
     "lib": ["ESNext"],
-    "module": "CommonJS",
+    "module": "ESNext",
+    "moduleResolution": "node",
     "outDir": "./dist",
     "paths": {
       "http-cookie-agent/http": ["./http"],
