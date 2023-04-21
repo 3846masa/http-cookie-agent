@@ -98,7 +98,7 @@
     "request": "2.88.2",
     "rimraf": "5.0.0",
     "semantic-release": "19.0.5",
-    "semver": "7.4.0",
+    "semver": "7.5.0",
     "superagent": "8.0.9",
     "tough-cookie": "4.1.2",
     "typescript": "5.0.4",
