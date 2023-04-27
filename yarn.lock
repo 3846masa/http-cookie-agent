@@ -1624,10 +1624,10 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.3.13.tgz#da4bfd73f49bd541d28920ab0e2bf0ee80f71c91"
   integrity sha512-21cFJr9z3g5dW8B0CVI9g2O9beqaThGQ6ZFBqHfwhzLDKUxaqTIy3vnfah/UPkfOiF2pLq+tGz+W8RyCskuslw==
 
-"@types/superagent@4.1.16":
-  version "4.1.16"
-  resolved "https://registry.yarnpkg.com/@types/superagent/-/superagent-4.1.16.tgz#12c9c16f232f9d89beab91d69368f96ce8e2d881"
-  integrity sha512-tLfnlJf6A5mB6ddqF159GqcDizfzbMUB1/DeT59/wBNqzRTNNKsaw79A/1TZ84X+f/EwWH8FeuSkjlCLyqS/zQ==
+"@types/superagent@4.1.17":
+  version "4.1.17"
+  resolved "https://registry.yarnpkg.com/@types/superagent/-/superagent-4.1.17.tgz#c8f0162b5d8a9c52d38b81398ef0650ef974b452"
+  integrity sha512-FFK/rRjNy24U6J1BvQkaNWu2ohOIF/kxRQXRsbT141YQODcOcZjzlcc4DGdI2SkTa0rhmF+X14zu6ICjCGIg+w==
   dependencies:
     "@types/cookiejar" "*"
     "@types/node" "*"
