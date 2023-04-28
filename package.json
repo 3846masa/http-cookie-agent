@@ -81,7 +81,7 @@
     "@types/node": "14.18.43",
     "@types/request": "2.48.8",
     "@types/semver": "7.3.13",
-    "@types/superagent": "4.1.16",
+    "@types/superagent": "4.1.17",
     "@types/tough-cookie": "4.0.2",
     "agentkeepalive": "4.3.0",
     "ava": "5.2.0",
