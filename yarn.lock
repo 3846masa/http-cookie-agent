@@ -7335,10 +7335,17 @@ unbox-primitive@^1.0.2:
     has-symbols "^1.0.3"
     which-boxed-primitive "^1.0.2"
 
-undici@5.22.0, undici@^5.6.0:
+undici@5.22.0:
   version "5.22.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-5.22.0.tgz#5e205d82a5aecc003fc4388ccd3d2c6e8674a0ad"
   integrity sha512-fR9RXCc+6Dxav4P9VV/sp5w3eFiSdOjJYsbtWfd4s5L5C4ogyuVpdKIVHeW0vV1MloM65/f7W45nR9ZxwVdyiA==
+  dependencies:
+    busboy "^1.6.0"
+
+undici@~5.21.2:
+  version "5.21.2"
+  resolved "https://registry.yarnpkg.com/undici/-/undici-5.21.2.tgz#329f628aaea3f1539a28b9325dccc72097d29acd"
+  integrity sha512-f6pTQ9RF4DQtwoWSaC42P/NKlUjvezVvd9r155ohqkwFNRyBKM3f3pcty3ouusefNRyM25XhIQEbeQ46sZDJfQ==
   dependencies:
     busboy "^1.6.0"
 
@@ -7436,10 +7443,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-urllib@3.13.1:
-  version "3.13.1"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.13.1.tgz#4ef8f6d57e25bac53406f27df67690cd4afa03a5"
-  integrity sha512-pd2s956JMAgMDeO5Ru4b7kpBD6Ul4WSgbzBvRDOKNoIyCvaf0krwb1esP1GU3yXPIDcMk5Y3aREf5agNCWwvjg==
+urllib@3.13.2:
+  version "3.13.2"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.13.2.tgz#03980f91e9434930e33a5eb832dea54d1acb4c0a"
+  integrity sha512-Z9yWZ9IFOTBGZcEzcAiJYvpPnUXoQlh5Qss0cOHUuTrwfk4vgivYLDLe0FLM/8HUF8tLeG3vu3lVxlSykoII+g==
   dependencies:
     default-user-agent "^1.0.0"
     digest-header "^1.0.0"
@@ -7448,7 +7455,7 @@ urllib@3.13.1:
     formstream "^1.1.1"
     mime-types "^2.1.35"
     pump "^3.0.0"
-    undici "^5.6.0"
+    undici "~5.21.2"
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
