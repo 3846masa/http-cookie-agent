@@ -65,7 +65,7 @@
     "workerThreads": false
   },
   "resolutions": {
-    "urllib/undici": "^5.11.0"
+    "urllib/undici": "^5.22.0"
   },
   "dependencies": {
     "agent-base": "^6.0.2"
