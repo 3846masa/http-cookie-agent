@@ -2,7 +2,7 @@ import http from 'node:http';
 import type { Readable } from 'node:stream';
 import { promisify } from 'node:util';
 
-import proxy from 'proxy';
+import { createProxy } from 'proxy';
 
 export async function createTestServer(
   stories: http.RequestListener[],
@@ -43,7 +43,7 @@ export async function createTestServerWithProxy(
   const { port, server } = await createTestServer(stories);
 
   // Create reverse proxy
-  const proxyServer = proxy(http.createServer());
+  const proxyServer = createProxy(http.createServer());
 
   await promisify(proxyServer.listen).apply(proxyServer);
 
