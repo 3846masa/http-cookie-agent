@@ -7485,10 +7485,10 @@ url-parse@^1.5.3:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
 
-urllib@3.16.0:
-  version "3.16.0"
-  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.16.0.tgz#73aa91e41943c4e83de17fac4112018bd11b805e"
-  integrity sha512-UNzfSN6ASoLATH8rbjmR00YnIuyGbvY3ahjwutBneoPtr7DnNWVc8C7kpFEWFQhEbaTnOCu9qQ+MlmkqDMPhfg==
+urllib@3.16.1:
+  version "3.16.1"
+  resolved "https://registry.yarnpkg.com/urllib/-/urllib-3.16.1.tgz#addfc98fe26bc51c7b132b1d0a0f9686cc4647af"
+  integrity sha512-mGiu8oPTnfvtwh74bGJk+61hHgquphD7gpXqM0i1l0hFPO1EaWT4O4sZurR3sTSeYD3i2yNHOG0Bcj8iglsjjw==
   dependencies:
     default-user-agent "^1.0.0"
     digest-header "^1.0.0"
@@ -7498,6 +7498,7 @@ urllib@3.16.0:
     mime-types "^2.1.35"
     pump "^3.0.0"
     undici "^5.22.1"
+    ylru "^1.3.2"
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
@@ -7749,6 +7750,11 @@ yargs@^17.6.2:
     string-width "^4.2.3"
     y18n "^5.0.5"
     yargs-parser "^21.1.1"
+
+ylru@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/ylru/-/ylru-1.3.2.tgz#0de48017473275a4cbdfc83a1eaf67c01af8a785"
+  integrity sha512-RXRJzMiK6U2ye0BlGGZnmpwJDPgakn6aNQ0A7gHRbD4I0uvK4TW6UqkK1V0pp9jskjJBAXd3dRrbzWkqJ+6cxA==
 
 yocto-queue@^0.1.0:
   version "0.1.0"
