@@ -68,7 +68,7 @@
     "urllib/undici": "^5.22.1"
   },
   "dependencies": {
-    "agent-base": "^6.0.2"
+    "agent-base": "^7.1.0"
   },
   "devDependencies": {
     "@3846masa/configs": "github:3846masa/configs#c5e22a4164f298e29db7a6f4529d496f840bd36d",
