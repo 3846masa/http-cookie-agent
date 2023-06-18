@@ -33,22 +33,24 @@ const kReimplicitHeader = Symbol('reimplicitHeader');
 const kRecreateFirstChunk = Symbol('recreateFirstChunk');
 const kOverrideRequest = Symbol('overrideRequest');
 
-export function createCookieAgent<
-  BaseAgent extends http.Agent = http.Agent,
-  BaseAgentOptions = unknown,
-  BaseAgentConstructorRestParams extends unknown[] = unknown[],
->(BaseAgentClass: new (options: BaseAgentOptions, ...rest: BaseAgentConstructorRestParams) => BaseAgent) {
-  type Options = BaseAgentOptions & CookieAgentOptions;
+export function createCookieAgent<BaseAgent extends http.Agent = http.Agent, Params extends unknown[] = unknown[]>(
+  BaseAgentClass: new (...params: Params) => BaseAgent,
+) {
+  type WithCookieAgentOptions<T> = T extends http.AgentOptions ? T & CookieAgentOptions : T;
+  type ConstructorParams = {
+    [Index in keyof Params]: WithCookieAgentOptions<Params[Index]>;
+  } & { length: Params['length'] };
 
   // @ts-expect-error ...
   class CookieAgent extends BaseAgentClass {
     [kCookieOptions]: CookieOptions | undefined;
 
-    constructor(
-      { cookies: cookieOptions, ...options }: Options = {} as Options,
-      ...rest: BaseAgentConstructorRestParams
-    ) {
-      super(options as BaseAgentOptions, ...rest);
+    constructor(...params: ConstructorParams) {
+      const { cookies: cookieOptions } = (params.find((opt) => {
+        return opt != null && typeof opt === 'object' && 'cookies' in opt;
+      }) ?? {}) as CookieAgentOptions;
+
+      super(...(params as Params));
 
       if (cookieOptions) {
         validateCookieOptions(cookieOptions);
