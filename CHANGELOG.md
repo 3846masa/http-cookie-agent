@@ -1,3 +1,10 @@
+## [5.0.4](https://github.com/3846masa/http-cookie-agent/compare/v5.0.3...v5.0.4) (2023-06-18)
+
+
+### Bug Fixes
+
+* change createCookieAgent types for http-proxy-agent v6 updates ([e7d97dd](https://github.com/3846masa/http-cookie-agent/commit/e7d97dd50095b6183ab70661c401c2583fb352b9))
+
 ## [5.0.3](https://github.com/3846masa/http-cookie-agent/compare/v5.0.2...v5.0.3) (2023-06-18)
 
 
