@@ -1623,10 +1623,10 @@
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
-"@types/needle@3.2.1":
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/@types/needle/-/needle-3.2.1.tgz#15ce202692a0438bd5345fcb20273de2a79ee6d4"
-  integrity sha512-RETMl27VIoMo/HfT3UzizZHB0nYa5oOTrTHtDsTqBF1V8UpFVZyItRlxThI3QeyBLWplCZRn6BLj4OaIpCLjgg==
+"@types/needle@3.2.2":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@types/needle/-/needle-3.2.2.tgz#807608bd177f4b11019b82b5258519200856a99d"
+  integrity sha512-xUKAjFjDcucpgfyTvnbaqN+WBKyM9UehBuVRI/1AoPbaXrCScADqeTgTM1ZBYnS3Ovs9IEQt813IcJNyac7dNQ==
   dependencies:
     "@types/node" "*"
 
