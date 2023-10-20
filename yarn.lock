@@ -1675,10 +1675,10 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.4.tgz#0a41252ad431c473158b22f9bfb9a63df7541cff"
   integrity sha512-MMzuxN3GdFwskAnb6fz0orFvhfqi752yjaXylr0Rp4oDg5H0Zn1IuyRhDVvYOwAXoJirx2xuS16I3WjxnAIHiQ==
 
-"@types/superagent@4.1.19":
-  version "4.1.19"
-  resolved "https://registry.yarnpkg.com/@types/superagent/-/superagent-4.1.19.tgz#33f4fa460fb9e79e5e47a96731725141c667acd0"
-  integrity sha512-McM1mlc7PBZpCaw0fw/36uFqo0YeA6m8JqoyE4OfqXsZCIg0hPP2xdE6FM7r6fdprDZHlJwDpydUj1R++93hCA==
+"@types/superagent@4.1.20":
+  version "4.1.20"
+  resolved "https://registry.yarnpkg.com/@types/superagent/-/superagent-4.1.20.tgz#9248f55ac588794568f02fe9cac6d6ff2650b660"
+  integrity sha512-GfpwJgYSr3yO+nArFkmyqv3i0vZavyEG5xPd/o95RwpKYpsOKJYI5XLdxLpdRbZI3YiGKKdIOFIf/jlP7A0Jxg==
   dependencies:
     "@types/cookiejar" "*"
     "@types/node" "*"
