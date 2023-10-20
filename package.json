@@ -85,7 +85,7 @@
     "@types/request": "2.48.11",
     "@types/semver": "7.5.4",
     "@types/superagent": "4.1.20",
-    "@types/tough-cookie": "4.0.3",
+    "@types/tough-cookie": "4.0.4",
     "agentkeepalive": "4.5.0",
     "ava": "5.3.1",
     "axios": "1.5.1",
