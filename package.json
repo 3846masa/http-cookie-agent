@@ -90,7 +90,7 @@
     "ava": "5.3.1",
     "axios": "1.5.1",
     "deasync": "0.1.29",
-    "got": "12.6.1",
+    "got": "13.0.0",
     "http-proxy-agent": "7.0.0",
     "needle": "3.2.0",
     "node-fetch": "3.3.2",
