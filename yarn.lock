@@ -1598,10 +1598,10 @@
   resolved "https://registry.yarnpkg.com/@types/cookiejar/-/cookiejar-2.1.2.tgz#66ad9331f63fe8a3d3d9d8c6e3906dd10f6446e8"
   integrity sha512-t73xJJrvdTjXrn4jLS9VSGRbz0nUY3cl2DMGDU48lKl+HR9dbbjW2A9r3g40VA++mQpy6uuHg33gy7du2BKpog==
 
-"@types/deasync@0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@types/deasync/-/deasync-0.1.4.tgz#ac33183b865f1eabdf1be4e3f56adcfd26435701"
-  integrity sha512-dcQbMOlj4+1ZekRwOi+96FWjHWslNpnK2mfymAZaVKN+Fne9ZCBWxovMcIu9lYLWZOGX6qOlD7vXllx8nYRohw==
+"@types/deasync@0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@types/deasync/-/deasync-0.1.5.tgz#b9f2e25d0d08ff3f65ad2b8a8fdf79984938fac4"
+  integrity sha512-mLov/tw+fOX4ZsrT9xuHOJv8xToOpNsp6W4gp8VDHy2qniJ58izyOzHlisnz5r8HdZ+WItDHtANWZy/W0JEJwg==
 
 "@types/http-cache-semantics@^4.0.1":
   version "4.0.1"
