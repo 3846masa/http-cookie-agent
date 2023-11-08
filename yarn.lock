@@ -1655,10 +1655,10 @@
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.7.2.tgz#6c2324641cc4ba050a8c710b2b251b377581fbf0"
   integrity sha512-KufADq8uQqo1pYKVIYzfKbJfBAc0sOeXqGbFaSpv8MRmC/zXgowNZmFcbngndGk922QDmOASEXUZCaY48gs4cg==
 
-"@types/request@2.48.11":
-  version "2.48.11"
-  resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.11.tgz#04b597ea308418422f7901c9a52b24967a2c4ed2"
-  integrity sha512-HuihY1+Vss5RS9ZHzRyTGIzwPTdrJBkCm/mAeLRYrOQu/MGqyezKXWOK1VhCnR+SDbp9G2mRUP+OVEqCrzpcfA==
+"@types/request@2.48.12":
+  version "2.48.12"
+  resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.12.tgz#0f590f615a10f87da18e9790ac94c29ec4c5ef30"
+  integrity sha512-G3sY+NpsA9jnwm0ixhAFQSJ3Q9JkpLZpJbI3GMv0mIAT0y3mRabYeINzal5WOChIiaTEGQYlHOKgkaM9EisWHw==
   dependencies:
     "@types/caseless" "*"
     "@types/node" "*"
