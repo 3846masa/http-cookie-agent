@@ -83,7 +83,7 @@
     "@types/needle": "3.2.3",
     "@types/node": "14.18.63",
     "@types/request": "2.48.12",
-    "@types/semver": "7.5.4",
+    "@types/semver": "7.5.5",
     "@types/superagent": "4.1.20",
     "@types/tough-cookie": "4.0.4",
     "agentkeepalive": "4.5.0",
