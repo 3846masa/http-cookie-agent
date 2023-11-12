@@ -73,9 +73,9 @@
   "devDependencies": {
     "@3846masa/configs": "github:3846masa/configs#ae91969a4d14505cfb7dcaae73133633e4baca97",
     "@babel/cli": "7.23.0",
-    "@babel/core": "7.23.2",
-    "@babel/preset-env": "7.23.2",
-    "@babel/preset-typescript": "7.23.2",
+    "@babel/core": "7.23.3",
+    "@babel/preset-env": "7.23.3",
+    "@babel/preset-typescript": "7.23.3",
     "@hapi/wreck": "18.0.1",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
