@@ -35,9 +35,23 @@ npm install undici
 
 ### Supported libraries
 
-Node.js global fetch / `undici` / `node:http` / `node:https` / `axios` / `node-fetch` / `got`\*\* / `superagent`\*\* / `request`\*\* / `needle` / `phin` / `@hapi/wreck` / `urllib` etc.
+| Library                                 | Supported?    | Notes   |
+| --------------------------------------- | ------------ | ------- |
+| Node.js global fetch                    | ✅ supported | |
+| `undici` (Node.js fetch implementation) | ✅ supported | |
+| `node:http`                             | ✅ supported | |
+| `node:https`                            | ✅ supported | |
+| `axios`                                 | ✅ supported | |
+| `node-fetch`                            | ✅ supported | |
+| `got`                                   | ✅ supported | :warning: `got` supports cookies by default. You may not need `http-cookie-agent` |
+| `superagent`                            | ✅ supported | :warning: `superagent` supports cookies by default. You may not need `http-cookie-agent`. |
+| `request`                               | ✅ supported | :warning: `request` supports cookies by default. You may not need `http-cookie-agent`. |
+| `needle`                                | ✅ supported | |
+| `phin`                                  | ✅ supported | |
+| `@hapi/wrech`                           | ✅ supported | |
+| `urllib`                                | ✅ supported | |
+| `bun` global fetch                      | ❌&nbsp;unsupported | Bun has properietary fetch/net implementation and is [not currently supported](https://github.com/3846masa/http-cookie-agent/issues/692) |
 
-\*\* The library supports cookies by default. You may not need `http-cookie-agent`.
 
 See also [examples](./examples) for more details.
 
