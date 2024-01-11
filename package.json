@@ -111,7 +111,7 @@
   "peerDependencies": {
     "deasync": "^0.1.26",
     "tough-cookie": "^4.0.0",
-    "undici": "^5.11.0"
+    "undici": "^6.2.1"
   },
   "peerDependenciesMeta": {
     "deasync": {
