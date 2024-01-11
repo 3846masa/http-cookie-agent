@@ -65,7 +65,7 @@
     "workerThreads": false
   },
   "resolutions": {
-    "urllib/undici": "^5.28.2"
+    "urllib/undici": "6.2.1"
   },
   "dependencies": {
     "agent-base": "^7.1.0"
@@ -105,7 +105,7 @@
     "superagent": "8.1.2",
     "tough-cookie": "4.1.3",
     "typescript": "5.3.3",
-    "undici": "5.28.2",
+    "undici": "6.2.1",
     "urllib": "3.19.1"
   },
   "peerDependencies": {

@@ -23,6 +23,10 @@ class CookieHandler implements Required<Dispatcher.DispatchHandlers> {
     this[kHandlers] = handlers;
   }
 
+  onResponseStarted = (): void => {
+    this[kHandlers].onResponseStarted?.();
+  };
+
   onConnect = (abort: () => void): void => {
     this[kHandlers].onConnect?.(abort);
   };
