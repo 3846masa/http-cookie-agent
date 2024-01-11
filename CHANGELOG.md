@@ -1,3 +1,20 @@
+# [6.0.0](https://github.com/3846masa/http-cookie-agent/compare/v5.0.4...v6.0.0) (2024-01-11)
+
+
+### Features
+
+* drop Node.js v14, v16 support ([#729](https://github.com/3846masa/http-cookie-agent/issues/729)) ([e32c407](https://github.com/3846masa/http-cookie-agent/commit/e32c40795fac0c9a4a4a4cdcf35dac864cfff7c3))
+
+
+### BREAKING CHANGES
+
+* Drop Node.js v14, v16 support
+
+* fix: supports undici v6.2.1
+
+close https://github.com/3846masa/http-cookie-agent/pull/706
+close https://github.com/3846masa/http-cookie-agent/issues/728
+
 ## [5.0.4](https://github.com/3846masa/http-cookie-agent/compare/v5.0.3...v5.0.4) (2023-06-18)
 
 
