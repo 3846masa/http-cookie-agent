@@ -33,13 +33,31 @@ npm install undici
 
 ## Usage
 
+See also [examples](./examples) for more details.
+
 ### Supported libraries
 
-Node.js global fetch / `undici` / `node:http` / `node:https` / `axios` / `node-fetch` / `got`\*\* / `superagent`\*\* / `request`\*\* / `needle` / `phin` / `@hapi/wreck` / `urllib` etc.
+| Library              | Supported?        |
+| -------------------- | ----------------- |
+| Node.js global fetch | ✅                |
+| `undici`             | ✅                |
+| `node:http`          | ✅                |
+| `node:https`         | ✅                |
+| `axios`              | ✅                |
+| `node-fetch`         | ✅                |
+| `got`                | ✅ <sup>\*1</sup> |
+| `superagent`         | ✅ <sup>\*1</sup> |
+| `request`            | ✅ <sup>\*1</sup> |
+| `needle`             | ✅                |
+| `phin`               | ✅                |
+| `@hapi/wrech`        | ✅                |
+| `urllib`             | ✅                |
+| Bun global fetch     | ❌ <sup>\*2</sup> |
+| Deno global fetch    | ❌ <sup>\*2</sup> |
 
-\*\* The library supports cookies by default. You may not need `http-cookie-agent`.
+\*1: This library supports cookies by default. You may not need `http-cookie-agent`.
 
-See also [examples](./examples) for more details.
+\*2: There have proprietary fetch implementation and is [not currently supported](https://github.com/3846masa/http-cookie-agent/issues/692).
 
 #### Node.js global fetch
 
