@@ -5,10 +5,6 @@ import { CookieJar } from 'tough-cookie';
 import { createTestServer, readStream } from '../../__tests__/helpers.mjs';
 import { CookieAgent } from '../cookie_agent.js';
 
-declare global {
-  const fetch: typeof import('undici').fetch;
-}
-
 if (semver.lt(process.version, 'v18.2.0')) {
   process.exit(0);
 }
