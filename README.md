@@ -33,27 +33,31 @@ npm install undici
 
 ## Usage
 
+See also [examples](./examples) for more details.
+
 ### Supported libraries
 
-| Library                                 | Supported?    | Notes   |
-| --------------------------------------- | ------------ | ------- |
-| Node.js global fetch                    | ✅ supported | |
-| `undici` (Node.js fetch implementation) | ✅ supported | |
-| `node:http`                             | ✅ supported | |
-| `node:https`                            | ✅ supported | |
-| `axios`                                 | ✅ supported | |
-| `node-fetch`                            | ✅ supported | |
-| `got`                                   | ✅ supported | :warning: `got` supports cookies by default. You may not need `http-cookie-agent` |
-| `superagent`                            | ✅ supported | :warning: `superagent` supports cookies by default. You may not need `http-cookie-agent`. |
-| `request`                               | ✅ supported | :warning: `request` supports cookies by default. You may not need `http-cookie-agent`. |
-| `needle`                                | ✅ supported | |
-| `phin`                                  | ✅ supported | |
-| `@hapi/wrech`                           | ✅ supported | |
-| `urllib`                                | ✅ supported | |
-| `bun` global fetch                      | ❌&nbsp;unsupported | Bun has properietary fetch/net implementation and is [not currently supported](https://github.com/3846masa/http-cookie-agent/issues/692) |
+| Library              | Supported?        |
+| -------------------- | ----------------- |
+| Node.js global fetch | ✅                |
+| `undici`             | ✅                |
+| `node:http`          | ✅                |
+| `node:https`         | ✅                |
+| `axios`              | ✅                |
+| `node-fetch`         | ✅                |
+| `got`                | ✅ <sup>\*1</sup> |
+| `superagent`         | ✅ <sup>\*1</sup> |
+| `request`            | ✅ <sup>\*1</sup> |
+| `needle`             | ✅                |
+| `phin`               | ✅                |
+| `@hapi/wrech`        | ✅                |
+| `urllib`             | ✅                |
+| Bun global fetch     | ❌ <sup>\*2</sup> |
+| Deno global fetch    | ❌ <sup>\*2</sup> |
 
+\*1: This library supports cookies by default. You may not need `http-cookie-agent`.
 
-See also [examples](./examples) for more details.
+\*2: There have proprietary fetch implementation and is [not currently supported](https://github.com/3846masa/http-cookie-agent/issues/692).
 
 #### Node.js global fetch
 
