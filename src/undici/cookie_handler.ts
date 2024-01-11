@@ -35,7 +35,7 @@ class CookieHandler implements Required<Dispatcher.DispatchHandlers> {
     this[kHandlers].onUpgrade?.(statusCode, headers, socket);
   };
 
-  onHeaders = (statusCode: number, _headers: string[] | null, resume: () => void): boolean => {
+  onHeaders = (statusCode: number, _headers: string[] | null, resume: () => void, statusText: string): boolean => {
     if (this[kHandlers].onHeaders == null) {
       throw new errors.InvalidArgumentError('invalid onHeaders method');
     }
@@ -48,7 +48,7 @@ class CookieHandler implements Required<Dispatcher.DispatchHandlers> {
     });
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this[kHandlers].onHeaders!(statusCode, _headers, resume);
+    return this[kHandlers].onHeaders!(statusCode, _headers, resume, statusText);
   };
 
   onData = (chunk: Buffer): boolean => {
