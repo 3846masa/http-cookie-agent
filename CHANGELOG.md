@@ -1,3 +1,10 @@
+## [6.0.1](https://github.com/3846masa/http-cookie-agent/compare/v6.0.0...v6.0.1) (2024-01-11)
+
+
+### Bug Fixes
+
+* add undici v6 to peerdeps ([#731](https://github.com/3846masa/http-cookie-agent/issues/731)) ([7611216](https://github.com/3846masa/http-cookie-agent/commit/7611216f09a101e14ff6252d9f09399e183ea0ec))
+
 # [6.0.0](https://github.com/3846masa/http-cookie-agent/compare/v5.0.4...v6.0.0) (2024-01-11)
 
 
