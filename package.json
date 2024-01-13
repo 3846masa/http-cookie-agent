@@ -42,20 +42,19 @@
   ],
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "npm-run-all build:*",
+    "build": "pnpm run --parallel \"/^build:.*/\"",
     "build:cjs": "babel src --out-dir dist --extensions .ts --out-file-extension .js",
     "build:mjs": "babel src --out-dir dist --extensions .mts --out-file-extension .mjs",
-    "semantic-release": "semantic-release",
-    "pretest": "npm run build",
-    "test": "ava",
-    "lint": "npm-run-all lint:*",
-    "lint:tsc": "tsc --noEmit",
-    "lint:eslint": "eslint --ext .js,.ts,.mjs,.mts .",
-    "lint:prettier": "prettier --check .",
-    "format": "npm-run-all format:*",
+    "format": "pnpm run --sequential \"/^format:.*/\"",
     "format:eslint": "eslint --fix --ext .js,.ts,.mjs,.mts .",
     "format:prettier": "prettier --write .",
-    "patch-package": "patch-package"
+    "lint": "pnpm run \"/^lint:.*/\"",
+    "lint:eslint": "eslint --ext .js,.ts,.mjs,.mts .",
+    "lint:prettier": "prettier --check .",
+    "lint:tsc": "tsc --noEmit",
+    "semantic-release": "semantic-release",
+    "pretest": "pnpm run build",
+    "test": "ava"
   },
   "ava": {
     "files": [
@@ -63,9 +62,6 @@
       "dist/**/__tests__/*.spec.mjs"
     ],
     "workerThreads": false
-  },
-  "resolutions": {
-    "urllib/undici": "6.3.0"
   },
   "dependencies": {
     "agent-base": "^7.1.0"
@@ -94,8 +90,6 @@
     "http-proxy-agent": "7.0.0",
     "needle": "3.3.1",
     "node-fetch": "3.3.2",
-    "npm-run-all": "4.1.5",
-    "patch-package": "8.0.0",
     "phin": "3.7.0",
     "proxy": "2.1.1",
     "request": "2.88.2",
@@ -121,7 +115,16 @@
       "optional": true
     }
   },
+  "packageManager": "pnpm@8.14.1+sha256.2df78e65d433d7693b9d3fbdaf431b2d96bb4f96a2ffecd51a50efe16e50a6a8",
   "engines": {
     "node": ">=18.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "urllib>undici": "$undici"
+    },
+    "patchedDependencies": {
+      "@semantic-release/git@10.0.1": "patches/@semantic-release__git@10.0.1.patch"
+    }
   }
 }
