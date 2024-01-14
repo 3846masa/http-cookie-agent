@@ -1,6 +1,6 @@
 import type { Agent, Dispatcher } from 'undici';
 import { Client, RedirectHandler } from 'undici';
-import { kDispatch, kMaxRedirections, kUrl } from 'undici/lib/core/symbols';
+import Symbols from 'undici/lib/core/symbols';
 
 import type { CookieOptions } from '../cookie_options';
 import { createCookieHeaderValue } from '../utils/create_cookie_header_value';
@@ -34,8 +34,8 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
       }
     }
 
-    override [kDispatch](opts: Agent.DispatchOptions, handler: Dispatcher.DispatchHandlers) {
-      const { maxRedirections = this[kMaxRedirections] } = opts;
+    override [Symbols.kDispatch](opts: Agent.DispatchOptions, handler: Dispatcher.DispatchHandlers) {
+      const { maxRedirections = this[Symbols.kMaxRedirections] } = opts;
 
       if (maxRedirections) {
         opts = { ...opts, maxRedirections: 0 };
@@ -44,7 +44,7 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
 
       const cookieOptions = this[kCookieOptions];
       if (cookieOptions) {
-        const origin = opts.origin || this[kUrl].origin;
+        const origin = opts.origin || this[Symbols.kUrl].origin;
         const requestUrl = new URL(opts.path, origin).toString();
         const headers = convertToHeadersObject(opts.headers);
 
@@ -61,7 +61,7 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
         handler = new CookieHandler(requestUrl, cookieOptions, handler);
       }
 
-      return super[kDispatch](opts, handler);
+      return super[Symbols.kDispatch](opts, handler);
     }
   }
 

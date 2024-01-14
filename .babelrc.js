@@ -1,26 +1,17 @@
-module.exports = {
-  overrides: [
-    {
-      include: ['**/*.mts'],
-      presets: [
-        [
-          '@babel/preset-env',
-          {
-            modules: false,
-            targets: { node: 14 },
-          },
-        ],
+module.exports = (api) => {
+  const isTest = api.env('test');
+
+  return {
+    plugins: ['@babel/plugin-proposal-explicit-resource-management'],
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          modules: isTest ? false : 'commonjs',
+          targets: { node: 18 },
+        },
       ],
-    },
-  ],
-  presets: [
-    [
-      '@babel/preset-env',
-      {
-        modules: 'commonjs',
-        targets: { node: 14 },
-      },
+      ['@babel/preset-typescript'],
     ],
-    ['@babel/preset-typescript'],
-  ],
+  };
 };
