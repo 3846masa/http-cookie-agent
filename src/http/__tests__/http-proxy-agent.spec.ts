@@ -1,22 +1,22 @@
 import http from 'node:http';
+import { text } from 'node:stream/consumers';
 
-import test from 'ava';
+import { expect, jest, test } from '@jest/globals';
 import hpa from 'http-proxy-agent';
 import { CookieJar } from 'tough-cookie';
 
-import { createTestServerWithProxy } from '../../__tests__/helpers.mjs';
-import { createCookieAgent } from '../create_cookie_agent.js';
+import { createTestServerWithProxy } from '../../__tests__/helpers';
+import { createCookieAgent } from '../create_cookie_agent';
 
 const HttpProxyCookieAgent = createCookieAgent(hpa.HttpProxyAgent);
 
 export function request(url: string, options: http.RequestOptions, payload?: unknown) {
-  const promise = new Promise<http.IncomingMessage>((resolve, reject) => {
+  const promise = new Promise<string>((resolve, reject) => {
     const req = http.request(url, options);
     req.on('response', (res) => {
       res.on('error', (err) => reject(err));
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      res.on('data', () => {});
-      res.on('end', () => resolve(res));
+      res.on('end', () => resolve(data));
+      const data = text(res);
     });
     req.on('error', (err) => reject(err));
     req.end(payload);
@@ -25,162 +25,144 @@ export function request(url: string, options: http.RequestOptions, payload?: unk
   return promise;
 }
 
-test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
-  const jar = new CookieJar();
-
-  const { port, proxyPort } = await createTestServerWithProxy([
+test('should set cookies to CookieJar from Set-Cookie header', async () => {
+  using server = await createTestServerWithProxy([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent(`http://localhost:${proxyPort}`, { cookies: { jar } });
+  const jar = new CookieJar();
+  const agent = new HttpProxyCookieAgent(`http://localhost:${server.proxyPort}`, { cookies: { jar } });
 
-  await request(`http://localhost:${port}`, {
+  await request(`http://localhost:${server.port}`, {
     agent,
     method: 'GET',
   });
 
-  const cookies = await jar.getCookies(`http://localhost:${port}`);
-  t.is(cookies.length, 1);
-  t.like(cookies[0], { key: 'key', value: 'value' });
-
-  t.plan(2);
+  const actual = await jar.getCookies(`http://localhost:${server.port}`);
+  expect(actual).toMatchObject([{ key: 'key', value: 'value' }]);
 });
 
-test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
-  const jar = new CookieJar();
-
-  const { port, proxyPort } = await createTestServerWithProxy([
+test('should set cookies to CookieJar from multiple Set-Cookie headers', async () => {
+  using server = await createTestServerWithProxy([
     (_req, res) => {
       res.setHeader('Set-Cookie', ['key1=value1', 'key2=value2']);
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent(`http://localhost:${proxyPort}`, { cookies: { jar } });
+  const jar = new CookieJar();
+  const agent = new HttpProxyCookieAgent(`http://localhost:${server.proxyPort}`, { cookies: { jar } });
 
-  await request(`http://localhost:${port}`, {
+  await request(`http://localhost:${server.port}`, {
     agent,
     method: 'GET',
   });
 
-  const cookies = await jar.getCookies(`http://localhost:${port}`);
-  t.is(cookies.length, 2);
-  t.like(cookies[0], { key: 'key1', value: 'value1' });
-  t.like(cookies[1], { key: 'key2', value: 'value2' });
-
-  t.plan(3);
+  const actual = await jar.getCookies(`http://localhost:${server.port}`);
+  expect(actual).toMatchObject([
+    { key: 'key1', value: 'value1' },
+    { key: 'key2', value: 'value2' },
+  ]);
 });
 
-test('should send cookies from CookieJar', async (t) => {
-  const jar = new CookieJar();
-
-  const { port, proxyPort } = await createTestServerWithProxy([
+test('should send cookies from CookieJar', async () => {
+  using server = await createTestServerWithProxy([
     (req, res) => {
-      t.is(req.headers['cookie'], 'key=value');
+      res.write(req.headers['cookie']);
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent(`http://localhost:${proxyPort}`, { cookies: { jar } });
+  const jar = new CookieJar();
+  const agent = new HttpProxyCookieAgent(`http://localhost:${server.proxyPort}`, { cookies: { jar } });
 
-  await jar.setCookie('key=value', `http://localhost:${port}`);
+  await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
-  await request(`http://localhost:${port}`, {
+  const actual = await request(`http://localhost:${server.port}`, {
     agent,
     method: 'GET',
   });
-
-  t.plan(1);
+  expect(actual).toBe('key=value');
 });
 
-test('should send cookies from both a request options and CookieJar', async (t) => {
-  const jar = new CookieJar();
-
-  const { port, proxyPort } = await createTestServerWithProxy([
+test('should send cookies from both a request options and CookieJar', async () => {
+  using server = await createTestServerWithProxy([
     (req, res) => {
-      t.is(req.headers['cookie'], 'key1=value1; key2=value2');
+      res.write(req.headers['cookie']);
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent(`http://localhost:${proxyPort}`, { cookies: { jar } });
+  const jar = new CookieJar();
+  const agent = new HttpProxyCookieAgent(`http://localhost:${server.proxyPort}`, { cookies: { jar } });
 
-  await jar.setCookie('key1=value1', `http://localhost:${port}`);
+  await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
 
-  await request(`http://localhost:${port}`, {
+  const actual = await request(`http://localhost:${server.port}`, {
     agent,
     headers: { Cookie: 'key2=value2' },
     method: 'GET',
   });
-
-  t.plan(1);
+  expect(actual).toBe('key1=value1; key2=value2');
 });
 
-test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
-  const jar = new CookieJar();
-
-  const { port, proxyPort } = await createTestServerWithProxy([
+test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async () => {
+  using server = await createTestServerWithProxy([
     (req, res) => {
-      t.is(req.headers['cookie'], 'key=expected');
+      res.write(req.headers['cookie']);
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent(`http://localhost:${proxyPort}`, { cookies: { jar } });
+  const jar = new CookieJar();
+  const agent = new HttpProxyCookieAgent(`http://localhost:${server.proxyPort}`, { cookies: { jar } });
 
-  await jar.setCookie('key=notexpected', `http://localhost:${port}`);
+  await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
-  await request(`http://localhost:${port}`, {
+  const actual = await request(`http://localhost:${server.port}`, {
     agent,
     headers: { Cookie: 'key=expected' },
     method: 'GET',
   });
-
-  t.plan(1);
+  expect(actual).toBe('key=expected');
 });
 
-test('should emit error when CookieJar#getCookies throws error.', async (t) => {
-  const jar = new CookieJar();
-  jar.getCookiesSync = () => {
-    throw new Error('Error');
-  };
-
-  const { port, proxyPort } = await createTestServerWithProxy([
+test('should emit error when CookieJar#getCookies throws error.', async () => {
+  using server = await createTestServerWithProxy([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent(`http://localhost:${proxyPort}`, { cookies: { jar } });
+  const jar = new CookieJar();
+  const agent = new HttpProxyCookieAgent(`http://localhost:${server.proxyPort}`, { cookies: { jar } });
 
-  await t.throwsAsync(() => {
-    return request(`http://localhost:${port}`, {
-      agent,
-      method: 'GET',
-    });
+  jest.spyOn(jar, 'getCookiesSync').mockImplementation(() => {
+    throw new Error('Error');
   });
 
-  t.plan(1);
+  const actual = request(`http://localhost:${server.port}`, {
+    agent,
+    method: 'GET',
+  });
+  await expect(actual).rejects.toThrowError();
 });
 
-test('should emit error when CookieJar#setCookie throws error.', async (t) => {
-  const jar = new CookieJar();
-  jar.setCookieSync = () => {
-    throw new Error('Error');
-  };
-
-  const { port, proxyPort } = await createTestServerWithProxy([
+test('should emit error when CookieJar#setCookie throws error.', async () => {
+  using server = await createTestServerWithProxy([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-  const agent = new HttpProxyCookieAgent(`http://localhost:${proxyPort}`, { cookies: { jar } });
+  const jar = new CookieJar();
+  const agent = new HttpProxyCookieAgent(`http://localhost:${server.proxyPort}`, { cookies: { jar } });
 
-  await t.throwsAsync(() => {
-    return request(`http://localhost:${port}`, {
-      agent,
-      method: 'GET',
-    });
+  jest.spyOn(jar, 'setCookieSync').mockImplementation(() => {
+    throw new Error('Error');
   });
 
-  t.plan(1);
+  const actual = request(`http://localhost:${server.port}`, {
+    agent,
+    method: 'GET',
+  });
+  await expect(actual).rejects.toThrowError();
 });

@@ -1,12 +1,11 @@
 import http from 'node:http';
-import type { Readable } from 'node:stream';
 import { promisify } from 'node:util';
 
 import { createProxy } from 'proxy';
 
 export async function createTestServer(
   stories: http.RequestListener[],
-): Promise<{ port: number; server: http.Server }> {
+): Promise<{ [Symbol.dispose]: () => void; port: number }> {
   const server = http.createServer();
 
   await promisify(server.listen).apply(server);
@@ -18,12 +17,7 @@ export async function createTestServer(
 
   server.on('request', (req, res) => {
     const listener = stories.shift();
-    if (listener != null) {
-      listener(req, res);
-    }
-    if (stories.length === 0) {
-      server.close();
-    }
+    listener?.(req, res);
   });
 
   server.on('clientError', (err, socket) => {
@@ -32,41 +26,44 @@ export async function createTestServer(
   });
 
   return {
+    [Symbol.dispose]: () => {
+      server.close();
+    },
     port: serverInfo.port,
-    server,
+  };
+}
+
+async function createProxyServer(): Promise<{ [Symbol.dispose]: () => void; port: number }> {
+  // Create reverse proxy
+  const server = createProxy(http.createServer());
+
+  await promisify(server.listen).apply(server);
+
+  const serverInfo = server.address();
+  if (serverInfo == null || typeof serverInfo === 'string') {
+    throw new Error('Failed to setup a test server.');
+  }
+
+  return {
+    [Symbol.dispose]: () => {
+      server.close();
+    },
+    port: serverInfo.port,
   };
 }
 
 export async function createTestServerWithProxy(
   stories: http.RequestListener[],
-): Promise<{ port: number; proxyPort: number; server: http.Server }> {
-  const { port, server } = await createTestServer(stories);
-
-  // Create reverse proxy
-  const proxyServer = createProxy(http.createServer());
-
-  await promisify(proxyServer.listen).apply(proxyServer);
-
-  const serverInfo = proxyServer.address();
-  if (serverInfo == null || typeof serverInfo === 'string') {
-    throw new Error('Failed to setup a test server.');
-  }
-
-  server.once('close', () => {
-    proxyServer.close();
-  });
+): Promise<{ [Symbol.dispose]: () => void; port: number; proxyPort: number }> {
+  const server = await createTestServer(stories);
+  const proxyServer = await createProxyServer();
 
   return {
-    port,
-    proxyPort: serverInfo.port,
-    server,
+    [Symbol.dispose]: () => {
+      server[Symbol.dispose]();
+      proxyServer[Symbol.dispose]();
+    },
+    port: server.port,
+    proxyPort: proxyServer.port,
   };
-}
-
-export async function readStream(stream: Readable): Promise<string> {
-  let data = '';
-  for await (const chunk of stream) {
-    data += chunk;
-  }
-  return data;
 }

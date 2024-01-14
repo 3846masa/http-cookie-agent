@@ -1,11 +1,15 @@
+import { createRequire } from 'node:module';
+
 import type { CookieOptions } from '../cookie_options';
+
+const require = 'require' in globalThis ? globalThis.require : createRequire(import.meta.url);
 
 type ModuleResolver = (id: string) => string;
 
 function validateCookieOptions(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   opts: any,
-  resolver: ModuleResolver = require.resolve,
+  resolver: ModuleResolver = require,
 ): asserts opts is CookieOptions {
   if (!('jar' in opts)) {
     throw new TypeError('invalid cookies.jar');

@@ -1,4 +1,8 @@
+import { createRequire } from 'node:module';
+
 import type { CookieOptions } from '../cookie_options';
+
+const require = 'require' in globalThis ? globalThis.require : createRequire(import.meta.url);
 
 type Params = {
   cookieOptions: CookieOptions;

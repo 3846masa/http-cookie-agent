@@ -1,122 +1,111 @@
-import test from 'ava';
+import { text } from 'node:stream/consumers';
+
+import { expect, jest, test } from '@jest/globals';
 import axios from 'axios';
 import { CookieJar } from 'tough-cookie';
 
-import { createTestServer, readStream } from '../../__tests__/helpers.mjs';
-import { HttpCookieAgent } from '../index.js';
+import { createTestServer } from '../../__tests__/helpers';
+import { HttpCookieAgent } from '../index';
 
-test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
-  const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should set cookies to CookieJar from Set-Cookie header', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-
-  await axios.get(`http://localhost:${port}`, {
-    httpAgent: agent,
-  });
-
-  const cookies = await jar.getCookies(`http://localhost:${port}`);
-  t.is(cookies.length, 1);
-  t.like(cookies[0], { key: 'key', value: 'value' });
-
-  t.plan(2);
-});
-
-test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
   const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  const { port } = await createTestServer([
+  await axios.get(`http://localhost:${server.port}`, {
+    httpAgent: agent,
+  });
+
+  const actual = await jar.getCookies(`http://localhost:${server.port}`);
+  expect(actual).toMatchObject([{ key: 'key', value: 'value' }]);
+});
+
+test('should set cookies to CookieJar from multiple Set-Cookie headers', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', ['key1=value1', 'key2=value2']);
       res.end();
     },
   ]);
-
-  await axios.get(`http://localhost:${port}`, {
-    httpAgent: agent,
-  });
-
-  const cookies = await jar.getCookies(`http://localhost:${port}`);
-  t.is(cookies.length, 2);
-  t.like(cookies[0], { key: 'key1', value: 'value1' });
-  t.like(cookies[1], { key: 'key2', value: 'value2' });
-
-  t.plan(3);
-});
-
-test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
   const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  const { port } = await createTestServer([
-    (req, res) => {
-      t.is(req.headers['cookie'], 'key=value');
-      res.end();
-    },
-  ]);
-
-  await jar.setCookie('key=value', `http://localhost:${port}`);
-
-  await axios.get(`http://localhost:${port}`, {
+  await axios.get(`http://localhost:${server.port}`, {
     httpAgent: agent,
   });
 
-  t.plan(1);
+  const actual = await jar.getCookies(`http://localhost:${server.port}`);
+  expect(actual).toMatchObject([
+    { key: 'key1', value: 'value1' },
+    { key: 'key2', value: 'value2' },
+  ]);
 });
 
-test('should send cookies from both a request options and CookieJar', async (t) => {
-  const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should send cookies from CookieJar', async () => {
+  using server = await createTestServer([
     (req, res) => {
-      t.is(req.headers['cookie'], 'key1=value1; key2=value2');
+      res.write(req.headers['cookie']);
       res.end();
     },
   ]);
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  await jar.setCookie('key1=value1', `http://localhost:${port}`);
+  await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
-  await axios.get(`http://localhost:${port}`, {
+  const { data: actual } = await axios.get(`http://localhost:${server.port}`, {
+    httpAgent: agent,
+    responseType: 'text',
+  });
+  expect(actual).toBe('key=value');
+});
+
+test('should send cookies from both a request options and CookieJar', async () => {
+  using server = await createTestServer([
+    (req, res) => {
+      res.write(req.headers['cookie']);
+      res.end();
+    },
+  ]);
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { jar } });
+
+  await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
+
+  const { data: actual } = await axios.get(`http://localhost:${server.port}`, {
     headers: { Cookie: 'key2=value2' },
     httpAgent: agent,
+    responseType: 'text',
   });
-
-  t.plan(1);
+  expect(actual).toBe('key1=value1; key2=value2');
 });
 
-test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
-  const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async () => {
+  using server = await createTestServer([
     (req, res) => {
-      t.is(req.headers['cookie'], 'key=expected');
+      res.write(req.headers['cookie']);
       res.end();
     },
   ]);
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  await jar.setCookie('key=notexpected', `http://localhost:${port}`);
+  await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
-  await axios.get(`http://localhost:${port}`, {
+  const { data: actual } = await axios.get(`http://localhost:${server.port}`, {
     headers: { Cookie: 'key=expected' },
     httpAgent: agent,
   });
-
-  t.plan(1);
+  expect(actual).toBe('key=expected');
 });
 
-test('should send cookies from the first response when redirecting', async (t) => {
-  const jar = new CookieJar();
-  const agent = new HttpCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should send cookies from the first response when redirecting', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.statusCode = 301;
       res.setHeader('Location', '/redirect');
@@ -124,87 +113,102 @@ test('should send cookies from the first response when redirecting', async (t) =
       res.end();
     },
     (req, res) => {
-      t.is(req.headers['cookie'], 'key=value');
+      res.write(req.headers['cookie']);
       res.end();
     },
   ]);
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  await axios.get(`http://localhost:${port}`, {
+  const { data: actual } = await axios.get(`http://localhost:${server.port}`, {
     httpAgent: agent,
   });
-
-  t.plan(1);
+  expect(actual).toBe('key=value');
 });
 
-test('should emit error when CookieJar#getCookies throws error.', async (t) => {
-  const jar = new CookieJar();
-  jar.getCookiesSync = () => {
-    throw new Error('Error');
-  };
-  const agent = new HttpCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should emit error when CookieJar#getCookies throws error.', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-
-  await t.throwsAsync(() => {
-    return axios.get(`http://localhost:${port}`, {
-      httpAgent: agent,
-    });
-  });
-
-  t.plan(1);
-});
-
-test('should emit error when CookieJar#setCookie throws error.', async (t) => {
   const jar = new CookieJar();
-  jar.setCookieSync = () => {
-    throw new Error('Error');
-  };
   const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  const { port } = await createTestServer([
+  jest.spyOn(jar, 'getCookiesSync').mockImplementation(() => {
+    throw new Error('Error');
+  });
+
+  const actual = axios.get(`http://localhost:${server.port}`, {
+    httpAgent: agent,
+  });
+  await expect(actual).rejects.toThrowError();
+});
+
+test('should emit error when CookieJar#setCookie throws error.', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
+  const jar = new CookieJar();
+  const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  await t.throwsAsync(() => {
-    return axios.get(`http://localhost:${port}`, {
-      httpAgent: agent,
-    });
+  jest.spyOn(jar, 'setCookieSync').mockImplementation(() => {
+    throw new Error('Error');
   });
 
-  t.plan(1);
+  const actual = axios.get(`http://localhost:${server.port}`, {
+    httpAgent: agent,
+  });
+  await expect(actual).rejects.toThrowError();
 });
 
-test('should send post data when keepalive is enabled', async (t) => {
-  const times = 2;
-
+test('should send post data when keepalive is enabled', async () => {
+  using server = await createTestServer([
+    async (req, res) => {
+      res.write(
+        JSON.stringify({
+          cookie: req.headers['cookie'],
+          payload: await text(req),
+        }),
+      );
+      res.end();
+    },
+    async (req, res) => {
+      res.write(
+        JSON.stringify({
+          cookie: req.headers['cookie'],
+          payload: await text(req),
+        }),
+      );
+      res.end();
+    },
+  ]);
   const jar = new CookieJar();
   const agent = new HttpCookieAgent({ cookies: { jar }, keepAlive: true });
 
-  const { port } = await createTestServer(
-    Array.from({ length: times }, (_, idx) => {
-      return async (req, res) => {
-        t.is(await readStream(req), `{ "index": "${idx}" }`);
-        t.is(req.headers['cookie'], 'key=expected');
-        res.end();
-      };
-    }),
-  );
+  await jar.setCookie('key=expected', `http://localhost:${server.port}`);
 
-  await jar.setCookie('key=expected', `http://localhost:${port}`);
+  const actual = await Promise.all([
+    axios
+      .post(`http://localhost:${server.port}`, `payload-01`, {
+        httpAgent: agent,
+        responseType: 'json',
+      })
+      .then((res) => res.data),
+    axios
+      .post(`http://localhost:${server.port}`, `payload-02`, {
+        httpAgent: agent,
+        responseType: 'json',
+      })
+      .then((res) => res.data),
+  ]);
 
-  for (let idx = 0; idx < times; idx++) {
-    await axios.post(`http://localhost:${port}`, `{ "index": "${idx}" }`, {
-      httpAgent: agent,
-    });
-  }
-
-  t.plan(times * 2);
+  expect(actual).toEqual([
+    { cookie: 'key=expected', payload: 'payload-01' },
+    { cookie: 'key=expected', payload: 'payload-02' },
+  ]);
 });

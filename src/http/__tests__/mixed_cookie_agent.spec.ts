@@ -1,187 +1,166 @@
 import http from 'node:http';
+import { text } from 'node:stream/consumers';
 
-import test from 'ava';
+import { expect, jest, test } from '@jest/globals';
 import { CookieJar } from 'tough-cookie';
 
-import { createTestServer } from '../../__tests__/helpers.mjs';
-import { MixedCookieAgent } from '../index.js';
+import { createTestServer } from '../../__tests__/helpers';
+import { MixedCookieAgent } from '../index';
 
 export function request(url: string, options: http.RequestOptions) {
   const req = http.request(url, options);
 
-  const promise = new Promise<http.IncomingMessage>((resolve, reject) => {
+  const promise = new Promise<string>((resolve, reject) => {
     req.on('response', (res) => {
       res.on('error', (err) => reject(err));
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
-      res.on('data', () => {});
-      res.on('end', () => resolve(res));
+      res.on('end', () => resolve(data));
+      const data = text(res);
     });
     req.on('error', (err) => reject(err));
   });
   req.end();
 
-  return { promise, req };
+  return promise;
 }
 
-test('should set cookies to CookieJar from Set-Cookie header', async (t) => {
-  const jar = new CookieJar();
-  const agent = new MixedCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should set cookies to CookieJar from Set-Cookie header', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
-
-  const { promise } = request(`http://localhost:${port}`, {
-    agent,
-    method: 'GET',
-  });
-  await promise;
-
-  const cookies = await jar.getCookies(`http://localhost:${port}`);
-  t.is(cookies.length, 1);
-  t.like(cookies[0], { key: 'key', value: 'value' });
-
-  t.plan(2);
-});
-
-test('should set cookies to CookieJar from multiple Set-Cookie headers', async (t) => {
   const jar = new CookieJar();
   const agent = new MixedCookieAgent({ cookies: { jar } });
 
-  const { port } = await createTestServer([
+  await request(`http://localhost:${server.port}`, {
+    agent,
+    method: 'GET',
+  });
+
+  const actual = await jar.getCookies(`http://localhost:${server.port}`);
+  expect(actual).toMatchObject([{ key: 'key', value: 'value' }]);
+});
+
+test('should set cookies to CookieJar from multiple Set-Cookie headers', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', ['key1=value1', 'key2=value2']);
       res.end();
     },
   ]);
-
-  const { promise } = request(`http://localhost:${port}`, {
-    agent,
-    method: 'GET',
-  });
-  await promise;
-
-  const cookies = await jar.getCookies(`http://localhost:${port}`);
-  t.is(cookies.length, 2);
-  t.like(cookies[0], { key: 'key1', value: 'value1' });
-  t.like(cookies[1], { key: 'key2', value: 'value2' });
-
-  t.plan(3);
-});
-
-test('should send cookies from CookieJar', async (t) => {
   const jar = new CookieJar();
   const agent = new MixedCookieAgent({ cookies: { jar } });
 
-  const { port } = await createTestServer([
-    (req, res) => {
-      t.is(req.headers['cookie'], 'key=value');
-      res.end();
-    },
-  ]);
-
-  await jar.setCookie('key=value', `http://localhost:${port}`);
-
-  const { promise } = request(`http://localhost:${port}`, {
+  await request(`http://localhost:${server.port}`, {
     agent,
     method: 'GET',
   });
-  await promise;
 
-  t.plan(1);
+  const actual = await jar.getCookies(`http://localhost:${server.port}`);
+  expect(actual).toMatchObject([
+    { key: 'key1', value: 'value1' },
+    { key: 'key2', value: 'value2' },
+  ]);
 });
 
-test('should send cookies from both a request options and CookieJar', async (t) => {
-  const jar = new CookieJar();
-  const agent = new MixedCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should send cookies from CookieJar', async () => {
+  using server = await createTestServer([
     (req, res) => {
-      t.is(req.headers['cookie'], 'key1=value1; key2=value2');
+      res.write(req.headers['cookie']);
       res.end();
     },
   ]);
+  const jar = new CookieJar();
+  const agent = new MixedCookieAgent({ cookies: { jar } });
 
-  await jar.setCookie('key1=value1', `http://localhost:${port}`);
+  await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const actual = await request(`http://localhost:${server.port}`, {
+    agent,
+    method: 'GET',
+  });
+  expect(actual).toBe('key=value');
+});
+
+test('should send cookies from both a request options and CookieJar', async () => {
+  using server = await createTestServer([
+    (req, res) => {
+      res.write(req.headers['cookie']);
+      res.end();
+    },
+  ]);
+  const jar = new CookieJar();
+  const agent = new MixedCookieAgent({ cookies: { jar } });
+
+  await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
+
+  const actual = await request(`http://localhost:${server.port}`, {
     agent,
     headers: { Cookie: 'key2=value2' },
     method: 'GET',
   });
-  await promise;
-
-  t.plan(1);
+  expect(actual).toBe('key1=value1; key2=value2');
 });
 
-test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async (t) => {
-  const jar = new CookieJar();
-  const agent = new MixedCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async () => {
+  using server = await createTestServer([
     (req, res) => {
-      t.is(req.headers['cookie'], 'key=expected');
+      res.write(req.headers['cookie']);
       res.end();
     },
   ]);
+  const jar = new CookieJar();
+  const agent = new MixedCookieAgent({ cookies: { jar } });
 
-  await jar.setCookie('key=notexpected', `http://localhost:${port}`);
+  await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
-  const { promise } = request(`http://localhost:${port}`, {
+  const actual = await request(`http://localhost:${server.port}`, {
     agent,
     headers: { Cookie: 'key=expected' },
     method: 'GET',
   });
-  await promise;
-
-  t.plan(1);
+  expect(actual).toBe('key=expected');
 });
 
-test('should emit error when CookieJar#getCookies throws error.', async (t) => {
-  const jar = new CookieJar();
-  jar.getCookiesSync = () => {
-    throw new Error('Error');
-  };
-  const agent = new MixedCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should emit error when CookieJar#getCookies throws error.', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
+  const jar = new CookieJar();
+  const agent = new MixedCookieAgent({ cookies: { jar } });
 
-  const { promise } = request(`http://localhost:${port}`, {
+  jest.spyOn(jar, 'getCookiesSync').mockImplementation(() => {
+    throw new Error('Error');
+  });
+
+  const actual = request(`http://localhost:${server.port}`, {
     agent,
     method: 'GET',
   });
-  await t.throwsAsync(() => promise);
-
-  t.plan(1);
+  await expect(actual).rejects.toThrowError();
 });
 
-test('should emit error when CookieJar#setCookie throws error.', async (t) => {
-  const jar = new CookieJar();
-  jar.setCookieSync = () => {
-    throw new Error('Error');
-  };
-  const agent = new MixedCookieAgent({ cookies: { jar } });
-
-  const { port } = await createTestServer([
+test('should emit error when CookieJar#setCookie throws error.', async () => {
+  using server = await createTestServer([
     (_req, res) => {
       res.setHeader('Set-Cookie', 'key=value');
       res.end();
     },
   ]);
+  const jar = new CookieJar();
+  const agent = new MixedCookieAgent({ cookies: { jar } });
 
-  const { promise } = request(`http://localhost:${port}`, {
+  jest.spyOn(jar, 'setCookieSync').mockImplementation(() => {
+    throw new Error('Error');
+  });
+
+  const actual = request(`http://localhost:${server.port}`, {
     agent,
     method: 'GET',
   });
-  await t.throwsAsync(() => promise);
-
-  t.plan(1);
+  await expect(actual).rejects.toThrowError();
 });
