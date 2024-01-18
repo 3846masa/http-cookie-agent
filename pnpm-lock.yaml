@@ -130,8 +130,8 @@ devDependencies:
     specifier: 6.3.0
     version: 6.3.0
   urllib:
-    specifier: 3.22.1
-    version: 3.22.1
+    specifier: 3.22.2
+    version: 3.22.2
 
 packages:
 
@@ -4842,6 +4842,7 @@ packages:
   /is-extglob@2.1.1:
     resolution: {integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     dev: true
 
   /is-fullwidth-code-point@3.0.0:
@@ -7555,8 +7556,8 @@ packages:
       requires-port: 1.0.0
     dev: true
 
-  /urllib@3.22.1:
-    resolution: {integrity: sha512-UjkH2mcN8vt4P5rI3DydnmwKTJXGx6+JMWDdWFEBgRSvSrjy0jSr5I+98bXBTQ9Dpa4rJBwoeRuEly5BSKGRtQ==}
+  /urllib@3.22.2:
+    resolution: {integrity: sha512-2mKMxflIsWXwAsPbanZ7sDEJF8UZL4QoAEaVviIxQBhsbJsftuTzaT/5MdbghBlL0/MU2iiky/a7mhB+LEjrRQ==}
     engines: {node: '>= 14.19.3'}
     dependencies:
       default-user-agent: 1.0.0
