@@ -39,7 +39,7 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
 
       if (maxRedirections) {
         opts = { ...opts, maxRedirections: 0 };
-        handler = new RedirectHandler(this, maxRedirections, opts, handler);
+        handler = new RedirectHandler(this, maxRedirections, opts, handler, false);
       }
 
       const cookieOptions = this[kCookieOptions];
