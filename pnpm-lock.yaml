@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  urllib>undici: 6.6.1
+  urllib>undici: 6.6.2
 
 patchedDependencies:
   '@semantic-release/git@10.0.1':
@@ -127,8 +127,8 @@ devDependencies:
     specifier: 5.3.3
     version: 5.3.3
   undici:
-    specifier: 6.6.1
-    version: 6.6.1
+    specifier: 6.6.2
+    version: 6.6.2
   urllib:
     specifier: 3.22.2
     version: 3.22.2
@@ -7500,8 +7500,8 @@ packages:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
 
-  /undici@6.6.1:
-    resolution: {integrity: sha512-J0GaEp0ztu/grIE2Uq57AbK6TRb+bWbOlxu0POCzhFKA6LKbwSAev+hDQaQcgUUA9CPs8Ky+cauzTHnQrtAQEA==}
+  /undici@6.6.2:
+    resolution: {integrity: sha512-vSqvUE5skSxQJ5sztTZ/CdeJb1Wq0Hf44hlYMciqHghvz+K88U0l7D6u1VsndoFgskDcnU+nG3gYmMzJVzd9Qg==}
     engines: {node: '>=18.0'}
     dependencies:
       '@fastify/busboy': 2.1.0
@@ -7603,7 +7603,7 @@ packages:
       pump: 3.0.0
       qs: 6.11.2
       type-fest: 4.9.0
-      undici: 6.6.1
+      undici: 6.6.2
       ylru: 1.3.2
     dev: true
 
