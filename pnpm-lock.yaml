@@ -88,8 +88,8 @@ devDependencies:
     specifier: 12.6.1
     version: 12.6.1
   http-proxy-agent:
-    specifier: 7.0.0
-    version: 7.0.0
+    specifier: 7.0.1
+    version: 7.0.1
   jest:
     specifier: 29.7.0
     version: 29.7.0(@types/node@18.19.17)
@@ -2164,7 +2164,7 @@ packages:
       debug: 4.3.4
       dir-glob: 3.0.1
       globby: 14.0.0
-      http-proxy-agent: 7.0.0
+      http-proxy-agent: 7.0.1
       https-proxy-agent: 7.0.2
       issue-parser: 6.0.0
       lodash-es: 4.17.21
@@ -4665,8 +4665,8 @@ packages:
     resolution: {integrity: sha512-er295DKPVsV82j5kw1Gjt+ADA/XYHsajl82cGNQG2eyoPkvgUhX+nDIyelzhIWbbsXP39EHcI6l5tYs2FYqYXQ==}
     dev: true
 
-  /http-proxy-agent@7.0.0:
-    resolution: {integrity: sha512-+ZT+iBxVUQ1asugqnD6oWoRiS25AkjNfG085dKJGtGxkdwLQrMKU5wJr2bOOFAXzKcTuqq+7fZlTMgG3SRfIYQ==}
+  /http-proxy-agent@7.0.1:
+    resolution: {integrity: sha512-My1KCEPs6A0hb4qCVzYp8iEvA8j8YqcvXLZZH8C9OFuTYpYjHE7N2dtG3mRl1HMD4+VGXpF3XcDVcxGBT7yDZQ==}
     engines: {node: '>= 14'}
     dependencies:
       agent-base: 7.1.0
