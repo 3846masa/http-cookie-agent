@@ -130,8 +130,8 @@ devDependencies:
     specifier: 6.6.2
     version: 6.6.2
   urllib:
-    specifier: 3.22.5
-    version: 3.22.5
+    specifier: 3.23.0
+    version: 3.23.0
 
 packages:
 
@@ -7621,8 +7621,8 @@ packages:
       requires-port: 1.0.0
     dev: true
 
-  /urllib@3.22.5:
-    resolution: {integrity: sha512-7KS72bP+a60IVFb8VdOoaaadikRvlWSzdNgz3rfRJP2YgPTySIntDg/USEP1xPUUZKO6DwBCoFWONi7yN+WWMA==}
+  /urllib@3.23.0:
+    resolution: {integrity: sha512-mw+PPlA28SZr/7jwoYiZxp83o4VrNP8XOLqUE54xHaqrf+V00on96H3iO0Vemuqq9imDTQT101IcTXrLlDGFMw==}
     engines: {node: '>= 14.19.3'}
     dependencies:
       default-user-agent: 1.0.0
