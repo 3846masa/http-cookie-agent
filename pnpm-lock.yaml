@@ -64,8 +64,8 @@ devDependencies:
     specifier: 7.5.8
     version: 7.5.8
   '@types/superagent':
-    specifier: 8.1.4
-    version: 8.1.4
+    specifier: 8.1.5
+    version: 8.1.5
   '@types/tough-cookie':
     specifier: 4.0.5
     version: 4.0.5
@@ -2404,8 +2404,8 @@ packages:
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
     dev: true
 
-  /@types/superagent@8.1.4:
-    resolution: {integrity: sha512-uzSBYwrpal8y2X2Pul5ZSWpzRiDha2FLcquaN95qUPnOjYgm/zQ5LIdqeJpQJTRWNTN+Rhm0aC8H06Ds2rqCYw==}
+  /@types/superagent@8.1.5:
+    resolution: {integrity: sha512-4E+74d2fmrJ6zAK81YihtMzXnISS8udlwV853CNTuO4/untcUAEfO7BTqrQfVMP4sGQ6HOctr03UCeQ/+i6tww==}
     dependencies:
       '@types/cookiejar': 2.1.5
       '@types/methods': 1.1.4
