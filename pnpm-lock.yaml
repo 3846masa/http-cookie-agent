@@ -42,6 +42,9 @@ devDependencies:
   '@jest/globals':
     specifier: 29.7.0
     version: 29.7.0
+  '@reactioncommerce/babel-remove-es-create-require':
+    specifier: 1.0.0
+    version: 1.0.0(@babel/core@7.24.3)
   '@semantic-release/changelog':
     specifier: 6.0.3
     version: 6.0.3(semantic-release@22.0.12)
@@ -2109,6 +2112,14 @@ packages:
       '@pnpm/config.env-replace': 1.1.0
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
+    dev: true
+
+  /@reactioncommerce/babel-remove-es-create-require@1.0.0(@babel/core@7.24.3):
+    resolution: {integrity: sha512-yR1vMj76hK5D9/VcXjFpk2OMoYpQdbvEgGcJ79cEzTL/jkFwIs53Zl6PNBjcC608P8qHl5eypEYRwG7CCGLzwQ==}
+    peerDependencies:
+      '@babel/core': ^7.0.0-0
+    dependencies:
+      '@babel/core': 7.24.3
     dev: true
 
   /@semantic-release/changelog@6.0.3(semantic-release@22.0.12):
