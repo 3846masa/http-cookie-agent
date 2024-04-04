@@ -1,3 +1,10 @@
+## [6.0.3](https://github.com/3846masa/http-cookie-agent/compare/v6.0.2...v6.0.3) (2024-04-04)
+
+
+### Bug Fixes
+
+* remove createRequire code to generate commonjs ([#843](https://github.com/3846masa/http-cookie-agent/issues/843)) ([5a32bf1](https://github.com/3846masa/http-cookie-agent/commit/5a32bf17e961450e3edd935c31a63a354d3a8d9c)), closes [#840](https://github.com/3846masa/http-cookie-agent/issues/840) [#842](https://github.com/3846masa/http-cookie-agent/issues/842)
+
 ## [6.0.2](https://github.com/3846masa/http-cookie-agent/compare/v6.0.1...v6.0.2) (2024-04-02)
 
 
