@@ -37,8 +37,8 @@ devDependencies:
     specifier: 7.24.1
     version: 7.24.1(@babel/core@7.24.4)
   '@hapi/wreck':
-    specifier: 18.0.1
-    version: 18.0.1
+    specifier: 18.1.0
+    version: 18.1.0
   '@jest/globals':
     specifier: 29.7.0
     version: 29.7.0
@@ -1703,8 +1703,8 @@ packages:
     resolution: {integrity: sha512-PnsP5d4q7289pS2T2EgGz147BFJ2Jpb4yrEdkpz2IhgEUzos1S7HTl7ezWh1yfYzYlj89KzLdCRkqsP6SIryeQ==}
     dev: true
 
-  /@hapi/wreck@18.0.1:
-    resolution: {integrity: sha512-OLHER70+rZxvDl75xq3xXOfd3e8XIvz8fWY0dqg92UvhZ29zo24vQgfqgHSYhB5ZiuFpSLeriOisAlxAo/1jWg==}
+  /@hapi/wreck@18.1.0:
+    resolution: {integrity: sha512-0z6ZRCmFEfV/MQqkQomJ7sl/hyxvcZM7LtuVqN3vdAO4vM9eBbowl0kaqQj9EJJQab+3Uuh1GxbGIBFy4NfJ4w==}
     dependencies:
       '@hapi/boom': 10.0.1
       '@hapi/bourne': 3.0.0
