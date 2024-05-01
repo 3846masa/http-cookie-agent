@@ -13,16 +13,14 @@ export type CookieAgentOptions = {
 
 type CookieAgent<BaseAgent extends http.Agent> = BaseAgent;
 
-export function createCookieAgent<
-  BaseAgent extends http.Agent = http.Agent,
-  BaseAgentOptions = unknown,
-  BaseAgentConstructorRestParams extends unknown[] = unknown[],
->(
-  BaseAgent: new (options: BaseAgentOptions, ...rest: BaseAgentConstructorRestParams) => BaseAgent,
-): new (
-  options: BaseAgentOptions & CookieAgentOptions,
-  ...rest: BaseAgentConstructorRestParams
-) => CookieAgent<BaseAgent>;
+type WithCookieAgentOptions<T> = T extends http.AgentOptions ? T & CookieAgentOptions : T;
+type ConstructorParams<Params> = {
+  [Index in keyof Params]: WithCookieAgentOptions<Params[Index]>;
+} & { length: Params['length'] };
+
+export function createCookieAgent<BaseAgent extends http.Agent = http.Agent, Params extends unknown[] = unknown[]>(
+  BaseAgent: new (...rest: Params) => BaseAgent,
+): new (...rest: ConstructorParams<Params>) => CookieAgent<BaseAgent>;
 
 export const HttpCookieAgent: new (options: http.AgentOptions & CookieAgentOptions) => CookieAgent<http.Agent>;
 export const HttpsCookieAgent: new (options: https.AgentOptions & CookieAgentOptions) => CookieAgent<https.Agent>;
