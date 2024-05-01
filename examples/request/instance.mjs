@@ -9,7 +9,7 @@ const client = request.defaults({
 });
 
 client.get('https://httpbin.org/cookies/set/session/userid', (_err, _res) => {
-  jar.getCookies('https://httpbin.org').then((cookies) => {
+  void jar.getCookies('https://httpbin.org').then((cookies) => {
     console.log(cookies);
   });
 });

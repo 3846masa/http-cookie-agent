@@ -19,7 +19,7 @@ class CookieAgent extends Agent {
       validateCookieOptions(cookieOpts);
     }
 
-    function factory(origin: URL, opts: CookieAgentOptions & Pool.Options) {
+    function factory(origin: URL, opts?: CookieAgentOptions & Pool.Options) {
       if (opts && opts.connections === 1) {
         return new CookieClient(origin, {
           ...opts,

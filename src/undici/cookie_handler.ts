@@ -1,3 +1,4 @@
+/* global Buffer */
 import type { Duplex } from 'node:stream';
 
 import type { Dispatcher } from 'undici';
@@ -51,16 +52,14 @@ class CookieHandler implements Required<Dispatcher.DispatchHandlers> {
       requestUrl: this[kRequestUrl],
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this[kHandlers].onHeaders!(statusCode, _headers, resume, statusText);
+    return this[kHandlers].onHeaders(statusCode, _headers, resume, statusText);
   };
 
   onData = (chunk: Buffer): boolean => {
     if (this[kHandlers].onData == null) {
       throw new errors.InvalidArgumentError('invalid onData method');
     }
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return this[kHandlers].onData!(chunk);
+    return this[kHandlers].onData(chunk);
   };
 
   onComplete = (trailers: string[] | null): void => {

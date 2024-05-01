@@ -185,12 +185,12 @@ test('should send post data when keepalive is enabled', async () => {
       .post(`http://localhost:${server.port}`)
       .send(`payload-01`)
       .agent(agent)
-      .then((res) => res.body),
+      .then((res) => res.body as object),
     superagent
       .post(`http://localhost:${server.port}`)
       .send(`payload-02`)
       .agent(agent)
-      .then((res) => res.body),
+      .then((res) => res.body as object),
   ]);
 
   expect(actual).toEqual([

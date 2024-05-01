@@ -14,11 +14,17 @@ export function request(url: string, options: http.RequestOptions, payload?: unk
   const promise = new Promise<string>((resolve, reject) => {
     const req = http.request(url, options);
     req.on('response', (res) => {
-      res.on('error', (err) => reject(err));
-      res.on('end', () => resolve(data));
+      res.on('error', (err) => {
+        reject(err);
+      });
+      res.on('end', () => {
+        resolve(data);
+      });
       const data = text(res);
     });
-    req.on('error', (err) => reject(err));
+    req.on('error', (err) => {
+      reject(err);
+    });
     req.end(payload);
   });
 

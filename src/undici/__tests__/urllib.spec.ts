@@ -54,7 +54,10 @@ test('should send cookies from CookieJar', async () => {
 
   await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
-  const { data: actual } = await request(`http://localhost:${server.port}`, { dataType: 'text', dispatcher: agent });
+  const { data: actual } = await request<string>(`http://localhost:${server.port}`, {
+    dataType: 'text',
+    dispatcher: agent,
+  });
   expect(actual).toBe('key=value');
 });
 
@@ -70,7 +73,7 @@ test('should send cookies from both a request options and CookieJar', async () =
 
   await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
 
-  const { data: actual } = await request(`http://localhost:${server.port}`, {
+  const { data: actual } = await request<string>(`http://localhost:${server.port}`, {
     dataType: 'text',
     dispatcher: agent,
     headers: { Cookie: 'key2=value2' },
@@ -90,7 +93,7 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
-  const { data: actual } = await request(`http://localhost:${server.port}`, {
+  const { data: actual } = await request<string>(`http://localhost:${server.port}`, {
     dataType: 'text',
     dispatcher: agent,
     headers: { Cookie: 'key=expected' },
@@ -114,7 +117,7 @@ test('should send cookies from the first response when redirecting', async () =>
   const jar = new CookieJar();
   const agent = new CookieAgent({ cookies: { jar } });
 
-  const { data: actual } = await request(`http://localhost:${server.port}`, {
+  const { data: actual } = await request<string>(`http://localhost:${server.port}`, {
     dataType: 'text',
     dispatcher: agent,
     maxRedirects: 1,
@@ -190,13 +193,13 @@ test('should send post data when keepalive is enabled', async () => {
       dataType: 'json',
       dispatcher: agent,
       method: 'POST',
-    }).then((res) => res.data),
+    }).then((res) => res.data as object),
     request(`http://localhost:${server.port}`, {
       data: `payload-02`,
       dataType: 'json',
       dispatcher: agent,
       method: 'POST',
-    }).then((res) => res.data),
+    }).then((res) => res.data as object),
   ]);
 
   expect(actual).toEqual([

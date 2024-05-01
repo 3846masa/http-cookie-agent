@@ -11,11 +11,17 @@ export function request(url: string, options: http.RequestOptions, payload?: unk
   const promise = new Promise<string>((resolve, reject) => {
     const req = http.request(url, options);
     req.on('response', (res) => {
-      res.on('error', (err) => reject(err));
-      res.on('end', () => resolve(data));
+      res.on('error', (err) => {
+        reject(err);
+      });
+      res.on('end', () => {
+        resolve(data);
+      });
       const data = text(res);
     });
-    req.on('error', (err) => reject(err));
+    req.on('error', (err) => {
+      reject(err);
+    });
     req.end(payload);
   });
 
@@ -248,7 +254,7 @@ test('should send post data when keepalive is enabled', async () => {
         method: 'POST',
       },
       `payload-01`,
-    ).then((res) => JSON.parse(res)),
+    ).then((res) => JSON.parse(res) as object),
     request(
       `http://localhost:${server.port}`,
       {
@@ -256,7 +262,7 @@ test('should send post data when keepalive is enabled', async () => {
         method: 'POST',
       },
       `payload-02`,
-    ).then((res) => JSON.parse(res)),
+    ).then((res) => JSON.parse(res) as object),
   ]);
 
   expect(actual).toEqual([

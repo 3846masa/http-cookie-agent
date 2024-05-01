@@ -1,13 +1,12 @@
+import type { CookieJar } from 'tough-cookie';
+
 import type { CookieOptions } from '../cookie_options';
 
-function validateCookieOptions(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  opts: any,
-): asserts opts is CookieOptions {
+function validateCookieOptions(opts: object): asserts opts is CookieOptions {
   if (!('jar' in opts)) {
     throw new TypeError('invalid cookies.jar');
   }
-  if (!opts.jar.store.synchronous) {
+  if (!(opts.jar as CookieJar).store.synchronous) {
     throw new TypeError('an asynchronous cookie store is not supported.');
   }
 }

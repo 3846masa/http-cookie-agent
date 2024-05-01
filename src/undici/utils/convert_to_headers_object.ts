@@ -1,3 +1,4 @@
+/* global Buffer */
 import { errors } from 'undici';
 import type { IncomingHttpHeaders } from 'undici/types/header';
 
