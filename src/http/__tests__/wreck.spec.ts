@@ -1,3 +1,4 @@
+/* global Buffer */
 import { text } from 'node:stream/consumers';
 
 import Wreck from '@hapi/wreck';

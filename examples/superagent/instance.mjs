@@ -5,7 +5,10 @@ import { CookieJar } from 'tough-cookie';
 const jar = new CookieJar();
 const mixedAgent = new MixedCookieAgent({ cookies: { jar } });
 
-const client = superagent.agent().use((req) => req.agent(mixedAgent));
+const client = superagent.agent().use(
+  /** @param {import('superagent').Request} req */
+  (req) => req.agent(mixedAgent),
+);
 
 await client.get('https://httpbin.org/cookies/set/session/userid');
 

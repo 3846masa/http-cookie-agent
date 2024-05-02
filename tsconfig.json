@@ -4,15 +4,15 @@
     "lib": ["ESNext"],
     "module": "ESNext",
     "moduleResolution": "node",
-    "outDir": "./dist",
+    "noEmit": true,
     "paths": {
       "http-cookie-agent/http": ["./http"],
       "http-cookie-agent/undici": ["./undici"]
     },
-    "rootDir": "./src",
     "target": "ESNext",
     "types": ["@types/node"]
   },
-  "extends": "@3846masa/configs/tsconfig.json",
-  "include": ["src/**/*"]
+  "exclude": ["dist/", "http/index.js", "undici/index.js"],
+  "extends": "@3846masa/configs/typescript/tsconfig.json",
+  "include": ["**/*", "**/.*"]
 }

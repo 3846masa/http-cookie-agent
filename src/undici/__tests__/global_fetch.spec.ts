@@ -1,3 +1,4 @@
+/* global process */
 import { text } from 'node:stream/consumers';
 
 import { expect, jest, test } from '@jest/globals';

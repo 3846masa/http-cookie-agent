@@ -8,7 +8,7 @@ request.get(
   'https://httpbin.org/cookies/set/session/userid',
   { agent: new MixedCookieAgent({ cookies: { jar } }) },
   (_err, _res) => {
-    jar.getCookies('https://httpbin.org').then((cookies) => {
+    void jar.getCookies('https://httpbin.org').then((cookies) => {
       console.log(cookies);
     });
   },

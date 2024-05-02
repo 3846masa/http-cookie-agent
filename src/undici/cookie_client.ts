@@ -18,7 +18,7 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
     cookies?: CookieOptions | undefined;
   };
 
-  // @ts-expect-error ...
+  // @ts-expect-error -- BaseClientClass is type definition.
   class CookieClient extends BaseClientClass {
     private [kCookieOptions]: CookieOptions | undefined;
 

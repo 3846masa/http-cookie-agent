@@ -4,9 +4,11 @@ import { CookieJar } from 'tough-cookie';
 
 const jar = new CookieJar();
 
-Wreck.agents.http = new HttpCookieAgent({ cookies: { jar } });
-Wreck.agents.https = new HttpsCookieAgent({ cookies: { jar } });
-Wreck.agents.httpsAllowUnauthorized = new HttpsCookieAgent({ cookies: { jar } });
+Object.assign(Wreck.agents, {
+  http: new HttpCookieAgent({ cookies: { jar } }),
+  https: new HttpsCookieAgent({ cookies: { jar } }),
+  httpsAllowUnauthorized: new HttpsCookieAgent({ cookies: { jar } }),
+});
 
 await Wreck.get('https://httpbin.org/cookies/set/session/userid');
 

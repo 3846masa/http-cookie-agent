@@ -41,7 +41,7 @@ export function createCookieAgent<BaseAgent extends http.Agent = http.Agent, Par
     [Index in keyof Params]: WithCookieAgentOptions<Params[Index]>;
   } & { length: Params['length'] };
 
-  // @ts-expect-error ...
+  // @ts-expect-error -- BaseAgentClass is type definition.
   class CookieAgent extends BaseAgentClass {
     [kCookieOptions]: CookieOptions | undefined;
 
@@ -101,7 +101,7 @@ export function createCookieAgent<BaseAgent extends http.Agent = http.Agent, Par
           req.destroy(err as Error);
           return;
         }
-        return _implicitHeader();
+        _implicitHeader();
       };
 
       const emit = req.emit.bind(req);
@@ -147,7 +147,7 @@ export function createCookieAgent<BaseAgent extends http.Agent = http.Agent, Par
         }
       }
 
-      return super.addRequest(req, options);
+      super.addRequest(req, options);
     }
   }
 

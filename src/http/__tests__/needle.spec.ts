@@ -59,10 +59,10 @@ test('should send cookies from CookieJar', async () => {
 
   await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
-  const { body: actual } = await needle('get', `http://localhost:${server.port}`, {
+  const res = await needle('get', `http://localhost:${server.port}`, {
     agent,
   });
-  expect(actual).toBe('key=value');
+  expect(res.body).toBe('key=value');
 });
 
 test('should send cookies from both a request options and CookieJar', async () => {
@@ -78,11 +78,11 @@ test('should send cookies from both a request options and CookieJar', async () =
 
   await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
 
-  const { body: actual } = await needle('get', `http://localhost:${server.port}`, {
+  const res = await needle('get', `http://localhost:${server.port}`, {
     agent,
     headers: { Cookie: 'key2=value2' },
   });
-  expect(actual).toBe('key1=value1; key2=value2');
+  expect(res.body).toBe('key1=value1; key2=value2');
 });
 
 test('should send cookies from a request options when the key is duplicated in both a request options and CookieJar', async () => {
@@ -98,11 +98,11 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
-  const { body: actual } = await needle('get', `http://localhost:${server.port}`, {
+  const res = await needle('get', `http://localhost:${server.port}`, {
     agent,
     headers: { Cookie: 'key=expected' },
   });
-  expect(actual).toBe('key=expected');
+  expect(res.body).toBe('key=expected');
 });
 
 test('should send cookies from the first response when redirecting', async () => {
@@ -122,11 +122,11 @@ test('should send cookies from the first response when redirecting', async () =>
   const jar = new CookieJar();
   const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  const { body: actual } = await needle('get', `http://localhost:${server.port}`, {
+  const res = await needle('get', `http://localhost:${server.port}`, {
     agent,
     follow_max: 1,
   });
-  expect(actual).toBe('key=value');
+  expect(res.body).toBe('key=value');
 });
 
 test('should emit error when CookieJar#getCookies throws error.', async () => {
@@ -200,10 +200,10 @@ test('should send post data when keepalive is enabled', async () => {
   const actual = await Promise.all([
     needle('post', `http://localhost:${server.port}`, `payload-01`, {
       agent,
-    }).then((res) => res.body),
+    }).then((res) => res.body as object),
     needle('post', `http://localhost:${server.port}`, `payload-02`, {
       agent,
-    }).then((res) => res.body),
+    }).then((res) => res.body as object),
   ]);
 
   expect(actual).toEqual([

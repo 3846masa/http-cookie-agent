@@ -58,7 +58,7 @@ test('should send cookies from CookieJar', async () => {
 
   await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
-  const { data: actual } = await axios.get(`http://localhost:${server.port}`, {
+  const { data: actual } = await axios.get<string>(`http://localhost:${server.port}`, {
     httpAgent: agent,
     responseType: 'text',
   });
@@ -77,7 +77,7 @@ test('should send cookies from both a request options and CookieJar', async () =
 
   await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
 
-  const { data: actual } = await axios.get(`http://localhost:${server.port}`, {
+  const { data: actual } = await axios.get<string>(`http://localhost:${server.port}`, {
     headers: { Cookie: 'key2=value2' },
     httpAgent: agent,
     responseType: 'text',
@@ -97,7 +97,7 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
-  const { data: actual } = await axios.get(`http://localhost:${server.port}`, {
+  const { data: actual } = await axios.get<string>(`http://localhost:${server.port}`, {
     headers: { Cookie: 'key=expected' },
     httpAgent: agent,
   });
@@ -120,7 +120,7 @@ test('should send cookies from the first response when redirecting', async () =>
   const jar = new CookieJar();
   const agent = new HttpCookieAgent({ cookies: { jar } });
 
-  const { data: actual } = await axios.get(`http://localhost:${server.port}`, {
+  const { data: actual } = await axios.get<string>(`http://localhost:${server.port}`, {
     httpAgent: agent,
   });
   expect(actual).toBe('key=value');
@@ -194,13 +194,13 @@ test('should send post data when keepalive is enabled', async () => {
 
   const actual = await Promise.all([
     axios
-      .post(`http://localhost:${server.port}`, `payload-01`, {
+      .post<string>(`http://localhost:${server.port}`, `payload-01`, {
         httpAgent: agent,
         responseType: 'json',
       })
       .then((res) => res.data),
     axios
-      .post(`http://localhost:${server.port}`, `payload-02`, {
+      .post<string>(`http://localhost:${server.port}`, `payload-02`, {
         httpAgent: agent,
         responseType: 'json',
       })

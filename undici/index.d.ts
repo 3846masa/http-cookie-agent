@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */
 import type { CookieJar } from 'tough-cookie';
 import { Agent, Client } from 'undici';
 
