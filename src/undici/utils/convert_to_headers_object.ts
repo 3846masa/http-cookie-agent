@@ -2,8 +2,17 @@
 import { errors } from 'undici';
 import type { IncomingHttpHeaders } from 'undici/types/header';
 
+function isIterable(value: unknown): value is Iterable<unknown> {
+  return typeof value === 'object' && value != null && Symbol.iterator in value;
+}
+
 function convertToHeadersObject(
-  _headers: IncomingHttpHeaders | (string | Buffer)[] | null | undefined,
+  _headers:
+    | IncomingHttpHeaders
+    | (string | Buffer)[]
+    | Iterable<[string, string | string[] | undefined]>
+    | null
+    | undefined,
 ): IncomingHttpHeaders {
   const headers: IncomingHttpHeaders = {};
 
@@ -26,6 +35,10 @@ function convertToHeadersObject(
           headers[keyStr] = valueStr;
         }
       }
+    }
+  } else if (isIterable(_headers)) {
+    for (const [key, value] of _headers) {
+      headers[key.toLowerCase()] = value;
     }
   } else if (_headers != null) {
     for (const [key, value] of Object.entries(_headers)) {
