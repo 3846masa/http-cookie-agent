@@ -3,10 +3,7 @@ module.exports = (api) => {
   const isTest = api.env('test');
 
   return {
-    plugins: [
-      '@babel/plugin-proposal-explicit-resource-management',
-      ...(isTest ? [] : ['module:@reactioncommerce/babel-remove-es-create-require']),
-    ],
+    plugins: ['@babel/plugin-proposal-explicit-resource-management'],
     presets: [
       [
         '@babel/preset-env',

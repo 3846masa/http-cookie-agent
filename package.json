@@ -67,7 +67,6 @@
     "@babel/preset-typescript": "7.24.1",
     "@hapi/wreck": "18.1.0",
     "@jest/globals": "29.7.0",
-    "@reactioncommerce/babel-remove-es-create-require": "1.0.0",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
     "@types/babel__core": "7.20.5",
