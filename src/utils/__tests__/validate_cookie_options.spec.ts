@@ -11,28 +11,14 @@ test('should throw Error when jar is not set', () => {
   });
 });
 
-test('should throw Error when async_UNSTABLE is true but deasync is not installed', () => {
-  const jar = new CookieJar();
-
-  const resolver = () => {
-    throw new Error();
-  };
-
-  expect(() => {
-    validateCookieOptions({ async_UNSTABLE: true, jar }, resolver);
-  }).toThrowError({
-    message: 'you should install deasync library when cookies.async_UNSTABLE is true.',
-  });
-});
-
-test('should throw Error when cookie store is asynchronous but async_UNSTABLE is not set', () => {
+test('should throw Error when cookie store is asynchronous', () => {
   const jar = new CookieJar();
   jar.store.synchronous = false;
 
   expect(() => {
     validateCookieOptions({ jar });
   }).toThrowError({
-    message: 'you should set cookies.async_UNSTABLE to true for using the asynchronous cookie store.',
+    message: 'an asynchronous cookie store is not supported.',
   });
 });
 
@@ -41,13 +27,5 @@ test('should not throw Error when only pass synchronous cookie store', () => {
 
   expect(() => {
     validateCookieOptions({ jar });
-  }).not.toThrowError();
-});
-
-test('should not throw Error when cookie store is asynchronous and async_UNSTABLE is true', () => {
-  const jar = new CookieJar();
-
-  expect(() => {
-    validateCookieOptions({ async_UNSTABLE: true, jar });
   }).not.toThrowError();
 });

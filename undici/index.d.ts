@@ -2,7 +2,6 @@ import type { CookieJar } from 'tough-cookie';
 import { Agent, Client } from 'undici';
 
 export interface CookieOptions {
-  async_UNSTABLE?: true;
   jar: CookieJar;
 }
 
