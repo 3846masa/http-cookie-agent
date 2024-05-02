@@ -70,7 +70,6 @@
     "@reactioncommerce/babel-remove-es-create-require": "1.0.0",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
-    "@types/deasync": "0.1.5",
     "@types/needle": "3.3.0",
     "@types/node": "18.19.31",
     "@types/request": "2.48.12",
@@ -80,7 +79,6 @@
     "agentkeepalive": "4.5.0",
     "axios": "1.6.8",
     "babel-jest": "29.7.0",
-    "deasync": "0.1.29",
     "disposablestack": "1.1.4",
     "got": "12.6.1",
     "http-proxy-agent": "7.0.2",
@@ -100,14 +98,10 @@
     "urllib": "3.23.0"
   },
   "peerDependencies": {
-    "deasync": "^0.1.26",
     "tough-cookie": "^4.0.0",
     "undici": "^5.11.0 || ^6.0.0"
   },
   "peerDependenciesMeta": {
-    "deasync": {
-      "optional": true
-    },
     "undici": {
       "optional": true
     }

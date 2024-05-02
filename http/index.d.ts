@@ -4,7 +4,6 @@ import type https from 'node:https';
 import type { CookieJar } from 'tough-cookie';
 
 export interface CookieOptions {
-  async_UNSTABLE?: true;
   jar: CookieJar;
 }
 

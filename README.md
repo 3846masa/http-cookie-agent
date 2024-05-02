@@ -267,26 +267,6 @@ setGlobalDispatcher(agent);
 await request('https://example.com');
 ```
 
-### Using with an asynchronous Cookie store
-
-`http-cookie-agent` use synchronous CookieJar functions by default.
-
-Therefore, you cannot use an asynchronous Cookie store (e.g. `redis-cookie-store`) by default.
-
-If you want to use an asynchronous Cookie store, set `cookies.async_UNSTABLE` to true.
-
-```js
-// node:http, node:https
-const jar = new CookieJar();
-const agent = new HttpsCookieAgent({ cookies: { async_UNSTABLE: true, jar } });
-```
-
-```js
-// undici
-const jar = new CookieJar();
-const agent = new CookieAgent({ cookies: { async_UNSTABLE: true, jar } } });
-```
-
 ### Using with another Agent library
 
 If you want to use another Agent library, wrap the agent in `createCookieAgent`.
