@@ -1,3 +1,10 @@
+## [6.0.5](https://github.com/3846masa/http-cookie-agent/compare/v6.0.4...v6.0.5) (2024-05-02)
+
+
+### Bug Fixes
+
+* fix createCookieAgent type ([#873](https://github.com/3846masa/http-cookie-agent/issues/873)) ([4677b15](https://github.com/3846masa/http-cookie-agent/commit/4677b15506655989768f2051abd43308620c6872))
+
 ## [6.0.4](https://github.com/3846masa/http-cookie-agent/compare/v6.0.3...v6.0.4) (2024-05-02)
 
 
