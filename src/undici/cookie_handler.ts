@@ -40,7 +40,7 @@ class CookieHandler implements Required<Dispatcher.DispatchHandlers> {
     this[kHandlers].onUpgrade?.(statusCode, headers, socket);
   };
 
-  onHeaders = (statusCode: number, _headers: string[] | null, resume: () => void, statusText: string): boolean => {
+  onHeaders = (statusCode: number, _headers: Buffer[], resume: () => void, statusText: string): boolean => {
     if (this[kHandlers].onHeaders == null) {
       throw new errors.InvalidArgumentError('invalid onHeaders method');
     }
