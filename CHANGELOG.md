@@ -1,3 +1,10 @@
+## [6.0.4](https://github.com/3846masa/http-cookie-agent/compare/v6.0.3...v6.0.4) (2024-05-02)
+
+
+### Bug Fixes
+
+* removed async_UNSTABLE option because it is not working correctly ([#874](https://github.com/3846masa/http-cookie-agent/issues/874)) ([b5af18b](https://github.com/3846masa/http-cookie-agent/commit/b5af18bd94af0533ca73b0ac49c4fb4e55ce5d4d))
+
 ## [6.0.3](https://github.com/3846masa/http-cookie-agent/compare/v6.0.2...v6.0.3) (2024-04-04)
 
 
