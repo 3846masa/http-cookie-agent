@@ -75,7 +75,7 @@
     "@types/node": "18.19.31",
     "@types/request": "2.48.12",
     "@types/semver": "7.5.8",
-    "@types/superagent": "8.1.6",
+    "@types/superagent": "8.1.7",
     "@types/tough-cookie": "4.0.5",
     "agentkeepalive": "4.5.0",
     "axios": "1.6.8",
