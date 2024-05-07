@@ -21,8 +21,8 @@ importers:
         version: 7.1.1
     devDependencies:
       '@3846masa/configs':
-        specifier: github:3846masa/configs#2803a8a67c8207078cf40c97468f60a51a70d5c0
-        version: https://codeload.github.com/3846masa/configs/tar.gz/2803a8a67c8207078cf40c97468f60a51a70d5c0(@typescript-eslint/parser@7.8.0(eslint@9.1.1)(typescript@5.4.5))
+        specifier: github:3846masa/configs#d0dfb22003b11e47b2100b33a36e7fb7532e0fb8
+        version: https://codeload.github.com/3846masa/configs/tar.gz/d0dfb22003b11e47b2100b33a36e7fb7532e0fb8(@typescript-eslint/parser@7.8.0(eslint@9.1.1)(typescript@5.4.5))
       '@babel/cli':
         specifier: 7.24.5
         version: 7.24.5(@babel/core@7.24.5)
@@ -137,9 +137,9 @@ importers:
 
 packages:
 
-  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/2803a8a67c8207078cf40c97468f60a51a70d5c0':
-    resolution: {tarball: https://codeload.github.com/3846masa/configs/tar.gz/2803a8a67c8207078cf40c97468f60a51a70d5c0}
-    version: 1.0.366
+  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/d0dfb22003b11e47b2100b33a36e7fb7532e0fb8':
+    resolution: {tarball: https://codeload.github.com/3846masa/configs/tar.gz/d0dfb22003b11e47b2100b33a36e7fb7532e0fb8}
+    version: 1.0.367
 
   '@aashutoshrathi/word-wrap@1.2.6':
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
@@ -4223,7 +4223,7 @@ packages:
 
 snapshots:
 
-  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/2803a8a67c8207078cf40c97468f60a51a70d5c0(@typescript-eslint/parser@7.8.0(eslint@9.1.1)(typescript@5.4.5))':
+  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/d0dfb22003b11e47b2100b33a36e7fb7532e0fb8(@typescript-eslint/parser@7.8.0(eslint@9.1.1)(typescript@5.4.5))':
     dependencies:
       '@eslint/js': 9.1.1
       '@tsconfig/strictest': 2.0.5
@@ -4411,7 +4411,7 @@ snapshots:
       '@babel/helper-module-imports': 7.24.3
       '@babel/helper-simple-access': 7.22.5
       '@babel/helper-split-export-declaration': 7.22.6
-      '@babel/helper-validator-identifier': 7.22.20
+      '@babel/helper-validator-identifier': 7.24.5
 
   '@babel/helper-module-transforms@7.24.5(@babel/core@7.24.5)':
     dependencies:
@@ -6676,7 +6676,7 @@ snapshots:
 
   eslint-plugin-unicorn@52.0.0(eslint@9.1.1):
     dependencies:
-      '@babel/helper-validator-identifier': 7.22.20
+      '@babel/helper-validator-identifier': 7.24.5
       '@eslint-community/eslint-utils': 4.4.0(eslint@9.1.1)
       '@eslint/eslintrc': 2.1.4
       ci-info: 4.0.0
