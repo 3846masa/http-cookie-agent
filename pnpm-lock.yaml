@@ -132,8 +132,8 @@ importers:
         specifier: 6.15.0
         version: 6.15.0
       urllib:
-        specifier: 3.24.0
-        version: 3.24.0
+        specifier: 3.25.0
+        version: 3.25.0
 
 packages:
 
@@ -4123,8 +4123,8 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
-  urllib@3.24.0:
-    resolution: {integrity: sha512-A6+ypIUsS4PS0IeqDAAxo/zMobO1P6zViXyivRxI4rkbSKnaW7gFBH9Lmi9bELcYwji5gyrN7mQmCXPdXpzUhA==}
+  urllib@3.25.0:
+    resolution: {integrity: sha512-taFiJtMX8EPUmDU/5xy9kxxQRcckF6vgsY3NP9SKL8kJd7ICuREUYX+r5QjcViZmTVCYXIH9ObbFBSuxQ+VXEQ==}
     engines: {node: '>= 14.19.3'}
 
   util-deprecate@1.0.2:
@@ -8879,7 +8879,7 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  urllib@3.24.0:
+  urllib@3.25.0:
     dependencies:
       default-user-agent: 1.0.0
       digest-header: 1.1.0
