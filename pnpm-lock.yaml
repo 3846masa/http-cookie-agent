@@ -21,8 +21,8 @@ importers:
         version: 7.1.1
     devDependencies:
       '@3846masa/configs':
-        specifier: github:3846masa/configs#dd3a5e2b8a4af835457001922050903e88d668c4
-        version: https://codeload.github.com/3846masa/configs/tar.gz/dd3a5e2b8a4af835457001922050903e88d668c4(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))
+        specifier: github:3846masa/configs#26aff6618a67a8591770378bd28fe73dd5a914c0
+        version: https://codeload.github.com/3846masa/configs/tar.gz/26aff6618a67a8591770378bd28fe73dd5a914c0(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))
       '@babel/cli':
         specifier: 7.24.6
         version: 7.24.6(@babel/core@7.24.6)
@@ -137,9 +137,9 @@ importers:
 
 packages:
 
-  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/dd3a5e2b8a4af835457001922050903e88d668c4':
-    resolution: {tarball: https://codeload.github.com/3846masa/configs/tar.gz/dd3a5e2b8a4af835457001922050903e88d668c4}
-    version: 1.0.387
+  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/26aff6618a67a8591770378bd28fe73dd5a914c0':
+    resolution: {tarball: https://codeload.github.com/3846masa/configs/tar.gz/26aff6618a67a8591770378bd28fe73dd5a914c0}
+    version: 1.0.388
 
   '@aashutoshrathi/word-wrap@1.2.6':
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
@@ -3470,8 +3470,8 @@ packages:
     peerDependencies:
       prettier: ^3.0.0
 
-  prettier@3.2.5:
-    resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
+  prettier@3.3.0:
+    resolution: {integrity: sha512-J9odKxERhCQ10OC2yb93583f6UnYutOeiV5i0zEDS7UGTdUt0u+y8erxl3lBKvwo/JHyyoEdXjwp4dke9oyZ/g==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -4209,7 +4209,7 @@ packages:
 
 snapshots:
 
-  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/dd3a5e2b8a4af835457001922050903e88d668c4(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))':
+  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/26aff6618a67a8591770378bd28fe73dd5a914c0(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))':
     dependencies:
       '@eslint/js': 9.4.0
       '@tsconfig/strictest': 2.0.5
@@ -4217,13 +4217,13 @@ snapshots:
       eslint: 9.4.0
       eslint-config-prettier: 9.1.0(eslint@9.4.0)
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0))(eslint@9.4.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@9.4.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0))(eslint@9.4.0))(eslint@9.4.0)
       eslint-plugin-sort: 3.0.2(eslint@9.4.0)(typescript@5.4.5)
       eslint-plugin-unicorn: 53.0.0(eslint@9.4.0)
       globals: 15.3.0
-      prettier: 3.2.5
-      prettier-plugin-packagejson: 2.5.0(prettier@3.2.5)
-      prettier-plugin-sort-json: 4.0.0(prettier@3.2.5)
+      prettier: 3.3.0
+      prettier-plugin-packagejson: 2.5.0(prettier@3.3.0)
+      prettier-plugin-sort-json: 4.0.0(prettier@3.3.0)
       typescript: 5.4.5
       typescript-eslint: 7.11.0(eslint@9.4.0)(typescript@5.4.5)
     transitivePeerDependencies:
@@ -6574,7 +6574,7 @@ snapshots:
       enhanced-resolve: 5.15.0
       eslint: 9.4.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0))(eslint@9.4.0))(eslint@9.4.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@9.4.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0))(eslint@9.4.0))(eslint@9.4.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.2
       is-core-module: 2.13.1
@@ -6596,7 +6596,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1)(eslint@9.4.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.11.0(eslint@9.4.0)(typescript@5.4.5))(eslint@9.4.0))(eslint@9.4.0))(eslint@9.4.0):
     dependencies:
       array-includes: 3.1.7
       array.prototype.findlastindex: 1.2.3
@@ -8108,18 +8108,18 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-packagejson@2.5.0(prettier@3.2.5):
+  prettier-plugin-packagejson@2.5.0(prettier@3.3.0):
     dependencies:
       sort-package-json: 2.10.0
       synckit: 0.9.0
     optionalDependencies:
-      prettier: 3.2.5
+      prettier: 3.3.0
 
-  prettier-plugin-sort-json@4.0.0(prettier@3.2.5):
+  prettier-plugin-sort-json@4.0.0(prettier@3.3.0):
     dependencies:
-      prettier: 3.2.5
+      prettier: 3.3.0
 
-  prettier@3.2.5: {}
+  prettier@3.3.0: {}
 
   pretty-format@29.7.0:
     dependencies:
