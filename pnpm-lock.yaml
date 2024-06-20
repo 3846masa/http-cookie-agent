@@ -21,8 +21,8 @@ importers:
         version: 7.1.1
     devDependencies:
       '@3846masa/configs':
-        specifier: github:3846masa/configs#d2651d77d20703d18429b222f52a1fb07d59c5ed
-        version: https://codeload.github.com/3846masa/configs/tar.gz/d2651d77d20703d18429b222f52a1fb07d59c5ed(@typescript-eslint/parser@7.13.0(eslint@9.5.0)(typescript@5.4.5))
+        specifier: github:3846masa/configs#4f1cee9f521ffb00e44f6d37df5f9da9b819ba9c
+        version: https://codeload.github.com/3846masa/configs/tar.gz/4f1cee9f521ffb00e44f6d37df5f9da9b819ba9c(@typescript-eslint/parser@7.13.0(eslint@9.5.0)(typescript@5.4.5))
       '@babel/cli':
         specifier: 7.24.7
         version: 7.24.7(@babel/core@7.24.7)
@@ -137,9 +137,9 @@ importers:
 
 packages:
 
-  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/d2651d77d20703d18429b222f52a1fb07d59c5ed':
-    resolution: {tarball: https://codeload.github.com/3846masa/configs/tar.gz/d2651d77d20703d18429b222f52a1fb07d59c5ed}
-    version: 1.0.399
+  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/4f1cee9f521ffb00e44f6d37df5f9da9b819ba9c':
+    resolution: {tarball: https://codeload.github.com/3846masa/configs/tar.gz/4f1cee9f521ffb00e44f6d37df5f9da9b819ba9c}
+    version: 1.0.400
 
   '@aashutoshrathi/word-wrap@1.2.6':
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
@@ -4209,7 +4209,7 @@ packages:
 
 snapshots:
 
-  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/d2651d77d20703d18429b222f52a1fb07d59c5ed(@typescript-eslint/parser@7.13.0(eslint@9.5.0)(typescript@5.4.5))':
+  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/4f1cee9f521ffb00e44f6d37df5f9da9b819ba9c(@typescript-eslint/parser@7.13.0(eslint@9.5.0)(typescript@5.4.5))':
     dependencies:
       '@eslint/js': 9.5.0
       '@tsconfig/strictest': 2.0.5
