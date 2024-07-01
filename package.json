@@ -87,7 +87,7 @@
     "needle": "3.3.1",
     "node-fetch": "3.3.2",
     "phin": "3.7.1",
-    "proxy": "2.1.1",
+    "proxy": "2.2.0",
     "request": "2.88.2",
     "rimraf": "5.0.7",
     "semantic-release": "22.0.12",
