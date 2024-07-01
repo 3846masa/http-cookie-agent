@@ -105,8 +105,8 @@ importers:
         specifier: 3.7.1
         version: 3.7.1
       proxy:
-        specifier: 2.1.1
-        version: 2.1.1
+        specifier: 2.2.0
+        version: 2.2.0
       request:
         specifier: 2.88.2
         version: 2.88.2
@@ -3468,9 +3468,10 @@ packages:
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
 
-  proxy@2.1.1:
-    resolution: {integrity: sha512-nLgd7zdUAOpB3ZO/xCkU8gy74UER7P0aihU8DkUsDS5ZoFwVCX7u8dy+cv5tVK8UaB/yminU1GiLWE26TKPYpg==}
+  proxy@2.2.0:
+    resolution: {integrity: sha512-nYclNIWj9UpXbVJ3W5EXIYiGR88AKZoGt90kyh3zoOBY5QW+7bbtPvMFgKGD4VJmpS3UXQXtlGXSg3lRNLOFLg==}
     engines: {node: '>= 14'}
+    hasBin: true
 
   psl@1.9.0:
     resolution: {integrity: sha512-E/ZsdU4HLs/68gYzgGTkMicWTLPdAftJLfJFlLUAAKZGkStNU72sZjT66SnMDVOfOWY/YAoiD7Jxa9iHvngcag==}
@@ -8158,7 +8159,7 @@ snapshots:
 
   proxy-from-env@1.1.0: {}
 
-  proxy@2.1.1:
+  proxy@2.2.0:
     dependencies:
       args: 5.0.3
       basic-auth-parser: 0.0.2-1
