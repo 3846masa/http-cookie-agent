@@ -95,7 +95,7 @@
     "superagent": "10.0.0",
     "tough-cookie": "4.1.4",
     "typescript": "5.5.4",
-    "undici": "6.19.5",
+    "undici": "6.19.7",
     "urllib": "4.2.0"
   },
   "peerDependencies": {
