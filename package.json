@@ -52,6 +52,7 @@
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
+    "lint:tsc:types": "tsc --noEmit http/index.d.ts",
     "semantic-release": "semantic-release",
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest"
   },
