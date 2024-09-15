@@ -132,8 +132,8 @@ importers:
         specifier: 6.19.8
         version: 6.19.8
       urllib:
-        specifier: 4.2.0
-        version: 4.2.0
+        specifier: 4.2.1
+        version: 4.2.1
 
 packages:
 
@@ -4029,10 +4029,6 @@ packages:
     resolution: {integrity: sha512-R6wDsVsoS9xYOpy8vgeBlqpdOyzJ12HNfQhC/aAKWM3YoCV9TtunJzh/QpkMgeDhkoynDcw5f1y+qF9yc/HHyg==}
     engines: {node: '>=16'}
 
-  type-fest@4.9.0:
-    resolution: {integrity: sha512-KS/6lh/ynPGiHD/LnAobrEFq3Ad4pBzOlJ1wAnJx9N4EYoqFhMfLIBjUT2UEx4wg5ZE+cC1ob6DCSpppVo+rtg==}
-    engines: {node: '>=16'}
-
   typed-array-buffer@1.0.2:
     resolution: {integrity: sha512-gEymJYKZtKXzzBzM4jqa9w6Q1Jjm7x2d+sh19AdsD4wqnMPDYyvwpsIc2Q/835kHuo3BEQ7CjelGhfTsoBb2MQ==}
     engines: {node: '>= 0.4'}
@@ -4139,8 +4135,8 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
-  urllib@4.2.0:
-    resolution: {integrity: sha512-9BJyIUh62zqv0FR0bQEfhcM0z/biHO+KGqH2CQ9Z2GeYQwvYI+9VJuKGHbvVKc0KbXaIIOnXXm/P1n+qjYJA/Q==}
+  urllib@4.2.1:
+    resolution: {integrity: sha512-0pyN1Ojd31/wwJ0yEALNg1evwsQdJ3q6l7YoyY+41J0gfJNdpm6Nwfg4ati23BxrHKDvKaTKH5e/iNDM8H3XfQ==}
     engines: {node: '>= 18.19.0'}
 
   util-deprecate@1.0.2:
@@ -8301,7 +8297,7 @@ snapshots:
     dependencies:
       find-up-simple: 1.0.0
       read-pkg: 9.0.1
-      type-fest: 4.9.0
+      type-fest: 4.20.1
 
   read-pkg-up@7.0.1:
     dependencies:
@@ -8846,8 +8842,6 @@ snapshots:
 
   type-fest@4.20.1: {}
 
-  type-fest@4.9.0: {}
-
   typed-array-buffer@1.0.2:
     dependencies:
       call-bind: 1.0.7
@@ -8957,7 +8951,7 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  urllib@4.2.0:
+  urllib@4.2.1:
     dependencies:
       formstream: 1.5.1
       mime-types: 2.1.35
