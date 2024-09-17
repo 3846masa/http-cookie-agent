@@ -96,7 +96,7 @@
     "tough-cookie": "4.1.4",
     "typescript": "5.6.2",
     "undici": "6.19.8",
-    "urllib": "4.2.1"
+    "urllib": "4.3.0"
   },
   "peerDependencies": {
     "tough-cookie": "^4.0.0",

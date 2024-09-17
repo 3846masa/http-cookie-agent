@@ -132,8 +132,8 @@ importers:
         specifier: 6.19.8
         version: 6.19.8
       urllib:
-        specifier: 4.2.1
-        version: 4.2.1
+        specifier: 4.3.0
+        version: 4.3.0
 
 packages:
 
@@ -4135,8 +4135,8 @@ packages:
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
-  urllib@4.2.1:
-    resolution: {integrity: sha512-0pyN1Ojd31/wwJ0yEALNg1evwsQdJ3q6l7YoyY+41J0gfJNdpm6Nwfg4ati23BxrHKDvKaTKH5e/iNDM8H3XfQ==}
+  urllib@4.3.0:
+    resolution: {integrity: sha512-VqhKRhhrUTpqnxxVUFo7n/w0OYuHOGLtmv1TsnWBSeALnCxvU6w0xNPc7NFNHbxspyZ8ah+UXM/amU0YTpJn8w==}
     engines: {node: '>= 18.19.0'}
 
   util-deprecate@1.0.2:
@@ -8951,7 +8951,7 @@ snapshots:
       querystringify: 2.2.0
       requires-port: 1.0.0
 
-  urllib@4.2.1:
+  urllib@4.3.0:
     dependencies:
       formstream: 1.5.1
       mime-types: 2.1.35
