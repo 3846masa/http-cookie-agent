@@ -71,9 +71,6 @@ importers:
       '@types/superagent':
         specifier: 8.1.9
         version: 8.1.9
-      '@types/tough-cookie':
-        specifier: 4.0.5
-        version: 4.0.5
       agentkeepalive:
         specifier: 4.5.0
         version: 4.5.0
@@ -123,8 +120,8 @@ importers:
         specifier: 10.1.0
         version: 10.1.0
       tough-cookie:
-        specifier: 4.1.4
-        version: 4.1.4
+        specifier: 5.0.0
+        version: 5.0.0
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -3532,9 +3529,6 @@ packages:
     resolution: {integrity: sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==}
     engines: {node: '>=0.6'}
 
-  querystringify@2.2.0:
-    resolution: {integrity: sha512-FIqgj2EUvTa7R50u0rGsyTftzjYmv/a3hO345bZNrqabNqjtgiDMgmo4mkUjd+nzU5oF3dClKqFIPUKybUyqoQ==}
-
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
@@ -3621,9 +3615,6 @@ packages:
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
     engines: {node: '>=0.10.0'}
-
-  requires-port@1.0.0:
-    resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
 
   resolve-alpn@1.2.1:
     resolution: {integrity: sha512-0a1F4l73/ZFZOakJnQ3FvkJ2+gSTQWz/r2KE5OdDY0TxPm5h4GkqkWWfM47T7HsbnOtcJVEF4epCVy6u7Q3K+g==}
@@ -3943,6 +3934,13 @@ packages:
   through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
 
+  tldts-core@6.1.46:
+    resolution: {integrity: sha512-zA3ai/j4aFcmbqTvTONkSBuWs0Q4X4tJxa0gV9sp6kDbq5dAhQDSg0WUkReEm0fBAKAGNj+wPKCCsR8MYOYmwA==}
+
+  tldts@6.1.46:
+    resolution: {integrity: sha512-fw81lXV2CijkNrZAZvee7wegs+EOlTyIuVl/z4q6OUzZHQ1jGL2xQzKXq9geYf/1tzo9LZQLrkcko2m8HLh+rg==}
+    hasBin: true
+
   tmpl@1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}
 
@@ -3958,9 +3956,9 @@ packages:
     resolution: {integrity: sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==}
     engines: {node: '>=0.8'}
 
-  tough-cookie@4.1.4:
-    resolution: {integrity: sha512-Loo5UUvLD9ScZ6jh8beX1T6sO1w2/MpCRpEP7V280GKMVUQ0Jzar2U3UJPsrdbziLEMMhu3Ujnq//rhiFuIeag==}
-    engines: {node: '>=6'}
+  tough-cookie@5.0.0:
+    resolution: {integrity: sha512-FRKsF7cz96xIIeMZ82ehjC3xW2E+O2+v11udrDYewUbszngYhsGa8z6YUMMzO9QJZzzyd0nGGXnML/TReX6W8Q==}
+    engines: {node: '>=16'}
 
   traverse@0.6.8:
     resolution: {integrity: sha512-aXJDbk6SnumuaZSANd21XAo15ucCDE38H4fkqiGsc3MhCK+wOlZvLP9cB/TvpHT0mOyWgC4Z8EwRlzqYSUzdsA==}
@@ -4111,10 +4109,6 @@ packages:
   universal-user-agent@6.0.1:
     resolution: {integrity: sha512-yCzhz6FN2wU1NiiQRogkTQszlQSlpWaw8SvVegAc+bDxbzHgh1vX8uIe8OYyMH6DwH+sdTJsgMl36+mSMdRJIQ==}
 
-  universalify@0.2.0:
-    resolution: {integrity: sha512-CJ1QgKmNg3CwvAv/kOFmtnEN05f0D/cn9QntgNOQlQF9dgvVTHj3t+8JPdjqawCHk7V/KA+fbUqzZ9XWhcqPUg==}
-    engines: {node: '>= 4.0.0'}
-
   universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
@@ -4131,9 +4125,6 @@ packages:
   url-join@5.0.0:
     resolution: {integrity: sha512-n2huDr9h9yzd6exQVnH/jU5mr+Pfx08LRXXZhkLLetAMESRj+anQsTAh940iMrIetKAmry9coFuZQ2jY8/p3WA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
-  url-parse@1.5.10:
-    resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
 
   urllib@4.3.0:
     resolution: {integrity: sha512-VqhKRhhrUTpqnxxVUFo7n/w0OYuHOGLtmv1TsnWBSeALnCxvU6w0xNPc7NFNHbxspyZ8ah+UXM/amU0YTpJn8w==}
@@ -8278,8 +8269,6 @@ snapshots:
 
   qs@6.5.3: {}
 
-  querystringify@2.2.0: {}
-
   queue-microtask@1.2.3: {}
 
   quick-lru@5.1.1: {}
@@ -8405,8 +8394,6 @@ snapshots:
       uuid: 3.4.0
 
   require-directory@2.1.1: {}
-
-  requires-port@1.0.0: {}
 
   resolve-alpn@1.2.1: {}
 
@@ -8774,6 +8761,12 @@ snapshots:
 
   through@2.3.8: {}
 
+  tldts-core@6.1.46: {}
+
+  tldts@6.1.46:
+    dependencies:
+      tldts-core: 6.1.46
+
   tmpl@1.0.5: {}
 
   to-fast-properties@2.0.0: {}
@@ -8787,12 +8780,9 @@ snapshots:
       psl: 1.9.0
       punycode: 2.3.1
 
-  tough-cookie@4.1.4:
+  tough-cookie@5.0.0:
     dependencies:
-      psl: 1.9.0
-      punycode: 2.3.1
-      universalify: 0.2.0
-      url-parse: 1.5.10
+      tldts: 6.1.46
 
   traverse@0.6.8: {}
 
@@ -8924,8 +8914,6 @@ snapshots:
 
   universal-user-agent@6.0.1: {}
 
-  universalify@0.2.0: {}
-
   universalify@2.0.1: {}
 
   update-browserslist-db@1.1.0(browserslist@4.23.2):
@@ -8945,11 +8933,6 @@ snapshots:
       punycode: 2.3.1
 
   url-join@5.0.0: {}
-
-  url-parse@1.5.10:
-    dependencies:
-      querystringify: 2.2.0
-      requires-port: 1.0.0
 
   urllib@4.3.0:
     dependencies:
