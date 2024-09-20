@@ -71,9 +71,6 @@ importers:
       '@types/superagent':
         specifier: 8.1.9
         version: 8.1.9
-      '@types/tough-cookie':
-        specifier: 4.0.5
-        version: 4.0.5
       agentkeepalive:
         specifier: 4.5.0
         version: 4.5.0
