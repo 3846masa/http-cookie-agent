@@ -1,5 +1,5 @@
-import type http from 'node:http';
-import type https from 'node:https';
+import type * as http from 'node:http';
+import type * as https from 'node:https';
 
 import type { CookieJar } from 'tough-cookie';
 
@@ -14,9 +14,9 @@ export type CookieAgentOptions = {
 type CookieAgent<BaseAgent extends http.Agent> = BaseAgent;
 
 type WithCookieAgentOptions<T> = T extends http.AgentOptions ? T & CookieAgentOptions : T;
-type ConstructorParams<Params> = {
+type ConstructorParams<Params extends unknown[]> = {
   [Index in keyof Params]: WithCookieAgentOptions<Params[Index]>;
-} & { length: Params['length'] };
+};
 
 export function createCookieAgent<BaseAgent extends http.Agent = http.Agent, Params extends unknown[] = unknown[]>(
   BaseAgent: new (...rest: Params) => BaseAgent,

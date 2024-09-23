@@ -49,6 +49,7 @@
     "format:eslint": "eslint --fix .",
     "format:prettier": "prettier --write .",
     "lint": "pnpm run \"/^lint:.*/\"",
+    "lint:dts": "tsc --noEmit http/*.d.ts undici/*.d.ts",
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",

@@ -39,7 +39,7 @@ export function createCookieAgent<BaseAgent extends http.Agent = http.Agent, Par
   type WithCookieAgentOptions<T> = T extends http.AgentOptions ? T & CookieAgentOptions : T;
   type ConstructorParams = {
     [Index in keyof Params]: WithCookieAgentOptions<Params[Index]>;
-  } & { length: Params['length'] };
+  };
 
   // @ts-expect-error -- BaseAgentClass is type definition.
   class CookieAgent extends BaseAgentClass {
