@@ -1,3 +1,10 @@
+## [6.0.6](https://github.com/3846masa/http-cookie-agent/compare/v6.0.5...v6.0.6) (2024-09-23)
+
+
+### Bug Fixes
+
+* fix http/index.d.ts types ([#1028](https://github.com/3846masa/http-cookie-agent/issues/1028)) ([e597713](https://github.com/3846masa/http-cookie-agent/commit/e597713a835028b02eddc646dca17d2403379803))
+
 ## [6.0.5](https://github.com/3846masa/http-cookie-agent/compare/v6.0.4...v6.0.5) (2024-05-02)
 
 
