@@ -1,6 +1,6 @@
 import { configs as sharedConfigs } from '@3846masa/configs/eslint/config.mjs';
 
-/** @type {import('eslint').Linter.FlatConfig[]} */
+/** @type {import('eslint').Linter.Config[]} */
 const configs = [
   { ignores: ['dist/', 'http/index.js', 'undici/index.js'] },
   ...sharedConfigs,

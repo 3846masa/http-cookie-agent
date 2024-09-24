@@ -19,7 +19,7 @@ type ConstructorParams<Params extends unknown[]> = {
 };
 
 export function createCookieAgent<BaseAgent extends http.Agent = http.Agent, Params extends unknown[] = unknown[]>(
-  BaseAgent: new (...rest: Params) => BaseAgent,
+  BaseAgentClass: new (...rest: Params) => BaseAgent,
 ): new (...rest: ConstructorParams<Params>) => CookieAgent<BaseAgent>;
 
 export const HttpCookieAgent: new (options: http.AgentOptions & CookieAgentOptions) => CookieAgent<http.Agent>;
