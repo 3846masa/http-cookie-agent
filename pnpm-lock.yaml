@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  urllib>undici: 6.20.0
+  urllib>undici: 6.20.1
 
 patchedDependencies:
   '@semantic-release/git@10.0.1':
@@ -123,8 +123,8 @@ importers:
         specifier: 5.6.3
         version: 5.6.3
       undici:
-        specifier: 6.20.0
-        version: 6.20.0
+        specifier: 6.20.1
+        version: 6.20.1
       urllib:
         specifier: 4.4.0
         version: 4.4.0
@@ -3940,8 +3940,8 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici@6.20.0:
-    resolution: {integrity: sha512-AITZfPuxubm31Sx0vr8bteSalEbs9wQb/BOBi9FPlD9Qpd6HxZ4Q0+hI742jBhkPb4RT2v5MQzaW5VhRVyj+9A==}
+  undici@6.20.1:
+    resolution: {integrity: sha512-AjQF1QsmqfJys+LXfGTNum+qw4S88CojRInG/6t31W/1fk6G59s92bnAvGz5Cmur+kQv2SURXEvvudLmbrE8QA==}
     engines: {node: '>=18.17'}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
@@ -8572,7 +8572,7 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici@6.20.0: {}
+  undici@6.20.1: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
@@ -8615,7 +8615,7 @@ snapshots:
       mime-types: 2.1.35
       qs: 6.12.1
       type-fest: 4.20.1
-      undici: 6.20.0
+      undici: 6.20.1
       ylru: 2.0.0
 
   util-deprecate@1.0.2: {}
