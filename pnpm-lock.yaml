@@ -126,8 +126,8 @@ importers:
         specifier: 6.21.0
         version: 6.21.0
       urllib:
-        specifier: 4.4.0
-        version: 4.4.0
+        specifier: 4.6.3
+        version: 4.6.3
 
 packages:
 
@@ -2144,8 +2144,8 @@ packages:
     resolution: {integrity: sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==}
     engines: {node: '>= 0.12'}
 
-  form-data@4.0.0:
-    resolution: {integrity: sha512-ETEklSGi5t0QMZuiXoA/Q6vcnxcLQP5vdugSpuAyi6SVGi2clPPp+xgEhuMaHC+zGgn31Kd235W35f7Hykkaww==}
+  form-data@4.0.1:
+    resolution: {integrity: sha512-tzN8e4TX8+kkxGPK8D5u0FNmjPUjw3lwC9lSLxxoB/+GtsJG91CO8bSWy73APlgAZzZbXEYZJuxjkHH2w+Ezhw==}
     engines: {node: '>= 6'}
 
   formdata-polyfill@4.0.10:
@@ -3955,8 +3955,8 @@ packages:
     resolution: {integrity: sha512-n2huDr9h9yzd6exQVnH/jU5mr+Pfx08LRXXZhkLLetAMESRj+anQsTAh940iMrIetKAmry9coFuZQ2jY8/p3WA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  urllib@4.4.0:
-    resolution: {integrity: sha512-q5RQ0Wt3H4DXVFQZFiEzlrL0IEtJ7bIot9yyQ9otAhh0XTxdZMI9xkmv4COFnb1wICcyc+bpagl3QND3AF46Cw==}
+  urllib@4.6.3:
+    resolution: {integrity: sha512-vbjqWSLyontNQKJj2mSazeAGich5HayURQPDSzITkmIlP0GJ5uHn+UFUQiY+0ZezODzLAkz+azpr9LY3Ttf4WQ==}
     engines: {node: '>= 18.19.0'}
 
   util-deprecate@1.0.2:
@@ -5467,7 +5467,7 @@ snapshots:
       '@types/cookiejar': 2.1.5
       '@types/methods': 1.1.4
       '@types/node': 18.19.67
-      form-data: 4.0.0
+      form-data: 4.0.1
 
   '@types/tough-cookie@4.0.5': {}
 
@@ -5714,7 +5714,7 @@ snapshots:
   axios@1.7.9:
     dependencies:
       follow-redirects: 1.15.6
-      form-data: 4.0.0
+      form-data: 4.0.1
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -6592,7 +6592,7 @@ snapshots:
       combined-stream: 1.0.8
       mime-types: 2.1.35
 
-  form-data@4.0.0:
+  form-data@4.0.1:
     dependencies:
       asynckit: 0.4.0
       combined-stream: 1.0.8
@@ -8270,7 +8270,7 @@ snapshots:
       cookiejar: 2.1.4
       debug: 4.3.7
       fast-safe-stringify: 2.1.1
-      form-data: 4.0.0
+      form-data: 4.0.1
       formidable: 3.5.2
       methods: 1.1.2
       mime: 2.6.0
@@ -8500,8 +8500,9 @@ snapshots:
 
   url-join@5.0.0: {}
 
-  urllib@4.4.0:
+  urllib@4.6.3:
     dependencies:
+      form-data: 4.0.1
       formstream: 1.5.1
       mime-types: 2.1.35
       qs: 6.12.1
