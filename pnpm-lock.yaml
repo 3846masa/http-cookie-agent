@@ -24,8 +24,8 @@ importers:
         specifier: github:3846masa/configs#4f18beb38fdf55c0f810422b366426b5b55fcb44
         version: https://codeload.github.com/3846masa/configs/tar.gz/4f18beb38fdf55c0f810422b366426b5b55fcb44(@typescript-eslint/parser@8.17.0(eslint@9.16.0)(typescript@5.7.2))
       '@babel/cli':
-        specifier: 7.25.9
-        version: 7.25.9(@babel/core@7.26.0)
+        specifier: 7.26.4
+        version: 7.26.4(@babel/core@7.26.0)
       '@babel/core':
         specifier: 7.26.0
         version: 7.26.0
@@ -143,8 +143,8 @@ packages:
     resolution: {integrity: sha512-lFMjJTrFL3j7L9yBxwYfCq2k6qqwHyzuUl/XBnif78PWTJYyL/dfowQHWE3sp6U6ZzqWiiIZnpTMO96zhkjwtg==}
     engines: {node: '>=6.0.0'}
 
-  '@babel/cli@7.25.9':
-    resolution: {integrity: sha512-I+02IfrTiSanpxJBlZQYb18qCxB6c2Ih371cVpfgIrPQrjAYkf45XxomTJOG8JBWX5GY35/+TmhCMdJ4ZPkL8Q==}
+  '@babel/cli@7.26.4':
+    resolution: {integrity: sha512-+mORf3ezU3p3qr+82WvJSnQNE1GAYeoCfEv4fik6B5/2cvKZ75AX8oawWQdXtM9MmndooQj15Jr9kelRFWsuRw==}
     engines: {node: '>=6.9.0'}
     hasBin: true
     peerDependencies:
@@ -4075,7 +4075,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@babel/cli@7.25.9(@babel/core@7.26.0)':
+  '@babel/cli@7.26.4(@babel/core@7.26.0)':
     dependencies:
       '@babel/core': 7.26.0
       '@jridgewell/trace-mapping': 0.3.25
