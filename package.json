@@ -57,7 +57,7 @@
     "test": "NODE_OPTIONS=\"--experimental-vm-modules\" jest"
   },
   "dependencies": {
-    "agent-base": "^7.1.1"
+    "agent-base": "^7.1.2"
   },
   "devDependencies": {
     "@3846masa/configs": "github:3846masa/configs#4f18beb38fdf55c0f810422b366426b5b55fcb44",
