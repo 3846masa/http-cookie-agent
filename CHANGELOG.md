@@ -1,3 +1,10 @@
+## [6.0.8](https://github.com/3846masa/http-cookie-agent/compare/v6.0.7...v6.0.8) (2024-12-12)
+
+
+### Bug Fixes
+
+* **npm:** update dependency agent-base to ^7.1.3 ([#1136](https://github.com/3846masa/http-cookie-agent/issues/1136)) ([88f351f](https://github.com/3846masa/http-cookie-agent/commit/88f351fb6bb488c02f5fe90063e6f3a9144e769e))
+
 ## [6.0.7](https://github.com/3846masa/http-cookie-agent/compare/v6.0.6...v6.0.7) (2024-12-10)
 
 
