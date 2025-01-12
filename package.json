@@ -93,7 +93,7 @@
     "semver": "7.6.3",
     "superagent": "10.1.1",
     "tough-cookie": "5.0.0",
-    "typescript": "5.7.2",
+    "typescript": "5.7.3",
     "undici": "6.21.0",
     "urllib": "4.4.0"
   },
