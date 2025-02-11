@@ -92,7 +92,7 @@
     "semantic-release": "22.0.12",
     "semver": "7.7.1",
     "superagent": "10.1.1",
-    "tough-cookie": "5.1.0",
+    "tough-cookie": "5.1.1",
     "typescript": "5.7.3",
     "undici": "6.21.1",
     "urllib": "4.4.0"
