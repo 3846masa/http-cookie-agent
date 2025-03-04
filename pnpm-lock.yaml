@@ -117,8 +117,8 @@ importers:
         specifier: 10.1.1
         version: 10.1.1
       tough-cookie:
-        specifier: 5.1.1
-        version: 5.1.1
+        specifier: 5.1.2
+        version: 5.1.2
       typescript:
         specifier: 5.7.3
         version: 5.7.3
@@ -3841,8 +3841,8 @@ packages:
     resolution: {integrity: sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==}
     engines: {node: '>=0.8'}
 
-  tough-cookie@5.1.1:
-    resolution: {integrity: sha512-Ek7HndSVkp10hmHP9V4qZO1u+pn1RU5sI0Fw+jCU3lyvuMZcgqsNgc6CmJJZyByK4Vm/qotGRJlfgAX8q+4JiA==}
+  tough-cookie@5.1.2:
+    resolution: {integrity: sha512-FVDYdxtnj0G6Qm/DhNPSb8Ju59ULcup3tuJxkFb5K8Bv2pUXILbf0xZWU8PX8Ov19OXljbUyveOFwRMwkXzO+A==}
     engines: {node: '>=16'}
 
   traverse@0.6.8:
@@ -8478,7 +8478,7 @@ snapshots:
       psl: 1.9.0
       punycode: 2.3.1
 
-  tough-cookie@5.1.1:
+  tough-cookie@5.1.2:
     dependencies:
       tldts: 6.1.46
 
