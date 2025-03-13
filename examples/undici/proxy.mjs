@@ -11,7 +11,7 @@ proxyServer.listen(9000);
 
 const jar = new CookieJar();
 const agent = new ProxyAgent({
-  factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
+  factory: (origin, /** @type {object} */ opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
   uri: 'http://127.0.0.1:9000',
 });
 
