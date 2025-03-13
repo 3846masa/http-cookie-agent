@@ -14,7 +14,7 @@ test('should set cookies to CookieJar from Set-Cookie header', async () => {
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
+    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
   });
 
@@ -33,7 +33,7 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
+    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
   });
 
@@ -55,7 +55,7 @@ test('should send cookies from CookieJar', async () => {
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
+    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
   });
 
@@ -74,7 +74,7 @@ test('should send cookies from both a request options and CookieJar', async () =
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
+    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
   });
 
@@ -96,7 +96,7 @@ test('should send cookies from a request options when the key is duplicated in b
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
+    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
   });
 
@@ -118,7 +118,7 @@ test('should emit error when CookieJar#getCookies throws error.', async () => {
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
+    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
   });
 
@@ -139,7 +139,7 @@ test('should emit error when CookieJar#setCookie throws error.', async () => {
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
+    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
   });
 

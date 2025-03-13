@@ -30,7 +30,11 @@ function convertToHeadersObject(
         const valueStr = Buffer.isBuffer(value) ? value.toString('utf-8') : value;
 
         if (keyStr === 'set-cookie') {
-          headers[keyStr] = [...(headers[keyStr] ?? []), valueStr];
+          if (Array.isArray(headers[keyStr])) {
+            headers[keyStr] = [...headers[keyStr], valueStr];
+          } else {
+            headers[keyStr] = headers[keyStr] != null ? [headers[keyStr], valueStr] : [valueStr];
+          }
         } else {
           headers[keyStr] = valueStr;
         }
