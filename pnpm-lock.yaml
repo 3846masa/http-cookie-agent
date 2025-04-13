@@ -21,8 +21,8 @@ importers:
         version: 7.1.3
     devDependencies:
       '@3846masa/configs':
-        specifier: github:3846masa/configs#35269a8b260828fde658389715e757171f2c9e19
-        version: https://codeload.github.com/3846masa/configs/tar.gz/35269a8b260828fde658389715e757171f2c9e19(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))
+        specifier: github:3846masa/configs#e259de36675e7ccd48a0285d325cb9be710f4370
+        version: https://codeload.github.com/3846masa/configs/tar.gz/e259de36675e7ccd48a0285d325cb9be710f4370(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))
       '@babel/cli':
         specifier: 7.27.0
         version: 7.27.0(@babel/core@7.26.10)
@@ -131,9 +131,9 @@ importers:
 
 packages:
 
-  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/35269a8b260828fde658389715e757171f2c9e19':
-    resolution: {tarball: https://codeload.github.com/3846masa/configs/tar.gz/35269a8b260828fde658389715e757171f2c9e19}
-    version: 1.0.641
+  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/e259de36675e7ccd48a0285d325cb9be710f4370':
+    resolution: {tarball: https://codeload.github.com/3846masa/configs/tar.gz/e259de36675e7ccd48a0285d325cb9be710f4370}
+    version: 1.0.642
 
   '@aashutoshrathi/word-wrap@1.2.6':
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
@@ -4160,7 +4160,7 @@ packages:
 
 snapshots:
 
-  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/35269a8b260828fde658389715e757171f2c9e19(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))':
+  '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/e259de36675e7ccd48a0285d325cb9be710f4370(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))':
     dependencies:
       '@eslint/js': 9.24.0
       '@tsconfig/strictest': 2.0.5
@@ -4168,7 +4168,7 @@ snapshots:
       eslint: 9.24.0
       eslint-config-prettier: 10.1.1(eslint@9.24.0)
       eslint-import-resolver-typescript: 4.3.2(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint@9.24.0))(eslint@9.24.0)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint-import-resolver-typescript@4.3.2(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint@9.24.0))(eslint@9.24.0))(eslint@9.24.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint-import-resolver-typescript@4.3.2)(eslint@9.24.0)
       eslint-plugin-sort: 4.0.0(eslint@9.24.0)(typescript@5.8.3)
       eslint-plugin-unicorn: 58.0.0(eslint@9.24.0)
       globals: 16.0.0
@@ -6484,7 +6484,7 @@ snapshots:
       tinyglobby: 0.2.12
       unrs-resolver: 1.4.1
     optionalDependencies:
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint-import-resolver-typescript@4.3.2(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint@9.24.0))(eslint@9.24.0))(eslint@9.24.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint-import-resolver-typescript@4.3.2)(eslint@9.24.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -6499,7 +6499,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint-import-resolver-typescript@4.3.2(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint@9.24.0))(eslint@9.24.0))(eslint@9.24.0):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.29.1(eslint@9.24.0)(typescript@5.8.3))(eslint-import-resolver-typescript@4.3.2)(eslint@9.24.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.8
