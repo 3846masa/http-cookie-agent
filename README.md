@@ -24,12 +24,6 @@ Allows cookies with every Node.js HTTP clients (e.g. Node.js global fetch, undic
 npm install http-cookie-agent tough-cookie
 ```
 
-When you want to use Node.js global fetch (aka. `undici`), you should install `undici` additionally.
-
-```bash
-npm install undici
-```
-
 ## Usage
 
 See also [examples](./examples) for more details.
@@ -60,11 +54,17 @@ See also [examples](./examples) for more details.
 
 #### Node.js global fetch
 
-`http-cookie-agent` supports global fetch since Node.js v18.2.0.
+When you want to use Node.js global fetch, you should install `undici` additionally.
+
+| Node.js version | undici version         |
+| --------------- | ---------------------- |
+| v23             | `npm install undici@6` |
+| v22             | `npm install undici@6` |
+| v20             | `npm install undici@6` |
 
 ```js
 import { CookieJar } from 'tough-cookie';
-import { CookieAgent } from 'http-cookie-agent/undici';
+import { CookieAgent } from 'http-cookie-agent/undici/v6';
 
 const jar = new CookieJar();
 const agent = new CookieAgent({ cookies: { jar } });
