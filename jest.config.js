@@ -17,8 +17,8 @@ const config = {
       extensionsToTreatAsEsm: ['.ts'],
       injectGlobals: false,
       moduleNameMapper: {
-        '^undici$': 'undici@v6',
-        '^undici/(.*)$': 'undici@v6/$1',
+        '^undici$': 'undici__v6',
+        '^undici/(.*)$': 'undici__v6/$1',
       },
       roots: ['./src'],
       setupFiles: ['./jest/setup.ts'],
