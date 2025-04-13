@@ -3,14 +3,14 @@
 ## Migration guide from v6.x.x to v7.0.0
 
 - [Node.js v18 is no longer supported.](#nodejs-v18-is-no-longer-supported)
-- [When using global fetch with Node.js v22, v23, v24, undici v6 should be installed.](#when-using-global-fetch-with-nodejs-v22-v23-v24-undici-v6-should-be-installed)
+- [When using global fetch with Node.js v20, v22, v23, undici v6 should be installed.](#when-using-global-fetch-with-nodejs-v20-v22-v23-undici-v6-should-be-installed)
 - [undici v7 supports](#undici-v7-supports)
 
 ### Node.js v18 is no longer supported.
 
 Node.js v18 is no longer supported.
 
-### When using global fetch with Node.js v22, v23, v24, undici v6 should be installed.
+### When using global fetch with Node.js v20, v22, v23, undici v6 should be installed.
 
 The global fetch built-in to Node.js v20, v22, and v23 is undici v6.
 
