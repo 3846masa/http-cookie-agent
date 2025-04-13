@@ -3,7 +3,7 @@
     "declaration": false,
     "lib": ["ESNext"],
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "noEmit": true,
     "paths": {
       "http-cookie-agent/http": ["./http"],
