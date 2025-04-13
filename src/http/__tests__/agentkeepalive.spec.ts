@@ -2,7 +2,7 @@ import http from 'node:http';
 import { text } from 'node:stream/consumers';
 
 import { expect, jest, test } from '@jest/globals';
-import KeepAliveAgent from 'agentkeepalive';
+import { HttpAgent as KeepAliveAgent } from 'agentkeepalive';
 import { CookieJar } from 'tough-cookie';
 
 import { createTestServer } from '../../__tests__/helpers';
