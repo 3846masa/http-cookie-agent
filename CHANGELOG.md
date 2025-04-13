@@ -1,3 +1,15 @@
+# [7.0.0](https://github.com/3846masa/http-cookie-agent/compare/v6.0.8...v7.0.0) (2025-04-13)
+
+
+### Features
+
+* release v7 ([afa99f5](https://github.com/3846masa/http-cookie-agent/commit/afa99f5354460767a6e4d46ae9b3388373d7ac05))
+
+
+### BREAKING CHANGES
+
+* see MIGRATION.md
+
 ## [6.0.8](https://github.com/3846masa/http-cookie-agent/compare/v6.0.7...v6.0.8) (2024-12-12)
 
 
