@@ -97,11 +97,11 @@
     "typescript": "5.8.3",
     "undici": "7.8.0",
     "undici@v6": "npm:undici@6.21.2",
-    "urllib": "4.4.0"
+    "urllib": "4.6.11"
   },
   "peerDependencies": {
     "tough-cookie": "^4.0.0 || ^5.0.0",
-    "undici": "^5.11.0 || ^6.0.0"
+    "undici": "^7.0.0"
   },
   "peerDependenciesMeta": {
     "undici": {
