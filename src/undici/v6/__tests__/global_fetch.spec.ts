@@ -5,7 +5,7 @@ import { expect, jest, test } from '@jest/globals';
 import semver from 'semver';
 import { CookieJar } from 'tough-cookie';
 
-import { createTestServer } from '../../__tests__/helpers';
+import { createTestServer } from '../../../__tests__/helpers';
 import { CookieAgent } from '../cookie_agent';
 
 if (semver.lt(process.version, 'v18.2.0')) {

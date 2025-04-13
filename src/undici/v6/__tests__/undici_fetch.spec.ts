@@ -2,10 +2,10 @@ import { text } from 'node:stream/consumers';
 
 import { expect, jest, test } from '@jest/globals';
 import { CookieJar } from 'tough-cookie';
-import { Agent, interceptors, request } from 'undici';
+import { fetch } from 'undici';
 
-import { createTestServer } from '../../__tests__/helpers';
-import { cookie } from '../index';
+import { createTestServer } from '../../../__tests__/helpers';
+import { CookieAgent } from '../cookie_agent';
 
 test('should set cookies to CookieJar from Set-Cookie header', async () => {
   using server = await createTestServer([
@@ -15,9 +15,9 @@ test('should set cookies to CookieJar from Set-Cookie header', async () => {
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }));
+  const agent = new CookieAgent({ cookies: { jar } });
 
-  await request(`http://localhost:${server.port}`, { dispatcher: agent });
+  await fetch(`http://localhost:${server.port}`, { dispatcher: agent });
 
   const actual = await jar.getCookies(`http://localhost:${server.port}`);
   expect(actual).toMatchObject([{ key: 'key', value: 'value' }]);
@@ -31,9 +31,9 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }));
+  const agent = new CookieAgent({ cookies: { jar } });
 
-  await request(`http://localhost:${server.port}`, { dispatcher: agent });
+  await fetch(`http://localhost:${server.port}`, { dispatcher: agent });
 
   const actual = await jar.getCookies(`http://localhost:${server.port}`);
   expect(actual).toMatchObject([
@@ -50,11 +50,11 @@ test('should send cookies from CookieJar', async () => {
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }));
+  const agent = new CookieAgent({ cookies: { jar } });
 
   await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
-  const actual = await request(`http://localhost:${server.port}`, { dispatcher: agent }).then((res) => res.body.text());
+  const actual = await fetch(`http://localhost:${server.port}`, { dispatcher: agent }).then((res) => res.text());
   expect(actual).toBe('key=value');
 });
 
@@ -66,14 +66,14 @@ test('should send cookies from both a request options and CookieJar', async () =
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }));
+  const agent = new CookieAgent({ cookies: { jar } });
 
   await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
 
-  const actual = await request(`http://localhost:${server.port}`, {
+  const actual = await fetch(`http://localhost:${server.port}`, {
     dispatcher: agent,
     headers: { Cookie: 'key2=value2' },
-  }).then((res) => res.body.text());
+  }).then((res) => res.text());
   expect(actual).toBe('key1=value1; key2=value2');
 });
 
@@ -85,14 +85,14 @@ test('should send cookies from a request options when the key is duplicated in b
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }));
+  const agent = new CookieAgent({ cookies: { jar } });
 
   await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
-  const actual = await request(`http://localhost:${server.port}`, {
+  const actual = await fetch(`http://localhost:${server.port}`, {
     dispatcher: agent,
     headers: { Cookie: 'key=expected' },
-  }).then((res) => res.body.text());
+  }).then((res) => res.text());
   expect(actual).toBe('key=expected');
 });
 
@@ -110,12 +110,9 @@ test('should send cookies from the first response when redirecting', async () =>
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }), interceptors.redirect());
+  const agent = new CookieAgent({ cookies: { jar } });
 
-  const actual = await request(`http://localhost:${server.port}`, {
-    dispatcher: agent,
-    maxRedirections: 1,
-  }).then((res) => res.body.text());
+  const actual = await fetch(`http://localhost:${server.port}`, { dispatcher: agent }).then((res) => res.text());
   expect(actual).toBe('key=value');
 });
 
@@ -127,13 +124,13 @@ test('should emit error when CookieJar#getCookies throws error.', async () => {
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }));
+  const agent = new CookieAgent({ cookies: { jar } });
 
   jest.spyOn(jar, 'getCookiesSync').mockImplementation(() => {
     throw new Error('Error');
   });
 
-  const actual = request(`http://localhost:${server.port}`, { dispatcher: agent });
+  const actual = fetch(`http://localhost:${server.port}`, { dispatcher: agent });
   await expect(actual).rejects.toThrowError();
 });
 
@@ -145,13 +142,13 @@ test('should emit error when CookieJar#setCookie throws error.', async () => {
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }));
+  const agent = new CookieAgent({ cookies: { jar } });
 
   jest.spyOn(jar, 'setCookieSync').mockImplementation(() => {
     throw new Error('Error');
   });
 
-  const actual = request(`http://localhost:${server.port}`, { dispatcher: agent });
+  const actual = fetch(`http://localhost:${server.port}`, { dispatcher: agent });
   await expect(actual).rejects.toThrowError();
 });
 
@@ -177,21 +174,21 @@ test('should send post data when keepalive is enabled', async () => {
     },
   ]);
   const jar = new CookieJar();
-  const agent = new Agent().compose(cookie({ jar }));
+  const agent = new CookieAgent({ cookies: { jar } });
 
   await jar.setCookie('key=expected', `http://localhost:${server.port}`);
 
   const actual = await Promise.all([
-    request(`http://localhost:${server.port}`, {
+    fetch(`http://localhost:${server.port}`, {
       body: `payload-01`,
       dispatcher: agent,
       method: 'POST',
-    }).then((res) => res.body.json()),
-    request(`http://localhost:${server.port}`, {
+    }).then((res) => res.json()),
+    fetch(`http://localhost:${server.port}`, {
       body: `payload-02`,
       dispatcher: agent,
       method: 'POST',
-    }).then((res) => res.body.json()),
+    }).then((res) => res.json()),
   ]);
 
   expect(actual).toEqual([

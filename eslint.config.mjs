@@ -2,7 +2,7 @@ import { configs as sharedConfigs } from '@3846masa/configs/eslint';
 
 /** @type {import('eslint').Linter.Config[]} */
 const configs = [
-  { ignores: ['dist/', 'http/index.js', 'undici/index.js'] },
+  { ignores: ['dist/', 'http/index.js', 'undici/index.js', 'undici/v6/index.js'] },
   ...sharedConfigs,
   {
     files: ['examples/**/*'],

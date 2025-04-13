@@ -14,7 +14,6 @@ Allows cookies with every Node.js HTTP clients (e.g. Node.js global fetch, undic
 - [Install](#install)
 - [Usage](#usage)
   - [Supported libraries](#supported-libraries)
-  - [Using with an asynchronous Cookie store](#using-with-an-asynchronous-cookie-store)
   - [Using with another Agent library](#using-with-another-agent-library)
 - [Contributing](#contributing)
 - [License](#license)
@@ -82,6 +81,23 @@ import { CookieAgent } from 'http-cookie-agent/undici';
 
 const jar = new CookieJar();
 const agent = new CookieAgent({ cookies: { jar } });
+
+await fetch('https://example.com', { dispatcher: agent });
+```
+
+Alternatively, `http-cookie-agent` can be used as [interceptors](https://github.com/nodejs/undici/blob/v7.0.0/docs/docs/api/Dispatcher.md#dispatchercomposeinterceptors-interceptor).
+In this case, the `cookie()` must be placed at the beginning of the interceptors.
+
+```js
+import { fetch, interceptors } from 'undici';
+import { CookieJar } from 'tough-cookie';
+import { cookie } from 'http-cookie-agent/undici';
+
+const jar = new CookieJar();
+const agent = new Agent()
+  .compose(cookie({ jar }))
+  .compose(interceptors.retry())
+  .compose(interceptors.redirect({ maxRedirections: 3 }));
 
 await fetch('https://example.com', { dispatcher: agent });
 ```
@@ -258,7 +274,7 @@ await client.get('https://example.com');
 ```js
 import { request, setGlobalDispatcher } from 'urllib';
 import { CookieJar } from 'tough-cookie';
-import { CookieClient } from 'http-cookie-agent/undici';
+import { CookieAgent } from 'http-cookie-agent/undici';
 
 const jar = new CookieJar();
 const agent = new CookieAgent({ cookies: { jar } });
@@ -290,44 +306,17 @@ https.get('https://example.com', { agent }, (res) => {
 
 #### `undici`
 
-If you want to use another undici Agent library, use `CookieClient` via factory function.
+If you want to use another undici Agent library, use `cookie` with the compose method.
 
 ```js
 import { fetch, ProxyAgent } from 'undici';
 import { CookieJar } from 'tough-cookie';
-import { CookieClient } from 'http-cookie-agent/undici';
+import { cookie } from 'http-cookie-agent/undici';
 
 const jar = new CookieJar();
 const agent = new ProxyAgent({
-  factory: (origin, opts) => {
-    return new CookieClient(origin, {
-      ...opts,
-      cookies: { jar },
-    });
-  },
-});
-
-await fetch('https://example.com', { dispatcher: agent });
-```
-
-If you want to use another undici Client library, wrap the client in `createCookieClient`.
-
-```js
-import { fetch, Agent, MockClient } from 'undici';
-import { CookieJar } from 'tough-cookie';
-import { createCookieClient } from 'http-cookie-agent/undici';
-
-const CookieClient = createCookieClient(MockClient);
-
-const jar = new CookieJar();
-const agent = new Agent({
-  factory: (origin, opts) => {
-    return new CookieClient(origin, {
-      ...opts,
-      cookies: { jar },
-    });
-  },
-});
+  /* ... */
+}).compose(cookie({ jar }));
 
 await fetch('https://example.com', { dispatcher: agent });
 ```

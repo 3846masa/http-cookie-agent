@@ -3,7 +3,7 @@ import { CookieJar } from 'tough-cookie';
 import { ProxyAgent, request } from 'undici';
 
 import { createTestServerWithProxy } from '../../__tests__/helpers';
-import { CookieClient } from '../cookie_client';
+import { cookie } from '../index';
 
 test('should set cookies to CookieJar from Set-Cookie header', async () => {
   using server = await createTestServerWithProxy([
@@ -14,9 +14,8 @@ test('should set cookies to CookieJar from Set-Cookie header', async () => {
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
-  });
+  }).compose(cookie({ jar }));
 
   await request(`http://localhost:${server.port}`, { dispatcher: agent });
 
@@ -33,9 +32,8 @@ test('should set cookies to CookieJar from multiple Set-Cookie headers', async (
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
-  });
+  }).compose(cookie({ jar }));
 
   await request(`http://localhost:${server.port}`, { dispatcher: agent });
 
@@ -55,9 +53,8 @@ test('should send cookies from CookieJar', async () => {
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
-  });
+  }).compose(cookie({ jar }));
 
   await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
@@ -74,9 +71,8 @@ test('should send cookies from both a request options and CookieJar', async () =
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
-  });
+  }).compose(cookie({ jar }));
 
   await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
 
@@ -96,9 +92,8 @@ test('should send cookies from a request options when the key is duplicated in b
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
-  });
+  }).compose(cookie({ jar }));
 
   await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
@@ -118,9 +113,8 @@ test('should emit error when CookieJar#getCookies throws error.', async () => {
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
-  });
+  }).compose(cookie({ jar }));
 
   jest.spyOn(jar, 'getCookiesSync').mockImplementation(() => {
     throw new Error('Error');
@@ -139,9 +133,8 @@ test('should emit error when CookieJar#setCookie throws error.', async () => {
   ]);
   const jar = new CookieJar();
   const agent = new ProxyAgent({
-    factory: (origin, opts: object) => new CookieClient(origin, { ...opts, cookies: { jar } }),
     uri: `http://localhost:${server.proxyPort}`,
-  });
+  }).compose(cookie({ jar }));
 
   jest.spyOn(jar, 'setCookieSync').mockImplementation(() => {
     throw new Error('Error');

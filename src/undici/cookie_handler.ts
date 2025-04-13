@@ -2,73 +2,102 @@
 import type { Duplex } from 'node:stream';
 
 import type { Dispatcher } from 'undici';
-import { errors } from 'undici';
+import type { IncomingHttpHeaders } from 'undici/types/header';
 
 import type { CookieOptions } from '../cookie_options';
+import { convertToHeadersObject } from '../utils/convert_to_headers_object';
+import { createCookieHeaderValue } from '../utils/create_cookie_header_value';
 import { saveCookiesFromHeader } from '../utils/save_cookies_from_header';
+import { validateCookieOptions } from '../utils/validate_cookie_options';
 
-import { convertToHeadersObject } from './utils/convert_to_headers_object';
+type UndiciV7HandlerMethods =
+  | 'onRequestStart'
+  | 'onRequestUpgrade'
+  | 'onResponseStart'
+  | 'onResponseData'
+  | 'onResponseEnd'
+  | 'onResponseError';
 
 const kRequestUrl = Symbol('requestUrl');
 const kCookieOptions = Symbol('cookieOptions');
-const kHandlers = Symbol('handlers');
+const kDispatchHandler = Symbol('dispatchHandler');
+const kDispatch = Symbol('dispatch');
 
-class CookieHandler implements Required<Dispatcher.DispatchHandlers> {
-  private [kRequestUrl]: string;
+class CookieHandler implements Pick<Required<Dispatcher.DispatchHandler>, UndiciV7HandlerMethods> {
+  private [kRequestUrl]: string | null;
   private [kCookieOptions]: CookieOptions;
-  private [kHandlers]: Dispatcher.DispatchHandlers;
+  private [kDispatchHandler]: Dispatcher.DispatchHandler;
+  private [kDispatch]: Dispatcher['dispatch'];
 
-  constructor(requestUrl: string, cookieOptions: CookieOptions, handlers: Dispatcher.DispatchHandlers) {
-    this[kRequestUrl] = requestUrl;
+  constructor(dispatch: Dispatcher['dispatch'], cookieOptions: CookieOptions, handler: Dispatcher.DispatchHandler) {
+    validateCookieOptions(cookieOptions);
+    this[kRequestUrl] = null;
     this[kCookieOptions] = cookieOptions;
-    this[kHandlers] = handlers;
+    this[kDispatchHandler] = handler;
+    this[kDispatch] = dispatch;
   }
 
-  onResponseStarted = (): void => {
-    this[kHandlers].onResponseStarted?.();
-  };
+  dispatch(options: Dispatcher.DispatchOptions, handler: Dispatcher.DispatchHandler): boolean {
+    const cookieOptions = this[kCookieOptions];
+    const requestUrl = new URL(options.path, options.origin).toString();
 
-  onConnect = (abort: () => void): void => {
-    this[kHandlers].onConnect?.(abort);
-  };
+    const headers = convertToHeadersObject(options.headers);
+    options.headers = headers;
 
-  onError = (err: Error): void => {
-    this[kHandlers].onError?.(err);
-  };
-
-  onUpgrade = (statusCode: number, headers: string[] | null, socket: Duplex): void => {
-    this[kHandlers].onUpgrade?.(statusCode, headers, socket);
-  };
-
-  onHeaders = (statusCode: number, _headers: Buffer[], resume: () => void, statusText: string): boolean => {
-    if (this[kHandlers].onHeaders == null) {
-      throw new errors.InvalidArgumentError('invalid onHeaders method');
-    }
-
-    const headers = convertToHeadersObject(_headers);
-    saveCookiesFromHeader({
-      cookieOptions: this[kCookieOptions],
-      cookies: headers['set-cookie'],
-      requestUrl: this[kRequestUrl],
+    headers['cookie'] = createCookieHeaderValue({
+      cookieOptions,
+      passedValues: [headers['cookie']].flat(),
+      requestUrl,
     });
+    this[kRequestUrl] = requestUrl;
 
-    return this[kHandlers].onHeaders(statusCode, _headers, resume, statusText);
-  };
+    return this[kDispatch](options, handler);
+  }
 
-  onData = (chunk: Buffer): boolean => {
-    if (this[kHandlers].onData == null) {
-      throw new errors.InvalidArgumentError('invalid onData method');
+  onRequestStart(controller: Dispatcher.DispatchController, context: unknown): void {
+    this[kDispatchHandler].onRequestStart?.(controller, context);
+  }
+
+  onRequestUpgrade(
+    controller: Dispatcher.DispatchController,
+    statusCode: number,
+    headers: IncomingHttpHeaders,
+    socket: Duplex,
+  ): void {
+    this[kDispatchHandler].onRequestUpgrade?.(controller, statusCode, headers, socket);
+  }
+
+  onResponseStart(
+    controller: Dispatcher.DispatchController,
+    statusCode: number,
+    headers: IncomingHttpHeaders,
+    statusMessage?: string,
+  ): void {
+    const cookieOptions = this[kCookieOptions];
+    const requestUrl = this[kRequestUrl];
+
+    if (requestUrl != null) {
+      saveCookiesFromHeader({
+        cookieOptions,
+        cookies: convertToHeadersObject(headers)['set-cookie'],
+        requestUrl,
+      });
     }
-    return this[kHandlers].onData(chunk);
-  };
 
-  onComplete = (trailers: string[] | null): void => {
-    this[kHandlers].onComplete?.(trailers);
-  };
+    this[kDispatchHandler].onResponseStart?.(controller, statusCode, headers, statusMessage);
+  }
 
-  onBodySent = (chunkSize: number, totalBytesSent: number): void => {
-    this[kHandlers].onBodySent?.(chunkSize, totalBytesSent);
-  };
+  onResponseData(controller: Dispatcher.DispatchController, chunk: Buffer): void {
+    this[kDispatchHandler].onResponseData?.(controller, chunk);
+  }
+
+  onResponseEnd(controller: Dispatcher.DispatchController, trailers: IncomingHttpHeaders): void {
+    this[kDispatchHandler].onResponseEnd?.(controller, trailers);
+  }
+
+  onResponseError(controller: Dispatcher.DispatchController, error: Error): void {
+    this[kDispatchHandler].onResponseError?.(controller, error);
+  }
 }
 
 export { CookieHandler };
