@@ -2,7 +2,7 @@ import { expect, jest, test } from '@jest/globals';
 import { CookieJar } from 'tough-cookie';
 import { ProxyAgent, request } from 'undici';
 
-import { createTestServerWithProxy } from '../../__tests__/helpers';
+import { createTestServerWithProxy } from '../../../__tests__/helpers';
 import { CookieClient } from '../cookie_client';
 
 test('should set cookies to CookieJar from Set-Cookie header', async () => {

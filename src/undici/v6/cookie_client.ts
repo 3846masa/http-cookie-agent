@@ -2,12 +2,12 @@ import type { Agent, Dispatcher } from 'undici';
 import { Client, RedirectHandler } from 'undici';
 import Symbols from 'undici/lib/core/symbols';
 
-import type { CookieOptions } from '../cookie_options';
-import { createCookieHeaderValue } from '../utils/create_cookie_header_value';
-import { validateCookieOptions } from '../utils/validate_cookie_options';
+import type { CookieOptions } from '../../cookie_options';
+import { convertToHeadersObject } from '../../utils/convert_to_headers_object';
+import { createCookieHeaderValue } from '../../utils/create_cookie_header_value';
+import { validateCookieOptions } from '../../utils/validate_cookie_options';
 
 import { CookieHandler } from './cookie_handler';
-import { convertToHeadersObject } from './utils/convert_to_headers_object';
 
 const kCookieOptions = Symbol('cookieOptions');
 
@@ -34,7 +34,7 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
       }
     }
 
-    override [Symbols.kDispatch](opts: Agent.DispatchOptions, handler: Dispatcher.DispatchHandlers) {
+    override [Symbols.kDispatch](opts: Agent.DispatchOptions, handler: Dispatcher.DispatchHandler) {
       const { maxRedirections = this[Symbols.kMaxRedirections] } = opts;
 
       if (maxRedirections) {

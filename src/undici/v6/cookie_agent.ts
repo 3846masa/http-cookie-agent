@@ -1,7 +1,7 @@
 import { Agent, errors, Pool } from 'undici';
 
-import type { CookieOptions } from '../cookie_options';
-import { validateCookieOptions } from '../utils/validate_cookie_options';
+import type { CookieOptions } from '../../cookie_options';
+import { validateCookieOptions } from '../../utils/validate_cookie_options';
 
 import { CookieClient } from './cookie_client';
 

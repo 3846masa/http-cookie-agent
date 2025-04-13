@@ -32,7 +32,8 @@
   "author": "3846masa <3846masahiro+git@gmail.com>",
   "exports": {
     "./http": "./http/index.js",
-    "./undici": "./undici/index.js"
+    "./undici": "./undici/index.js",
+    "./undici/v6": "./undici/v6/index.js"
   },
   "files": [
     "dist",
@@ -95,6 +96,7 @@
     "tough-cookie": "5.1.2",
     "typescript": "5.8.3",
     "undici": "7.8.0",
+    "undici@v6": "npm:undici@6.21.2",
     "urllib": "4.4.0"
   },
   "peerDependencies": {

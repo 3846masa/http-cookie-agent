@@ -4,7 +4,7 @@ import { expect, jest, test } from '@jest/globals';
 import { CookieJar } from 'tough-cookie';
 import { fetch } from 'undici';
 
-import { createTestServer } from '../../__tests__/helpers';
+import { createTestServer } from '../../../__tests__/helpers';
 import { CookieAgent } from '../cookie_agent';
 
 test('should set cookies to CookieJar from Set-Cookie header', async () => {

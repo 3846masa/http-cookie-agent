@@ -2,10 +2,10 @@ import { text } from 'node:stream/consumers';
 
 import { expect, jest, test } from '@jest/globals';
 import { CookieJar } from 'tough-cookie';
-import { request } from 'undici';
+import { request } from 'urllib';
 
-import { createTestServer } from '../../__tests__/helpers';
-import { CookieAgent } from '../cookie_agent';
+import { createTestServer } from '../../../__tests__/helpers';
+import { CookieAgent } from '../index';
 
 test('should set cookies to CookieJar from Set-Cookie header', async () => {
   using server = await createTestServer([
@@ -54,7 +54,10 @@ test('should send cookies from CookieJar', async () => {
 
   await jar.setCookie('key=value', `http://localhost:${server.port}`);
 
-  const actual = await request(`http://localhost:${server.port}`, { dispatcher: agent }).then((res) => res.body.text());
+  const { data: actual } = await request<string>(`http://localhost:${server.port}`, {
+    dataType: 'text',
+    dispatcher: agent,
+  });
   expect(actual).toBe('key=value');
 });
 
@@ -70,10 +73,11 @@ test('should send cookies from both a request options and CookieJar', async () =
 
   await jar.setCookie('key1=value1', `http://localhost:${server.port}`);
 
-  const actual = await request(`http://localhost:${server.port}`, {
+  const { data: actual } = await request<string>(`http://localhost:${server.port}`, {
+    dataType: 'text',
     dispatcher: agent,
     headers: { Cookie: 'key2=value2' },
-  }).then((res) => res.body.text());
+  });
   expect(actual).toBe('key1=value1; key2=value2');
 });
 
@@ -89,10 +93,11 @@ test('should send cookies from a request options when the key is duplicated in b
 
   await jar.setCookie('key=notexpected', `http://localhost:${server.port}`);
 
-  const actual = await request(`http://localhost:${server.port}`, {
+  const { data: actual } = await request<string>(`http://localhost:${server.port}`, {
+    dataType: 'text',
     dispatcher: agent,
     headers: { Cookie: 'key=expected' },
-  }).then((res) => res.body.text());
+  });
   expect(actual).toBe('key=expected');
 });
 
@@ -112,10 +117,11 @@ test('should send cookies from the first response when redirecting', async () =>
   const jar = new CookieJar();
   const agent = new CookieAgent({ cookies: { jar } });
 
-  const actual = await request(`http://localhost:${server.port}`, {
+  const { data: actual } = await request<string>(`http://localhost:${server.port}`, {
+    dataType: 'text',
     dispatcher: agent,
-    maxRedirections: 1,
-  }).then((res) => res.body.text());
+    maxRedirects: 1,
+  });
   expect(actual).toBe('key=value');
 });
 
@@ -183,15 +189,17 @@ test('should send post data when keepalive is enabled', async () => {
 
   const actual = await Promise.all([
     request(`http://localhost:${server.port}`, {
-      body: `payload-01`,
+      data: `payload-01`,
+      dataType: 'json',
       dispatcher: agent,
       method: 'POST',
-    }).then((res) => res.body.json()),
+    }).then((res) => res.data as object),
     request(`http://localhost:${server.port}`, {
-      body: `payload-02`,
+      data: `payload-02`,
+      dataType: 'json',
       dispatcher: agent,
       method: 'POST',
-    }).then((res) => res.body.json()),
+    }).then((res) => res.data as object),
   ]);
 
   expect(actual).toEqual([

@@ -1,24 +1,34 @@
+/* eslint-disable @typescript-eslint/no-deprecated */
 /* global Buffer */
 import type { Duplex } from 'node:stream';
 
 import type { Dispatcher } from 'undici';
 import { errors } from 'undici';
 
-import type { CookieOptions } from '../cookie_options';
-import { saveCookiesFromHeader } from '../utils/save_cookies_from_header';
+import type { CookieOptions } from '../../cookie_options';
+import { convertToHeadersObject } from '../../utils/convert_to_headers_object';
+import { saveCookiesFromHeader } from '../../utils/save_cookies_from_header';
 
-import { convertToHeadersObject } from './utils/convert_to_headers_object';
+type UndiciV6HandlerMethods =
+  | 'onConnect'
+  | 'onError'
+  | 'onUpgrade'
+  | 'onResponseStarted'
+  | 'onHeaders'
+  | 'onData'
+  | 'onComplete'
+  | 'onBodySent';
 
 const kRequestUrl = Symbol('requestUrl');
 const kCookieOptions = Symbol('cookieOptions');
 const kHandlers = Symbol('handlers');
 
-class CookieHandler implements Required<Dispatcher.DispatchHandlers> {
+class CookieHandler implements Pick<Required<Dispatcher.DispatchHandler>, UndiciV6HandlerMethods> {
   private [kRequestUrl]: string;
   private [kCookieOptions]: CookieOptions;
-  private [kHandlers]: Dispatcher.DispatchHandlers;
+  private [kHandlers]: Dispatcher.DispatchHandler;
 
-  constructor(requestUrl: string, cookieOptions: CookieOptions, handlers: Dispatcher.DispatchHandlers) {
+  constructor(requestUrl: string, cookieOptions: CookieOptions, handlers: Dispatcher.DispatchHandler) {
     this[kRequestUrl] = requestUrl;
     this[kCookieOptions] = cookieOptions;
     this[kHandlers] = handlers;
