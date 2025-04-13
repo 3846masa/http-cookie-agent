@@ -1,6 +1,6 @@
 import http from 'node:http';
 
-import { CookieClient } from 'http-cookie-agent/undici';
+import { cookie } from 'http-cookie-agent/undici';
 import { createProxy } from 'proxy';
 import { CookieJar } from 'tough-cookie';
 import { fetch, ProxyAgent } from 'undici';
@@ -11,9 +11,8 @@ proxyServer.listen(9000);
 
 const jar = new CookieJar();
 const agent = new ProxyAgent({
-  factory: (origin, /** @type {object} */ opts) => new CookieClient(origin, { ...opts, cookies: { jar } }),
   uri: 'http://127.0.0.1:9000',
-});
+}).compose(cookie({ jar }));
 
 await fetch('https://httpbin.org/cookies/set/session/userid', { dispatcher: agent });
 

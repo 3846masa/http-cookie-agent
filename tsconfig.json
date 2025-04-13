@@ -12,7 +12,7 @@
     "target": "ESNext",
     "types": ["@types/node"]
   },
-  "exclude": ["dist/", "http/index.js", "undici/index.js"],
+  "exclude": ["dist/", "http/index.js", "undici/index.js", "undici/v6/index.js"],
   "extends": "@3846masa/configs/typescript/tsconfig.json",
   "include": ["**/*", "**/.*"]
 }

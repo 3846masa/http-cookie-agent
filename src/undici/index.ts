@@ -1,2 +1,3 @@
 export { CookieAgent } from './cookie_agent';
-export { CookieClient, createCookieClient } from './cookie_client';
+export { CookieHandler } from './cookie_handler';
+export { createCookieInterceptor as cookie } from './create_cookie_interceptor';
