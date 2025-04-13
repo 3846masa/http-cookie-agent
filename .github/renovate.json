@@ -6,6 +6,10 @@
       {
         "groupName": "semantic-release",
         "matchPackageNames": ["semantic-release", "@semantic-release/*"]
+      },
+      {
+        "allowedVersions": "^6.0.0",
+        "matchDepNames": ["undici__v6"]
       }
     ]
   }
