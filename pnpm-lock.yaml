@@ -5,7 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  urllib>undici: 7.8.0
+  urllib>undici: 7.9.0
 
 patchedDependencies:
   '@semantic-release/git@10.0.1':
@@ -123,8 +123,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       undici:
-        specifier: 7.8.0
-        version: 7.8.0
+        specifier: 7.9.0
+        version: 7.9.0
       undici__v6:
         specifier: npm:undici@6.21.3
         version: undici@6.21.3
@@ -4081,8 +4081,8 @@ packages:
     resolution: {integrity: sha512-gBLkYIlEnSp8pFbT64yFgGE6UIB9tAkhukC23PmMDCe5Nd+cRqKxSjw5y54MK2AZMgZfJWMaNE4nYUHgi1XEOw==}
     engines: {node: '>=18.17'}
 
-  undici@7.8.0:
-    resolution: {integrity: sha512-vFv1GA99b7eKO1HG/4RPu2Is3FBTWBrmzqzO0mz+rLxN3yXkE4mqRcb8g8fHxzX4blEysrNZLqg5RbJLqX5buA==}
+  undici@7.9.0:
+    resolution: {integrity: sha512-e696y354tf5cFZPXsF26Yg+5M63+5H3oE6Vtkh2oqbvsE2Oe7s2nIbcQh5lmG7Lp/eS29vJtTpw9+p6PX0qNSg==}
     engines: {node: '>=20.18.1'}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
@@ -8859,7 +8859,7 @@ snapshots:
 
   undici@6.21.3: {}
 
-  undici@7.8.0: {}
+  undici@7.9.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
@@ -8923,7 +8923,7 @@ snapshots:
       mime-types: 2.1.35
       qs: 6.12.1
       type-fest: 4.39.1
-      undici: 7.8.0
+      undici: 7.9.0
       ylru: 2.0.0
 
   util-deprecate@1.0.2: {}
