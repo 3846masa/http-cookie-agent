@@ -61,7 +61,7 @@
     "agent-base": "^7.1.3"
   },
   "devDependencies": {
-    "@3846masa/configs": "github:3846masa/configs#8f348b40e1ce5164aea719d2bd5ef4f31f0c906c",
+    "@3846masa/configs": "github:3846masa/configs#bfbd39868f881e307f406dafc6f8e4e7cb140572",
     "@babel/cli": "7.27.2",
     "@babel/core": "7.27.1",
     "@babel/plugin-proposal-explicit-resource-management": "7.27.1",
