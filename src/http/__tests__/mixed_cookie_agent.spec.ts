@@ -1,8 +1,8 @@
 import http from 'node:http';
 import { text } from 'node:stream/consumers';
 
-import { expect, jest, test } from '@jest/globals';
 import { CookieJar } from 'tough-cookie';
+import { expect, test, vi } from 'vitest';
 
 import { createTestServer } from '../../__tests__/helpers';
 import { MixedCookieAgent } from '../index';
@@ -139,7 +139,7 @@ test('should emit error when CookieJar#getCookies throws error.', async () => {
   const jar = new CookieJar();
   const agent = new MixedCookieAgent({ cookies: { jar } });
 
-  jest.spyOn(jar, 'getCookiesSync').mockImplementation(() => {
+  vi.spyOn(jar, 'getCookiesSync').mockImplementation(() => {
     throw new Error('Error');
   });
 
@@ -160,7 +160,7 @@ test('should emit error when CookieJar#setCookie throws error.', async () => {
   const jar = new CookieJar();
   const agent = new MixedCookieAgent({ cookies: { jar } });
 
-  jest.spyOn(jar, 'setCookieSync').mockImplementation(() => {
+  vi.spyOn(jar, 'setCookieSync').mockImplementation(() => {
     throw new Error('Error');
   });
 

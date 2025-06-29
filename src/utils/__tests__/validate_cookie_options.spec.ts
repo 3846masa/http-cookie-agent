@@ -1,14 +1,16 @@
-import { expect, test } from '@jest/globals';
 import { CookieJar } from 'tough-cookie';
+import { expect, test } from 'vitest';
 
 import { validateCookieOptions } from '../validate_cookie_options';
 
 test('should throw Error when jar is not set', () => {
   expect(() => {
     validateCookieOptions({});
-  }).toThrowError({
-    message: 'invalid cookies.jar',
-  });
+  }).toThrowError(
+    expect.objectContaining({
+      message: 'invalid cookies.jar',
+    }) as Error,
+  );
 });
 
 test('should throw Error when cookie store is asynchronous', () => {
@@ -17,9 +19,11 @@ test('should throw Error when cookie store is asynchronous', () => {
 
   expect(() => {
     validateCookieOptions({ jar });
-  }).toThrowError({
-    message: 'an asynchronous cookie store is not supported.',
-  });
+  }).toThrowError(
+    expect.objectContaining({
+      message: 'an asynchronous cookie store is not supported.',
+    }) as Error,
+  );
 });
 
 test('should not throw Error when only pass synchronous cookie store', () => {
