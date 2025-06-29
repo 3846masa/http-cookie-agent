@@ -5,12 +5,12 @@ import semver from 'semver';
 import { CookieJar } from 'tough-cookie';
 import { describe, expect, test, vi } from 'vitest';
 
-import { createTestServer } from '../../../__tests__/helpers';
+import { createTestServer } from '../../__tests__/helpers';
 import { CookieAgent } from '../cookie_agent';
 
-const isSupported = semver.gte(process.versions.node, 'v18.2.0') && semver.lt(process.versions.node, 'v24.0.0');
+const isSupported = semver.gte(process.versions.node, 'v24.0.0');
 
-describe('when running on Node.js v18.2.0 to v24.0.0', { skip: !isSupported }, () => {
+describe('when running on Node.js v24.0.0 or later', { skip: !isSupported }, () => {
   test('should set cookies to CookieJar from Set-Cookie header', async () => {
     using server = await createTestServer([
       (_req, res) => {
