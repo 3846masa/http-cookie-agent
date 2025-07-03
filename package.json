@@ -94,7 +94,7 @@
     "typescript": "5.8.3",
     "undici": "7.10.0",
     "undici__v6": "npm:undici@6.21.3",
-    "urllib": "4.6.11",
+    "urllib": "4.6.12",
     "vitest": "3.2.4"
   },
   "peerDependencies": {
