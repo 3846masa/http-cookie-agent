@@ -58,7 +58,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "agent-base": "^7.1.3"
+    "agent-base": "^7.1.4"
   },
   "devDependencies": {
     "@3846masa/configs": "github:3846masa/configs#6d886368a53bbe52a8dc599de1b24441691439ed",
