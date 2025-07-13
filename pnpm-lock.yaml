@@ -120,8 +120,8 @@ importers:
         specifier: npm:undici@6.21.3
         version: undici@6.21.3
       urllib:
-        specifier: 4.7.1
-        version: 4.7.1
+        specifier: 4.8.0
+        version: 4.8.0
       vitest:
         specifier: 3.2.4
         version: 3.2.4(@types/node@20.19.7)
@@ -4027,8 +4027,8 @@ packages:
     resolution: {integrity: sha512-n2huDr9h9yzd6exQVnH/jU5mr+Pfx08LRXXZhkLLetAMESRj+anQsTAh940iMrIetKAmry9coFuZQ2jY8/p3WA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  urllib@4.7.1:
-    resolution: {integrity: sha512-4I+bKXeiATeP/mHOKwuLcZSzUzNdsDn5tBPxaB7lOOI3rGv8WusrueMOW9FVe9cj36tMbvTDv8oD1J6NYI4ksQ==}
+  urllib@4.8.0:
+    resolution: {integrity: sha512-IPcxriVjJ5tujxojVObLia47GqB63D24V/iXGup90mLzKCTXff2Y9isdVPrvH6e5kwNPMFQOVAJ61mjHXTdtnw==}
     engines: {node: '>= 18.19.0'}
 
   util-deprecate@1.0.2:
@@ -8426,7 +8426,7 @@ snapshots:
 
   url-join@5.0.0: {}
 
-  urllib@4.7.1:
+  urllib@4.8.0:
     dependencies:
       form-data: 4.0.2
       formstream: 1.5.1
