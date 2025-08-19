@@ -90,7 +90,7 @@
     "semantic-release": "24.2.7",
     "semver": "7.7.2",
     "superagent": "10.2.3",
-    "tough-cookie": "5.1.2",
+    "tough-cookie": "6.0.0",
     "typescript": "5.9.2",
     "undici": "7.10.0",
     "undici__v6": "npm:undici@6.21.3",
