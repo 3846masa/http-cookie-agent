@@ -114,7 +114,7 @@ test('should send cookies from the first response when redirecting', async () =>
 
   const actual = await request(`http://localhost:${server.port}`, {
     dispatcher: agent,
-    maxRedirections: 1,
+    ...{ maxRedirections: 1 },
   }).then((res) => res.body.text());
   expect(actual).toBe('key=value');
 });

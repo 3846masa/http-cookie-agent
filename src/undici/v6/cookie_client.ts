@@ -34,11 +34,15 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
       }
     }
 
-    override [Symbols.kDispatch](opts: Agent.DispatchOptions, handler: Dispatcher.DispatchHandler) {
+    override [Symbols.kDispatch](
+      opts: Agent.DispatchOptions & { maxRedirections?: number },
+      handler: Dispatcher.DispatchHandler,
+    ) {
       const { maxRedirections = this[Symbols.kMaxRedirections] } = opts;
 
       if (maxRedirections) {
         opts = { ...opts, maxRedirections: 0 };
+        // @ts-expect-error -- This will cause a type error in Undici v7, but not in v6
         handler = new RedirectHandler(this, maxRedirections, opts, handler, false);
       }
 

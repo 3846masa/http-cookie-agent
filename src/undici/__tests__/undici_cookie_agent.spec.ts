@@ -110,11 +110,10 @@ test('should send cookies from the first response when redirecting', async () =>
     },
   ]);
   const jar = new CookieJar();
-  const agent = new CookieAgent({ cookies: { jar } }).compose(interceptors.redirect());
+  const agent = new CookieAgent({ cookies: { jar } }).compose(interceptors.redirect({ maxRedirections: 1 }));
 
   const actual = await request(`http://localhost:${server.port}`, {
     dispatcher: agent,
-    maxRedirections: 1,
   }).then((res) => res.body.text());
   expect(actual).toBe('key=value');
 });
