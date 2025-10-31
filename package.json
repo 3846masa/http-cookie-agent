@@ -77,7 +77,7 @@
     "@types/semver": "7.7.1",
     "@types/superagent": "8.1.9",
     "agentkeepalive": "4.6.0",
-    "axios": "1.12.2",
+    "axios": "1.13.1",
     "disposablestack": "1.1.7",
     "got": "14.6.1",
     "http-proxy-agent": "7.0.2",
