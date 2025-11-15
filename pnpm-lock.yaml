@@ -108,8 +108,8 @@ importers:
         specifier: 10.2.3
         version: 10.2.3
       tough-cookie:
-        specifier: 6.0.0
-        version: 6.0.0
+        specifier: 5.1.2
+        version: 5.1.2
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -3849,11 +3849,11 @@ packages:
     resolution: {integrity: sha512-PSkbLUoxOFRzJYjjxHJt9xro7D+iilgMX/C9lawzVuYiIdcihh9DXmVibBe8lmcFrRi/VzlPjBxbN7rH24q8/Q==}
     engines: {node: '>=14.0.0'}
 
-  tldts-core@7.0.12:
-    resolution: {integrity: sha512-3K76aXywJFduGRsOYoY5JzINLs/WMlOkeDwPL+8OCPq2Rh39gkSDtWAxdJQlWjpun/xF/LHf29yqCi6VC/rHDA==}
+  tldts-core@6.1.46:
+    resolution: {integrity: sha512-zA3ai/j4aFcmbqTvTONkSBuWs0Q4X4tJxa0gV9sp6kDbq5dAhQDSg0WUkReEm0fBAKAGNj+wPKCCsR8MYOYmwA==}
 
-  tldts@7.0.12:
-    resolution: {integrity: sha512-M9ZQBPp6FyqhMcl233vHYyYRkxXOA1SKGlnq13S0mJdUhRSwr2w6I8rlchPL73wBwRlyIZpFvpu2VcdSMWLYXw==}
+  tldts@6.1.46:
+    resolution: {integrity: sha512-fw81lXV2CijkNrZAZvee7wegs+EOlTyIuVl/z4q6OUzZHQ1jGL2xQzKXq9geYf/1tzo9LZQLrkcko2m8HLh+rg==}
     hasBin: true
 
   to-regex-range@5.0.1:
@@ -3864,8 +3864,8 @@ packages:
     resolution: {integrity: sha512-nlLsUzgm1kfLXSXfRZMc1KLAugd4hqJHDTvc2hDIwS3mZAfMEuMbc03SujMF+GEcpaX/qboeycw6iO8JwVv2+g==}
     engines: {node: '>=0.8'}
 
-  tough-cookie@6.0.0:
-    resolution: {integrity: sha512-kXuRi1mtaKMrsLUxz3sQYvVl37B0Ns6MzfrtV5DvJceE9bPyspOqk9xxv7XbZWcfLWbFmm997vl83qUWVJA64w==}
+  tough-cookie@5.1.2:
+    resolution: {integrity: sha512-FVDYdxtnj0G6Qm/DhNPSb8Ju59ULcup3tuJxkFb5K8Bv2pUXILbf0xZWU8PX8Ov19OXljbUyveOFwRMwkXzO+A==}
     engines: {node: '>=16'}
 
   traverse@0.6.8:
@@ -8229,11 +8229,11 @@ snapshots:
 
   tinyrainbow@3.0.3: {}
 
-  tldts-core@7.0.12: {}
+  tldts-core@6.1.46: {}
 
-  tldts@7.0.12:
+  tldts@6.1.46:
     dependencies:
-      tldts-core: 7.0.12
+      tldts-core: 6.1.46
 
   to-regex-range@5.0.1:
     dependencies:
@@ -8244,9 +8244,9 @@ snapshots:
       psl: 1.9.0
       punycode: 2.3.1
 
-  tough-cookie@6.0.0:
+  tough-cookie@5.1.2:
     dependencies:
-      tldts: 7.0.12
+      tldts: 6.1.46
 
   traverse@0.6.8: {}
 
