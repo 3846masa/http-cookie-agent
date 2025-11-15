@@ -1,3 +1,10 @@
+## [7.0.3](https://github.com/3846masa/http-cookie-agent/compare/v7.0.2...v7.0.3) (2025-11-15)
+
+
+### Bug Fixes
+
+* update dependency tough-cookie to v6 ([#1477](https://github.com/3846masa/http-cookie-agent/issues/1477)) ([dbace8c](https://github.com/3846masa/http-cookie-agent/commit/dbace8ced7555c1a514c01dff7231f9a4fffc25a)), closes [#1377](https://github.com/3846masa/http-cookie-agent/issues/1377) [#1475](https://github.com/3846masa/http-cookie-agent/issues/1475)
+
 ## [7.0.2](https://github.com/3846masa/http-cookie-agent/compare/v7.0.1...v7.0.2) (2025-07-13)
 
 
