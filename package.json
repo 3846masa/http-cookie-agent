@@ -79,7 +79,7 @@
     "agentkeepalive": "4.6.0",
     "axios": "1.13.2",
     "disposablestack": "1.1.7",
-    "got": "14.6.3",
+    "got": "14.6.4",
     "http-proxy-agent": "7.0.2",
     "needle": "3.3.1",
     "node-fetch": "3.3.2",
