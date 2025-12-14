@@ -54,7 +54,7 @@
     "lint:eslint": "eslint --max-warnings 0 .",
     "lint:prettier": "prettier --check .",
     "lint:tsc": "tsc --noEmit",
-    "semantic-release": "semantic-release",
+    "release": "release-it",
     "test": "vitest run"
   },
   "dependencies": {
@@ -68,8 +68,7 @@
     "@babel/preset-env": "7.28.5",
     "@babel/preset-typescript": "7.28.5",
     "@hapi/wreck": "18.1.0",
-    "@semantic-release/changelog": "6.0.3",
-    "@semantic-release/git": "10.0.1",
+    "@release-it/conventional-changelog": "10.0.3",
     "@types/babel__core": "7.20.5",
     "@types/needle": "3.3.0",
     "@types/node": "20.19.26",
@@ -78,6 +77,7 @@
     "@types/superagent": "8.1.9",
     "agentkeepalive": "4.6.0",
     "axios": "1.13.2",
+    "conventional-changelog-conventionalcommits": "9.1.0",
     "disposablestack": "1.1.7",
     "got": "14.6.5",
     "http-proxy-agent": "7.0.2",
@@ -85,9 +85,9 @@
     "node-fetch": "3.3.2",
     "phin": "3.7.1",
     "proxy": "2.2.0",
+    "release-it": "19.1.0",
     "request": "2.88.2",
     "rimraf": "6.1.2",
-    "semantic-release": "24.2.9",
     "semver": "7.7.3",
     "superagent": "10.2.3",
     "tough-cookie": "6.0.0",
@@ -112,10 +112,8 @@
   },
   "pnpm": {
     "overrides": {
+      "conventional-changelog-conventionalcommits": "$conventional-changelog-conventionalcommits",
       "urllib>undici": "$undici"
-    },
-    "patchedDependencies": {
-      "@semantic-release/git@10.0.1": "patches/@semantic-release__git@10.0.1.patch"
     }
   }
 }
