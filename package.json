@@ -68,7 +68,7 @@
     "@babel/preset-env": "7.28.5",
     "@babel/preset-typescript": "7.28.5",
     "@hapi/wreck": "18.1.0",
-    "@release-it/conventional-changelog": "10.0.3",
+    "@release-it/conventional-changelog": "10.0.4",
     "@types/babel__core": "7.20.5",
     "@types/needle": "3.3.0",
     "@types/node": "20.19.27",
