@@ -89,7 +89,7 @@
     "request": "2.88.2",
     "rimraf": "6.1.2",
     "semver": "7.7.3",
-    "superagent": "10.2.3",
+    "superagent": "10.3.0",
     "tough-cookie": "6.0.0",
     "typescript": "5.9.3",
     "undici": "7.18.0",
