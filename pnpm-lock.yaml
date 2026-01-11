@@ -113,8 +113,8 @@ importers:
         specifier: 7.18.2
         version: 7.18.2
       undici__v6:
-        specifier: npm:undici@6.22.0
-        version: undici@6.22.0
+        specifier: npm:undici@6.23.0
+        version: undici@6.23.0
       urllib:
         specifier: 4.9.0
         version: 4.9.0
@@ -3791,6 +3791,10 @@ packages:
 
   undici@6.22.0:
     resolution: {integrity: sha512-hU/10obOIu62MGYjdskASR3CUAiYaFTtC9Pa6vHyf//mAipSvSQg6od2CnJswq7fvzNS3zJhxoRkgNVaHurWKw==}
+    engines: {node: '>=18.17'}
+
+  undici@6.23.0:
+    resolution: {integrity: sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==}
     engines: {node: '>=18.17'}
 
   undici@7.18.2:
@@ -8041,6 +8045,8 @@ snapshots:
   undici-types@6.21.0: {}
 
   undici@6.22.0: {}
+
+  undici@6.23.0: {}
 
   undici@7.18.2: {}
 
