@@ -71,7 +71,7 @@
     "@release-it/conventional-changelog": "10.0.4",
     "@types/babel__core": "7.20.5",
     "@types/needle": "3.3.0",
-    "@types/node": "20.19.28",
+    "@types/node": "20.19.29",
     "@types/request": "2.48.13",
     "@types/semver": "7.7.1",
     "@types/superagent": "8.1.9",
