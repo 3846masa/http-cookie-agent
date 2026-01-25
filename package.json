@@ -92,7 +92,7 @@
     "superagent": "10.3.0",
     "tough-cookie": "6.0.0",
     "typescript": "5.9.3",
-    "undici": "7.18.2",
+    "undici": "7.19.0",
     "undici__v6": "npm:undici@6.23.0",
     "urllib": "4.9.0",
     "vitest": "4.0.17"
