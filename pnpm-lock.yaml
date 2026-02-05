@@ -6,7 +6,7 @@ settings:
 
 overrides:
   conventional-changelog-conventionalcommits: 9.1.0
-  urllib>undici: 7.19.2
+  urllib>undici: 7.20.0
 
 importers:
 
@@ -110,8 +110,8 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       undici:
-        specifier: 7.19.2
-        version: 7.19.2
+        specifier: 7.20.0
+        version: 7.20.0
       undici__v6:
         specifier: npm:undici@6.23.0
         version: undici@6.23.0
@@ -3820,8 +3820,8 @@ packages:
     resolution: {integrity: sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==}
     engines: {node: '>=18.17'}
 
-  undici@7.19.2:
-    resolution: {integrity: sha512-4VQSpGEGsWzk0VYxyB/wVX/Q7qf9t5znLRgs0dzszr9w9Fej/8RVNQ+S20vdXSAyra/bJ7ZQfGv6ZMj7UEbzSg==}
+  undici@7.20.0:
+    resolution: {integrity: sha512-MJZrkjyd7DeC+uPZh+5/YaMDxFiiEEaDgbUSVMXayofAkDWF1088CDo+2RPg7B1BuS1qf1vgNE7xqwPxE0DuSQ==}
     engines: {node: '>=20.18.1'}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
@@ -8076,7 +8076,7 @@ snapshots:
 
   undici@6.23.0: {}
 
-  undici@7.19.2: {}
+  undici@7.20.0: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
@@ -8132,7 +8132,7 @@ snapshots:
       mime-types: 2.1.35
       qs: 6.14.1
       type-fest: 4.39.1
-      undici: 7.19.2
+      undici: 7.20.0
       ylru: 2.0.0
 
   util-deprecate@1.0.2: {}
