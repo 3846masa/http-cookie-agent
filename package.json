@@ -77,7 +77,7 @@
     "@types/superagent": "8.1.9",
     "agentkeepalive": "4.6.0",
     "axios": "1.13.6",
-    "conventional-changelog-conventionalcommits": "9.2.0",
+    "conventional-changelog-conventionalcommits": "9.3.0",
     "disposablestack": "1.1.7",
     "got": "14.6.6",
     "http-proxy-agent": "7.0.2",
