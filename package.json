@@ -93,7 +93,7 @@
     "tough-cookie": "6.0.1",
     "typescript": "5.9.3",
     "undici": "7.24.3",
-    "undici__v6": "npm:undici@6.23.0",
+    "undici__v6": "npm:undici@6.24.1",
     "urllib": "4.9.0",
     "vitest": "4.0.18"
   },
