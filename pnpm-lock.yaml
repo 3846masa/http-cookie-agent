@@ -86,8 +86,8 @@ importers:
         specifier: 3.7.1
         version: 3.7.1
       proxy:
-        specifier: 2.2.0
-        version: 2.2.0
+        specifier: 3.0.0
+        version: 3.0.0
       release-it:
         specifier: 19.2.4
         version: 19.2.4(@types/node@20.19.37)
@@ -3344,8 +3344,8 @@ packages:
   proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
 
-  proxy@2.2.0:
-    resolution: {integrity: sha512-nYclNIWj9UpXbVJ3W5EXIYiGR88AKZoGt90kyh3zoOBY5QW+7bbtPvMFgKGD4VJmpS3UXQXtlGXSg3lRNLOFLg==}
+  proxy@3.0.0:
+    resolution: {integrity: sha512-3JQGizbKR8edoC+4EFkxCflh8toCZ3KbjYO10veRowcj+wHVJNIAavWo/BRUeez1kEHdvqad2ZZsCzSC2wOO+w==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -7498,7 +7498,7 @@ snapshots:
 
   proxy-from-env@1.1.0: {}
 
-  proxy@2.2.0:
+  proxy@3.0.0:
     dependencies:
       args: 5.0.3
       basic-auth-parser: 0.0.2-1
