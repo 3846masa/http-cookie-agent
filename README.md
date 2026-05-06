@@ -58,10 +58,9 @@ When you want to use Node.js global fetch, you should install `undici` additiona
 
 | Node.js version | undici version         |
 | --------------- | ---------------------- |
+| v26             | `npm install undici@8` |
 | v24             | `npm install undici@7` |
-| v23             | `npm install undici@6` |
 | v22             | `npm install undici@6` |
-| v20             | `npm install undici@6` |
 
 ```js
 import { CookieJar } from 'tough-cookie';
