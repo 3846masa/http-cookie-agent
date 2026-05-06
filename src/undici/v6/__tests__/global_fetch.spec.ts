@@ -135,7 +135,7 @@ describe('when running on Node.js v18.2.0 to v24.0.0', { skip: !isSupported }, (
     });
 
     const actual = fetch(`http://localhost:${server.port}`, { dispatcher: agent });
-    await expect(actual).rejects.toThrowError();
+    await expect(actual).rejects.toThrow();
   });
 
   test('should emit error when CookieJar#setCookie throws error.', async () => {
@@ -153,7 +153,7 @@ describe('when running on Node.js v18.2.0 to v24.0.0', { skip: !isSupported }, (
     });
 
     const actual = fetch(`http://localhost:${server.port}`, { dispatcher: agent });
-    await expect(actual).rejects.toThrowError();
+    await expect(actual).rejects.toThrow();
   });
 
   test('should send post data when keepalive is enabled', async () => {

@@ -147,7 +147,7 @@ test('should emit error when CookieJar#getCookies throws error.', async () => {
     agent,
     method: 'GET',
   });
-  await expect(actual).rejects.toThrowError();
+  await expect(actual).rejects.toThrow();
 });
 
 test('should emit error when CookieJar#setCookie throws error.', async () => {
@@ -168,5 +168,5 @@ test('should emit error when CookieJar#setCookie throws error.', async () => {
     agent,
     method: 'GET',
   });
-  await expect(actual).rejects.toThrowError();
+  await expect(actual).rejects.toThrow();
 });
