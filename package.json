@@ -43,9 +43,7 @@
   ],
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "pnpm run --parallel \"/^build:.*/\"",
-    "build:cjs": "babel src --out-dir dist --extensions .ts --out-file-extension .js",
-    "build:mjs": "babel src --out-dir dist --extensions .mts --out-file-extension .mjs",
+    "build": "babel src --out-dir dist --extensions .ts --out-file-extension .js",
     "format": "pnpm run --sequential \"/^format:.*/\"",
     "format:eslint": "eslint --fix .",
     "format:prettier": "prettier --write .",
@@ -64,7 +62,6 @@
     "@3846masa/configs": "github:3846masa/configs#6be5ac743b5cca398e436bd5e73dd9f99671a60d",
     "@babel/cli": "7.28.6",
     "@babel/core": "7.29.0",
-    "@babel/plugin-proposal-explicit-resource-management": "7.27.4",
     "@babel/preset-env": "7.29.3",
     "@babel/preset-typescript": "7.28.5",
     "@hapi/wreck": "18.1.0",
