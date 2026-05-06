@@ -2,7 +2,7 @@ import type { CookieOptions } from '../cookie_options';
 
 type Params = {
   cookieOptions: CookieOptions;
-  cookies: string | string[] | undefined;
+  cookies: string | number | string[] | undefined;
   requestUrl: string;
 };
 
@@ -13,6 +13,6 @@ export function saveCookiesFromHeader({ cookieOptions, cookies, requestUrl }: Pa
     if (cookie == null) {
       continue;
     }
-    jar.setCookieSync(cookie, requestUrl, { ignoreError: true });
+    jar.setCookieSync(String(cookie), requestUrl, { ignoreError: true });
   }
 }
