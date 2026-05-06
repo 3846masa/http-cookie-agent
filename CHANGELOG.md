@@ -1,5 +1,17 @@
 # Changelog
 
+## [8.0.0](https://github.com/3846masa/http-cookie-agent/compare/v7.0.4...v8.0.0) (2026-05-06)
+
+### ⚠ BREAKING CHANGES
+
+* Drop Node.js v20 support
+
+* chore: add undici v8 as peerdeps
+
+### Features
+
+* drop Node.js v20 support ([#1605](https://github.com/3846masa/http-cookie-agent/issues/1605)) ([14222bc](https://github.com/3846masa/http-cookie-agent/commit/14222bc4255e55dc5cc10ab3316a23f5b11bfd4c))
+
 ## [7.0.4](https://github.com/3846masa/http-cookie-agent/compare/v7.0.3...v7.0.4) (2026-05-06)
 
 ### Bug Fixes
