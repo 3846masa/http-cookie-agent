@@ -62,6 +62,7 @@ function createCookieClient<BaseClient extends Client = Client, BaseClientOption
         }
 
         opts = { ...opts, headers };
+        // @ts-expect-error -- This will cause a type error in Undici v8, but not in v6
         handler = new CookieHandler(requestUrl, cookieOptions, handler);
       }
 

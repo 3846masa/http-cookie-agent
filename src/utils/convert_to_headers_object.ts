@@ -1,6 +1,6 @@
 /* global Buffer */
 import { errors } from 'undici';
-import type { IncomingHttpHeaders } from 'undici/types/header';
+import type { OutgoingHttpHeaders } from 'undici/types/header';
 
 function isIterable(value: unknown): value is Iterable<unknown> {
   return typeof value === 'object' && value != null && Symbol.iterator in value;
@@ -8,13 +8,13 @@ function isIterable(value: unknown): value is Iterable<unknown> {
 
 function convertToHeadersObject(
   _headers:
-    | IncomingHttpHeaders
+    | OutgoingHttpHeaders
     | (string | Buffer)[]
     | Iterable<[string, string | string[] | undefined]>
     | null
     | undefined,
-): IncomingHttpHeaders {
-  const headers: IncomingHttpHeaders = {};
+): OutgoingHttpHeaders {
+  const headers: OutgoingHttpHeaders = {};
 
   if (Array.isArray(_headers)) {
     if (_headers.length % 2 !== 0) {
@@ -33,7 +33,7 @@ function convertToHeadersObject(
           if (Array.isArray(headers[keyStr])) {
             headers[keyStr] = [...headers[keyStr], valueStr];
           } else {
-            headers[keyStr] = headers[keyStr] != null ? [headers[keyStr], valueStr] : [valueStr];
+            headers[keyStr] = headers[keyStr] != null ? [String(headers[keyStr]), valueStr] : [valueStr];
           }
         } else {
           headers[keyStr] = valueStr;
