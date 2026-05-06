@@ -40,9 +40,7 @@ See also [examples](./examples) for more details.
 | `node-fetch`         | ✅                |
 | `got`                | ✅ <sup>\*1</sup> |
 | `superagent`         | ✅ <sup>\*1</sup> |
-| `request`            | ✅ <sup>\*1</sup> |
 | `needle`             | ✅                |
-| `phin`               | ✅                |
 | `@hapi/wrech`        | ✅                |
 | `urllib`             | ✅                |
 | Bun global fetch     | ❌ <sup>\*2</sup> |
@@ -196,28 +194,6 @@ const client = superagent.agent().use((req) => req.agent(mixedAgent));
 await client.get('https://example.com');
 ```
 
-#### `request`
-
-:warning: `request` supports cookies by default. You may not need `http-cookie-agent`.
-
-See https://github.com/request/request/tree/v2.88.1#examples.
-
-```js
-import request from 'request';
-import { CookieJar } from 'tough-cookie';
-import { MixedCookieAgent } from 'http-cookie-agent/http';
-
-const jar = new CookieJar();
-
-const client = request.defaults({
-  agent: new MixedCookieAgent({ cookies: { jar } }),
-});
-
-client.get('https://example.com', (_err, _res) => {
-  // ...
-});
-```
-
 #### `needle`
 
 ```js
@@ -229,23 +205,6 @@ const jar = new CookieJar();
 
 await needle('get', 'https://example.com', {
   agent: new MixedCookieAgent({ cookies: { jar } }),
-});
-```
-
-#### `phin`
-
-```js
-import phin from 'phin';
-import { CookieJar } from 'tough-cookie';
-import { MixedCookieAgent } from 'http-cookie-agent/http';
-
-const jar = new CookieJar();
-
-await phin({
-  url: 'https://example.com',
-  core: {
-    agent: new MixedCookieAgent({ cookies: { jar } }),
-  },
 });
 ```
 
