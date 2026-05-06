@@ -1,7 +1,7 @@
 import http from 'node:http';
 import { text } from 'node:stream/consumers';
 
-import hpa from 'http-proxy-agent';
+import * as hpa from 'http-proxy-agent';
 import { CookieJar } from 'tough-cookie';
 import { expect, test, vi } from 'vitest';
 

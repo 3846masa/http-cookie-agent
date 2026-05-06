@@ -1,7 +1,7 @@
 import http from 'node:http';
 
 import { createCookieAgent } from 'http-cookie-agent/http';
-import httpProxyAgent from 'http-proxy-agent';
+import * as hpa from 'http-proxy-agent';
 import { createProxy } from 'proxy';
 import { CookieJar } from 'tough-cookie';
 
@@ -9,7 +9,7 @@ import { CookieJar } from 'tough-cookie';
 const proxyServer = createProxy(http.createServer());
 proxyServer.listen(9000);
 
-const HttpProxyCookieAgent = createCookieAgent(httpProxyAgent.HttpProxyAgent);
+const HttpProxyCookieAgent = createCookieAgent(hpa.HttpProxyAgent);
 
 const jar = new CookieJar();
 const agent = new HttpProxyCookieAgent('http://127.0.0.1:9000', { cookies: { jar } });
