@@ -134,7 +134,7 @@ test('should emit error when CookieJar#getCookies throws error.', async () => {
   });
 
   const actual = request(`http://localhost:${server.port}`, { dispatcher: agent });
-  await expect(actual).rejects.toThrowError();
+  await expect(actual).rejects.toThrow();
 });
 
 test('should emit error when CookieJar#setCookie throws error.', async () => {
@@ -152,7 +152,7 @@ test('should emit error when CookieJar#setCookie throws error.', async () => {
   });
 
   const actual = request(`http://localhost:${server.port}`, { dispatcher: agent });
-  await expect(actual).rejects.toThrowError();
+  await expect(actual).rejects.toThrow();
 });
 
 test('should send post data when keepalive is enabled', async () => {

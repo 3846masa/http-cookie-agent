@@ -6,7 +6,7 @@ import { validateCookieOptions } from '../validate_cookie_options';
 test('should throw Error when jar is not set', () => {
   expect(() => {
     validateCookieOptions({});
-  }).toThrowError(
+  }).toThrow(
     expect.objectContaining({
       message: 'invalid cookies.jar',
     }) as Error,
@@ -19,7 +19,7 @@ test('should throw Error when cookie store is asynchronous', () => {
 
   expect(() => {
     validateCookieOptions({ jar });
-  }).toThrowError(
+  }).toThrow(
     expect.objectContaining({
       message: 'an asynchronous cookie store is not supported.',
     }) as Error,
@@ -31,5 +31,5 @@ test('should not throw Error when only pass synchronous cookie store', () => {
 
   expect(() => {
     validateCookieOptions({ jar });
-  }).not.toThrowError();
+  }).not.toThrow();
 });
