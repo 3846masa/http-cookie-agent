@@ -6,6 +6,10 @@
       {
         "allowedVersions": "^6.0.0",
         "matchDepNames": ["undici__v6"]
+      },
+      {
+        "allowedVersions": "^7.0.0",
+        "matchDepNames": ["undici__v7"]
       }
     ]
   }
