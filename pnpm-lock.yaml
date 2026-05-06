@@ -13,8 +13,8 @@ importers:
   .:
     dependencies:
       agent-base:
-        specifier: ^7.1.4
-        version: 7.1.4
+        specifier: ^9.0.0
+        version: 9.0.0
     devDependencies:
       '@3846masa/configs':
         specifier: github:3846masa/configs#6be5ac743b5cca398e436bd5e73dd9f99671a60d
