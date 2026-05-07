@@ -7,7 +7,7 @@ const configs = [
   {
     files: ['examples/**/*'],
     rules: {
-      'import/order': [
+      'import-x/order': [
         'error',
         {
           pathGroups: [
