@@ -60,7 +60,7 @@
     "@3846masa/configs": "github:3846masa/configs#c08b2fc0e7beb3553535cc6b57e32f402fa4c241",
     "@babel/cli": "7.28.6",
     "@babel/core": "7.29.0",
-    "@babel/preset-env": "7.29.3",
+    "@babel/preset-env": "7.29.5",
     "@babel/preset-typescript": "7.28.5",
     "@hapi/wreck": "18.1.0",
     "@release-it/conventional-changelog": "10.0.6",
