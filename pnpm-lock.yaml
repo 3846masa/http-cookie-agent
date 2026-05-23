@@ -32,8 +32,8 @@ importers:
         specifier: 7.28.5
         version: 7.28.5(@babel/core@7.29.0)
       '@hapi/wreck':
-        specifier: 18.1.1
-        version: 18.1.1
+        specifier: 18.1.2
+        version: 18.1.2
       '@release-it/conventional-changelog':
         specifier: 10.0.6
         version: 10.0.6(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.3.0)(release-it@20.0.1(@types/node@22.19.17))
@@ -955,8 +955,8 @@ packages:
   '@hapi/hoek@11.0.4':
     resolution: {integrity: sha512-PnsP5d4q7289pS2T2EgGz147BFJ2Jpb4yrEdkpz2IhgEUzos1S7HTl7ezWh1yfYzYlj89KzLdCRkqsP6SIryeQ==}
 
-  '@hapi/wreck@18.1.1':
-    resolution: {integrity: sha512-UwTeGBfAnB/1mkw4gD6IQGI/bgMu7iGmqgT8K+xxye3z4ZHhCZlmS2wuHBJmENhBJSKqvoYzJ71ds3Xfq4gofQ==}
+  '@hapi/wreck@18.1.2':
+    resolution: {integrity: sha512-3dMnV2pfhQiyEqu8DL3VBmxkdLiRDiiUDuG79Dp+UK1gL9ZxAfDOUhB6k3D5MLqcgJJ1IARyGFhwoc1NITr/pg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -4708,7 +4708,7 @@ snapshots:
 
   '@hapi/hoek@11.0.4': {}
 
-  '@hapi/wreck@18.1.1':
+  '@hapi/wreck@18.1.2':
     dependencies:
       '@hapi/boom': 10.0.1
       '@hapi/bourne': 3.0.0
