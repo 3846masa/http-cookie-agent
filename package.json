@@ -80,7 +80,7 @@
     "proxy": "4.0.0",
     "release-it": "20.0.1",
     "rimraf": "6.1.3",
-    "semver": "7.8.0",
+    "semver": "7.8.1",
     "superagent": "10.3.0",
     "tough-cookie": "6.0.1",
     "typescript": "6.0.3",
