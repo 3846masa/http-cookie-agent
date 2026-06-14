@@ -77,8 +77,8 @@ importers:
         specifier: 3.3.2
         version: 3.3.2
       proxy:
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 4.1.0
+        version: 4.1.0
       release-it:
         specifier: 20.2.0
         version: 20.2.0(@types/node@22.19.17)
@@ -1718,9 +1718,6 @@ packages:
     resolution: {integrity: sha512-ipDqC8FrAl/76p2SSWKSI+H9tFwm7vYqXQrItCuiVPt26Km0jS+NzSsBWAaBusvSbQcfJG+JitdMm+wZAgTYqg==}
     hasBin: true
 
-  basic-auth-parser@0.0.2-1:
-    resolution: {integrity: sha512-GFj8iVxo9onSU6BnnQvVwqvxh60UcSHJEDnIk3z4B6iOjsKSmqe+ibW0Rsz7YO7IE1HG3D3tqCNIidP46SZVdQ==}
-
   basic-ftp@5.0.5:
     resolution: {integrity: sha512-4Bcg1P8xhUuqcii/S0Z9wiHIrQVPMermM1any+MX5GeGD7faD3/msQUDGLol9wOcz4/jbg/WJnGqoJF6LiBdtg==}
     engines: {node: '>=10.0.0'}
@@ -3150,8 +3147,8 @@ packages:
     resolution: {integrity: sha512-cJ+oHTW1VAEa8cJslgmUZrc+sjRKgAKl3Zyse6+PV38hZe/V6Z14TbCuXcan9F9ghlz4QrFr2c92TNF82UkYHA==}
     engines: {node: '>=10'}
 
-  proxy@4.0.0:
-    resolution: {integrity: sha512-qYi7N3kisRTQW0Y13JL0upO8e9mVLpu4yuxrXvWzCsaJVA9yqVF+iQkC/rCdnx2lGPQhC+qjefWSY7M6SHclhQ==}
+  proxy@4.1.0:
+    resolution: {integrity: sha512-X3gqRNkp5dLWQolWksIfFSltI0ls8oQ01+tckxnPoz3bQ5+OUsdE7bwX/i/Q3TDEG4gx2PQjc3D07dIx90CQdg==}
     engines: {node: '>= 20'}
     hasBin: true
 
@@ -5471,8 +5468,6 @@ snapshots:
 
   baseline-browser-mapping@2.9.19: {}
 
-  basic-auth-parser@0.0.2-1: {}
-
   basic-ftp@5.0.5: {}
 
   before-after-hook@4.0.0: {}
@@ -7042,10 +7037,9 @@ snapshots:
 
   proxy-from-env@2.1.0: {}
 
-  proxy@4.0.0:
+  proxy@4.1.0:
     dependencies:
       args: 5.0.3
-      basic-auth-parser: 0.0.2-1
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
