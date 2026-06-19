@@ -85,7 +85,7 @@
     "tough-cookie": "6.0.1",
     "typescript": "6.0.3",
     "undici": "8.3.0",
-    "undici__v6": "npm:undici@6.26.0",
+    "undici__v6": "npm:undici@6.27.0",
     "undici__v7": "npm:undici@7.27.2",
     "urllib": "4.9.0",
     "vitest": "4.1.9"
