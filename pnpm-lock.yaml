@@ -65,8 +65,8 @@ importers:
         specifier: 1.1.8
         version: 1.1.8
       got:
-        specifier: 15.0.6
-        version: 15.0.6
+        specifier: 15.0.7
+        version: 15.0.7
       http-proxy-agent:
         specifier: 9.1.0
         version: 9.1.0
@@ -116,7 +116,7 @@ importers:
 packages:
 
   '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/a6b9e167994c429a2e9e97e0e845ee8b95873133':
-    resolution: {gitHosted: true, integrity: sha512-8jbTbyU7fL3aGFPEcZ8dJeuPrr4ZaXNuoFKEdy7spQAmKmoJArW5Fd9ZJerfAUlborc1WWC2k1Uojh42NXiAyA==, tarball: https://codeload.github.com/3846masa/configs/tar.gz/a6b9e167994c429a2e9e97e0e845ee8b95873133}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/3846masa/configs/tar.gz/a6b9e167994c429a2e9e97e0e845ee8b95873133}
     version: 1.0.893
 
   '@aashutoshrathi/word-wrap@1.2.6':
@@ -2440,8 +2440,8 @@ packages:
     resolution: {integrity: sha512-ZUKRh6/kUFoAiTAtTYPZJ3hw9wNxx+BIBOijnlG9PnrJsCcSjs1wyyD6vJpaYtgnzDrKYRSqf3OO6Rfa93xsRg==}
     engines: {node: '>= 0.4'}
 
-  got@15.0.6:
-    resolution: {integrity: sha512-6DEiZOte0BMR/QUFlk7CTBtcLpnJx/gAGnmApWtnHvM2i+LssgCaC3Kl3x+SZ/laTbYlmcaabylkwS0t97Y4BA==}
+  got@15.0.7:
+    resolution: {integrity: sha512-HA4XUhL2xk0/sA4l3zRyOzfqPtDEiVYpzDae56WLX2aHZYF6v6hjTnuDvURIdznSTPFYW1JUdlREhZjGAF9LCQ==}
     engines: {node: '>=22'}
 
   handlebars@4.7.8:
@@ -6368,7 +6368,7 @@ snapshots:
 
   gopd@1.2.0: {}
 
-  got@15.0.6:
+  got@15.0.7:
     dependencies:
       '@sindresorhus/is': 8.0.0
       byte-counter: 0.1.0
