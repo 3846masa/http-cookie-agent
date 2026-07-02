@@ -36,7 +36,7 @@ importers:
         version: 18.1.2
       '@release-it/conventional-changelog':
         specifier: 10.0.6
-        version: 10.0.6(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.3.0)(release-it@20.2.0(@types/node@22.19.17))
+        version: 10.0.6(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.3.0)(release-it@20.2.1(@types/node@22.19.17))
       '@types/babel__core':
         specifier: 7.20.5
         version: 7.20.5
@@ -80,8 +80,8 @@ importers:
         specifier: 4.1.0
         version: 4.1.0
       release-it:
-        specifier: 20.2.0
-        version: 20.2.0(@types/node@22.19.17)
+        specifier: 20.2.1
+        version: 20.2.1(@types/node@22.19.17)
       rimraf:
         specifier: 6.1.3
         version: 6.1.3
@@ -3209,8 +3209,8 @@ packages:
     resolution: {integrity: sha512-NZQZdC5wOE/H3UT28fVGL+ikOZcEzfMGk/c3iN9UGxzWHMa1op7274oyiUVrAG4B2EuFhus8SvkaYnhvW92p9Q==}
     hasBin: true
 
-  release-it@20.2.0:
-    resolution: {integrity: sha512-9ZTk9ripgctC6VTqH+P54KuboK29A5mG/I3tFfS5hnoAnkwtFFAMHRidYz93ylrW995vF50Ny1aOGJiyRmEN7w==}
+  release-it@20.2.1:
+    resolution: {integrity: sha512-xd0mqTGduwQlEzVBKOJcoVZxDrRLzjmFv3W8tWwkPIPDYtwYBWYjULiSk6VhfuGKocfz7GmptAqViKMQV4Zzbw==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24.0.0}
     hasBin: true
 
@@ -3557,10 +3557,6 @@ packages:
   undici@6.27.0:
     resolution: {integrity: sha512-YmfV3YnEDzXRC5lZ2jWtWWHKGUm1zIt8AhesR1tens+HTNv+YZlN/dp6G727LOvMJ8xjP9Be7Y2Sdr96LDm+pg==}
     engines: {node: '>=18.17'}
-
-  undici@7.24.5:
-    resolution: {integrity: sha512-3IWdCpjgxp15CbJnsi/Y9TCDE7HWVN19j1hmzVhoAkY/+CJx449tVxT5wZc1Gwg8J+P0LWvzlBzxYRnHJ+1i7Q==}
-    engines: {node: '>=20.18.1'}
 
   undici@7.28.0:
     resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
@@ -4950,7 +4946,7 @@ snapshots:
 
   '@phun-ky/typeof@2.0.3': {}
 
-  '@release-it/conventional-changelog@10.0.6(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.3.0)(release-it@20.2.0(@types/node@22.19.17))':
+  '@release-it/conventional-changelog@10.0.6(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.3.0)(release-it@20.2.1(@types/node@22.19.17))':
     dependencies:
       '@conventional-changelog/git-client': 2.6.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.3.0)
       concat-stream: 2.0.0
@@ -4958,7 +4954,7 @@ snapshots:
       conventional-changelog-angular: 8.3.0
       conventional-changelog-conventionalcommits: 9.3.1
       conventional-recommended-bump: 11.2.0
-      release-it: 20.2.0(@types/node@22.19.17)
+      release-it: 20.2.1(@types/node@22.19.17)
       semver: 7.8.5
     transitivePeerDependencies:
       - conventional-commits-filter
@@ -7109,7 +7105,7 @@ snapshots:
     dependencies:
       jsesc: 3.1.0
 
-  release-it@20.2.0(@types/node@22.19.17):
+  release-it@20.2.1(@types/node@22.19.17):
     dependencies:
       '@inquirer/prompts': 8.4.2(@types/node@22.19.17)
       '@octokit/rest': 22.0.1
@@ -7130,7 +7126,7 @@ snapshots:
       proxy-agent: 7.0.0
       semver: 7.7.4
       tinyglobby: 0.2.15
-      undici: 7.24.5
+      undici: 7.28.0
       url-join: 5.0.0
       wildcard-match: 5.1.4
       yargs-parser: 22.0.0
@@ -7537,8 +7533,6 @@ snapshots:
   undici-types@6.21.0: {}
 
   undici@6.27.0: {}
-
-  undici@7.24.5: {}
 
   undici@7.28.0: {}
 
