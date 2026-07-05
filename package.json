@@ -73,7 +73,7 @@
     "axios": "1.18.1",
     "conventional-changelog-conventionalcommits": "9.3.1",
     "disposablestack": "1.1.8",
-    "got": "15.0.7",
+    "got": "15.1.0",
     "http-proxy-agent": "9.1.0",
     "needle": "3.5.0",
     "node-fetch": "3.3.2",
