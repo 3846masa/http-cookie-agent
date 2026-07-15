@@ -68,7 +68,7 @@
     "@types/needle": "3.3.0",
     "@types/node": "22.19.17",
     "@types/semver": "7.7.1",
-    "@types/superagent": "8.1.10",
+    "@types/superagent": "8.1.11",
     "agentkeepalive": "4.6.0",
     "axios": "1.18.1",
     "conventional-changelog-conventionalcommits": "9.3.1",
