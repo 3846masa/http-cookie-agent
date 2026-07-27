@@ -101,8 +101,8 @@ importers:
         specifier: 8.3.0
         version: 8.3.0
       undici__v6:
-        specifier: npm:undici@6.27.0
-        version: undici@6.27.0
+        specifier: npm:undici@6.28.0
+        version: undici@6.28.0
       undici__v7:
         specifier: npm:undici@7.28.0
         version: undici@7.28.0
@@ -116,7 +116,7 @@ importers:
 packages:
 
   '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8':
-    resolution: {gitHosted: true, integrity: sha512-zfNOlOjP4fSrHwf+S+Omk1aWZtVHxEAbD26cG9QbIfYrEqccqWoaslUvcW8o9NnWKvRXXTDPPS9agsdYmFpKFQ==, tarball: https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8}
     version: 1.0.895
 
   '@aashutoshrathi/word-wrap@1.2.6':
@@ -3554,8 +3554,8 @@ packages:
   undici-types@6.21.0:
     resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
-  undici@6.27.0:
-    resolution: {integrity: sha512-YmfV3YnEDzXRC5lZ2jWtWWHKGUm1zIt8AhesR1tens+HTNv+YZlN/dp6G727LOvMJ8xjP9Be7Y2Sdr96LDm+pg==}
+  undici@6.28.0:
+    resolution: {integrity: sha512-LIY910g9TI13YS95lrMFrs8Rm/u/irgHeTWoKCoteeJ04CUJ92eEfj0rVn+7VKMPBpUPiUoBKfhNyLI23EE/KA==}
     engines: {node: '>=18.17'}
 
   undici@7.28.0:
@@ -7532,7 +7532,7 @@ snapshots:
 
   undici-types@6.21.0: {}
 
-  undici@6.27.0: {}
+  undici@6.28.0: {}
 
   undici@7.28.0: {}
 
