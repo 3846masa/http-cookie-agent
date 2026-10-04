@@ -104,8 +104,8 @@ importers:
         specifier: npm:undici@6.29.0
         version: undici@6.29.0
       undici__v7:
-        specifier: npm:undici@7.29.1
-        version: undici@7.29.1
+        specifier: npm:undici@7.30.0
+        version: undici@7.30.0
       urllib:
         specifier: 4.9.0
         version: 4.9.0
@@ -3473,8 +3473,8 @@ packages:
     resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
     engines: {node: '>=20.18.1'}
 
-  undici@7.29.1:
-    resolution: {integrity: sha512-RYONW2MeafgYlkVOKYKkA/Ag7BmXqgIWCa8t1m0JcxrQg9pI9lEqRhAOruOBCbAohOa/gkCF+iPi9hrgvTzu6Q==}
+  undici@7.30.0:
+    resolution: {integrity: sha512-dkrQXeHSaoamnItlYbmzG0wFYrM0ZwDxCIg0A7aKjTyyhh9svRzCNFEzV+Vm05/yehjCzjDZ31KXfGEjYSztDQ==}
     engines: {node: '>=20.18.1'}
 
   undici@8.3.0:
@@ -7250,7 +7250,7 @@ snapshots:
 
   undici@7.28.0: {}
 
-  undici@7.29.1: {}
+  undici@7.30.0: {}
 
   undici@8.3.0: {}
 
