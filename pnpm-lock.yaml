@@ -6,7 +6,7 @@ settings:
 
 overrides:
   conventional-changelog-conventionalcommits: 9.3.1
-  urllib>undici: 8.3.0
+  urllib>undici: 8.12.1
 
 importers:
 
@@ -98,8 +98,8 @@ importers:
         specifier: 6.0.3
         version: 6.0.3
       undici:
-        specifier: 8.3.0
-        version: 8.3.0
+        specifier: 8.12.1
+        version: 8.12.1
       undici__v6:
         specifier: npm:undici@6.29.0
         version: undici@6.29.0
@@ -116,7 +116,7 @@ importers:
 packages:
 
   '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8':
-    resolution: {gitHosted: true, integrity: sha512-zfNOlOjP4fSrHwf+S+Omk1aWZtVHxEAbD26cG9QbIfYrEqccqWoaslUvcW8o9NnWKvRXXTDPPS9agsdYmFpKFQ==, tarball: https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8}
     version: 1.0.895
 
   '@aashutoshrathi/word-wrap@1.2.6':
@@ -3481,8 +3481,8 @@ packages:
     resolution: {integrity: sha512-dkrQXeHSaoamnItlYbmzG0wFYrM0ZwDxCIg0A7aKjTyyhh9svRzCNFEzV+Vm05/yehjCzjDZ31KXfGEjYSztDQ==}
     engines: {node: '>=20.18.1'}
 
-  undici@8.3.0:
-    resolution: {integrity: sha512-TkUDgb6tl7KOGZ+7e8E3d2FYgUQgF6z5YypqjWmixVQSQERFcVrVg0ySADm2LVLRh5ljAaHTCR5Fmz3Q34rB7Q==}
+  undici@8.12.1:
+    resolution: {integrity: sha512-usz3OVQBeh1LxNn0DzU0voLXMgn5CU/WUdpBsY6Ti5afNao+vTkmn4H/NxoXolc10cOqe2+YIG0Hspq2rsl64w==}
     engines: {node: '>=22.19.0'}
 
   unicode-canonical-property-names-ecmascript@2.0.0:
@@ -7262,7 +7262,7 @@ snapshots:
 
   undici@7.30.0: {}
 
-  undici@8.3.0: {}
+  undici@8.12.1: {}
 
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
@@ -7320,7 +7320,7 @@ snapshots:
       mime-types: 2.1.35
       qs: 6.14.1
       type-fest: 4.39.1
-      undici: 8.3.0
+      undici: 8.12.1
       ylru: 2.0.0
 
   util-deprecate@1.0.2: {}
