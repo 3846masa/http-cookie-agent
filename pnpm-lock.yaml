@@ -32,8 +32,8 @@ importers:
         specifier: 8.0.7
         version: 8.0.7(@babel/core@8.0.9)
       '@hapi/wreck':
-        specifier: 18.1.2
-        version: 18.1.2
+        specifier: 18.1.3
+        version: 18.1.3
       '@release-it/conventional-changelog':
         specifier: 10.0.6
         version: 10.0.6(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.3.0)(release-it@20.2.1(@types/node@22.19.17))
@@ -116,7 +116,7 @@ importers:
 packages:
 
   '@3846masa/configs@https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8':
-    resolution: {gitHosted: true, integrity: sha512-zfNOlOjP4fSrHwf+S+Omk1aWZtVHxEAbD26cG9QbIfYrEqccqWoaslUvcW8o9NnWKvRXXTDPPS9agsdYmFpKFQ==, tarball: https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8}
+    resolution: {gitHosted: true, tarball: https://codeload.github.com/3846masa/configs/tar.gz/d1583fc579d159b1b0efe298445db99dd5066da8}
     version: 1.0.895
 
   '@aashutoshrathi/word-wrap@1.2.6':
@@ -945,8 +945,8 @@ packages:
   '@hapi/hoek@11.0.4':
     resolution: {integrity: sha512-PnsP5d4q7289pS2T2EgGz147BFJ2Jpb4yrEdkpz2IhgEUzos1S7HTl7ezWh1yfYzYlj89KzLdCRkqsP6SIryeQ==}
 
-  '@hapi/wreck@18.1.2':
-    resolution: {integrity: sha512-3dMnV2pfhQiyEqu8DL3VBmxkdLiRDiiUDuG79Dp+UK1gL9ZxAfDOUhB6k3D5MLqcgJJ1IARyGFhwoc1NITr/pg==}
+  '@hapi/wreck@18.1.3':
+    resolution: {integrity: sha512-PZ1FQpk5DWbEFFYiHu/kCkWeSHwUhAxDSUdv6Zsp1qi2coUP22cnYQlp647KCSsCc4uFB4LOTsHo9f5k7vgtHg==}
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -4530,7 +4530,7 @@ snapshots:
 
   '@hapi/hoek@11.0.4': {}
 
-  '@hapi/wreck@18.1.2':
+  '@hapi/wreck@18.1.3':
     dependencies:
       '@hapi/boom': 10.0.1
       '@hapi/bourne': 3.0.0
