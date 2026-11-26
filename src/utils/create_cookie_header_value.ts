@@ -11,9 +11,7 @@ type Params = {
 export function createCookieHeaderValue({ cookieOptions, passedValues, requestUrl }: Params): string {
   const { jar } = cookieOptions;
 
-  const cookies = jar.getCookiesSync(requestUrl);
-  const cookiesMap = new Map(cookies.map((cookie) => [cookie.key, cookie]));
-
+  const cookiesMap = new Map<string, Cookie>();
   for (const passedValue of passedValues) {
     if (typeof passedValue !== 'string') {
       continue;
@@ -26,7 +24,9 @@ export function createCookieHeaderValue({ cookieOptions, passedValues, requestUr
     }
   }
 
-  const cookieHeaderValue = Array.from(cookiesMap.values())
+  const jarCookies = jar.getCookiesSync(requestUrl).filter((cookie) => !cookiesMap.has(cookie.key));
+
+  const cookieHeaderValue = [...jarCookies, ...cookiesMap.values()]
     .map((cookie) => cookie.cookieString())
     .join(';\x20');
 
